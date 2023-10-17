@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "bA8/hScQc0snlszAqa/dRdk2iNvK3fag2XQkgr5II1hfW2qQd7+zN/RzLO0STCE5m0if+Eff0AALXAFrAso1xw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\API_ShipStation\\ShipStation_Test\\ShipStation_Test.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
