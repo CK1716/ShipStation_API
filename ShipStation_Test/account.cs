@@ -30,8 +30,7 @@ namespace SsApi
                 _countryCode: "US",
                 _phone: "5124111234");
 
-            string[] resData = RegisterAccount.AcReq(accountReq);
-            foreach (string s in resData) { Console.WriteLine(s); }
+            AccountResponse resData = RegisterAccount.AcReq(accountReq);
         }
     }
 }

@@ -82,7 +82,7 @@ namespace ShipStation.Api
 
     public class RegisterAccount
     {
-        public static string[] AcReq(AccountRequest _accountReq)
+        public static AccountResponse AcReq(AccountRequest _accountReq)
         {
             string url = "https://ssapi.shipstation.com/accounts/registeraccount";
 
@@ -115,12 +115,15 @@ namespace ShipStation.Api
 
             /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
 
-            ShipStation.ApiResult(url, "POST", _jsonData);
-            string[] _resData = AcRes();
+            _jsonData = ShipStation.ApiResult(url, "POST", _jsonData);
+
+
+
+            AccountResponse _resData = AcRes();
             
             return _resData;
         }
-        public static string[] AcRes()
+        public static AccountResponse AcRes()
         {
             AccountResponse accountRes = new AccountResponse(
                 _message: "ShipStation account Created.",
@@ -141,14 +144,23 @@ namespace ShipStation.Api
             JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
 
-            string[] __resData = new string[col.Count];
-
-            for (int i = 0; i < col.Count; i++)
+            try
             {
-                __resData[i] = col[i].Name + ": " + col[i].GetValue();
-                // Console.WriteLine(col[i].Name + ": " + col[i].GetValue());
+                Console.WriteLine(col["Message"].GetValue());
+                Console.WriteLine(col["SellerId"].GetValue());
+                Console.WriteLine(col["Success"].GetValue());
+                Console.WriteLine(col["ApiKey"].GetValue());
+                Console.WriteLine(col["ApiSecret"].GetValue());
+
+                /* Console.WriteLine(accountRes.Message);
+                Console.WriteLine(accountRes.SellerId);
+                Console.WriteLine(accountRes.Success);
+                Console.WriteLine(accountRes.ApiKey);
+                Console.WriteLine(accountRes.ApiSecret); */
             }
-            return __resData;
+            catch (NullReferenceException ex1) { Console.WriteLine(ex1.Message); }
+
+            return accountRes;
         }
     }
 

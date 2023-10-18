@@ -20,5 +20,15 @@ namespace ShipStation.Models
             [EnumMember(Value = "createDate")]
             CreateDate = 1
         }
+
+        public Value IntToEnum(int _value)
+        {
+            return (Value)_value;
+        } 
+
+        /*public Value stringToEnum(string _value)
+        {
+            return (Value)Enum.Parse(typeof(Value), _value);
+        }*/
     }
 }
