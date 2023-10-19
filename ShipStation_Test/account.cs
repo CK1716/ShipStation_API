@@ -5,17 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+
 using System.Net.Json;
 using Newtonsoft.Json;
+
 using ShipStation.Api;
 using ShipStation.Entities;
+
 namespace SsApi
 {
     public class Accounts
     {
-        public static void Main(String[] args)
+        public static void Account(String[] args)
         {
-            AccountRequest accountReq = new AccountRequest(
+            AccountRequest accountsReq = new AccountRequest(
                 _firstName: "John",
                 _lastName: "Smith",
                 _email: "jsmithtest@gmail.com",
@@ -30,7 +33,7 @@ namespace SsApi
                 _countryCode: "US",
                 _phone: "5124111234");
 
-            AccountResponse resData = RegisterAccount.AcReq(accountReq);
+            AccountResponse resData = RegisterAccount.AcReq(accountsReq);
         }
     }
 }

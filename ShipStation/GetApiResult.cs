@@ -24,17 +24,16 @@ namespace ShipStation.Api
             webRequest.Timeout = 30 * 1000; // 30초
                                             // ContentType은 지정된 것이 있으면 그것을 사용해준다.
             webRequest.ContentType = "application/json; charset=utf-8";
-            webRequest.ContentType = "Authorization; Basic=";
 
-            /* _postData 변수에 api request body 초기화*/
+            /* _postData 변수에 api request body 초기화*//*
             byte[] byteArray = Encoding.UTF8.GetBytes(_postData);
             // 요청 Data를 쓰는 데 사용할 Stream 개체를 가져온다.
             Stream dataStream = webRequest.GetRequestStream();
             // Data를 전송한다.
             dataStream.Write(byteArray, 0, byteArray.Length);
             // dataStream 개체 닫기
-            dataStream.Close();
-
+            dataStream.Close();*/
+            
             return _postData;
 
             try
@@ -82,7 +81,7 @@ namespace ShipStation.Api
 
     public class RegisterAccount
     {
-        public static AccountResponse AcReq(AccountRequest _accountReq)
+        public static AccountResponse AcReq(AccountRequest _accountsReq)
         {
             string url = "https://ssapi.shipstation.com/accounts/registeraccount";
 
@@ -90,19 +89,19 @@ namespace ShipStation.Api
             /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
             JsonObjectCollection items = new JsonObjectCollection */
             {
-                new JsonStringValue("FirstName", _accountReq.FirstName),
-                new JsonStringValue("LastName", _accountReq.LastName),
-                new JsonStringValue("Email", _accountReq.Email),
-                new JsonStringValue("Password", _accountReq.Password),
-                new JsonStringValue("ShippingOriginCountryCode", _accountReq.ShippingOriginCountryCode),
-                new JsonStringValue("CompanyName", _accountReq.CompanyName),
-                new JsonStringValue("Addr1", _accountReq.Addr1),
-                new JsonStringValue("Addr2", _accountReq.Addr2),
-                new JsonStringValue("City", _accountReq.City),
-                new JsonStringValue("State", _accountReq.State),
-                new JsonStringValue("Zip", _accountReq.Zip),
-                new JsonStringValue("CountryCode", _accountReq.CountryCode),
-                new JsonStringValue("Phone", _accountReq.Phone)
+                new JsonStringValue("FirstName", _accountsReq.FirstName),
+                new JsonStringValue("LastName", _accountsReq.LastName),
+                new JsonStringValue("Email", _accountsReq.Email),
+                new JsonStringValue("Password", _accountsReq.Password),
+                new JsonStringValue("ShippingOriginCountryCode", _accountsReq.ShippingOriginCountryCode),
+                new JsonStringValue("CompanyName", _accountsReq.CompanyName),
+                new JsonStringValue("Addr1", _accountsReq.Addr1),
+                new JsonStringValue("Addr2", _accountsReq.Addr2),
+                new JsonStringValue("City", _accountsReq.City),
+                new JsonStringValue("State", _accountsReq.State),
+                new JsonStringValue("Zip", _accountsReq.Zip),
+                new JsonStringValue("CountryCode", _accountsReq.CountryCode),
+                new JsonStringValue("Phone", _accountsReq.Phone)
             };
 
             // accountReq.Add(items);
@@ -115,17 +114,11 @@ namespace ShipStation.Api
 
             /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
 
-            _jsonData = ShipStation.ApiResult(url, "POST", _jsonData);
+            string reqResult = ShipStation.ApiResult(url, "POST", _jsonData);
 
-
-
-            AccountResponse _resData = AcRes();
-            
-            return _resData;
-        }
-        public static AccountResponse AcRes()
-        {
-            AccountResponse accountRes = new AccountResponse(
+            /* method : AcReq(), AcRes() 합치기 */
+            // 모델 형식으로 값 입력
+            AccountResponse accountsRes = new AccountResponse(
                 _message: "ShipStation account Created.",
                 _sellerId: 123456,
                 _success: true,
@@ -137,8 +130,8 @@ namespace ShipStation.Api
             Success = true,
             ApiKey = "abcdt9845hjmgfklj3498gkljdkuyekl",
             ApiSecret = "1234iou983lkj8mnxgfwu509hkhdy7u3" } */
-            
-            string resJsonData = JsonConvert.SerializeObject(accountRes);
+
+            string resJsonData = JsonConvert.SerializeObject(accountsRes);
 
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
@@ -146,6 +139,9 @@ namespace ShipStation.Api
 
             try
             {
+                /* 차이점 뭐지? 
+                 차이점..? : JsonObjectCollection parse 사용 vs model 형식 사용 ?*/
+
                 Console.WriteLine(col["Message"].GetValue());
                 Console.WriteLine(col["SellerId"].GetValue());
                 Console.WriteLine(col["Success"].GetValue());
@@ -160,20 +156,75 @@ namespace ShipStation.Api
             }
             catch (NullReferenceException ex1) { Console.WriteLine(ex1.Message); }
 
-            return accountRes;
+            return accountsRes;
         }
     }
 
     public class ListFulfillments
     {
-        public static string LfReq()
+        public static FulfillmentResponse LfReq(FulfillmentRequest _fulfillmentsReq)
         {
-            return "";
-        }
+            string url = "https://ssapi.shipstation.com/fulfillments";
 
-        public static string LfRes()
-        {
-            return "";
+            JsonObjectCollection reqMain = new JsonObjectCollection
+            /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
+            JsonObjectCollection items = new JsonObjectCollection */
+            {
+                new JsonStringValue("FulfillmentId", _fulfillmentsReq.FulfillmentId.ToString()),
+                new JsonStringValue("OrderId", _fulfillmentsReq.OrderId.ToString()),
+                new JsonStringValue("OrderNumber", _fulfillmentsReq.OrderNumber),
+                new JsonStringValue("TrackingNumber", _fulfillmentsReq.TrackingNumber),
+                new JsonStringValue("RecipientName", _fulfillmentsReq.RecipientName),
+                new JsonStringValue("CreateDateStart", _fulfillmentsReq.CreateDateStart.ToString()),
+                new JsonStringValue("CreateDateEnd", _fulfillmentsReq.CreateDateEnd.ToString()),
+                new JsonStringValue("ShipDateStart", _fulfillmentsReq.ShipDateStart.ToString()),
+                new JsonStringValue("ShipDateEnd", _fulfillmentsReq.ShipDateEnd.ToString()),
+                new JsonStringValue("SortBy", _fulfillmentsReq.SortBy),
+                new JsonStringValue("SortDir", _fulfillmentsReq.SortDir),
+                new JsonStringValue("Page", _fulfillmentsReq.Page.ToString()),
+                new JsonStringValue("PageSize", _fulfillmentsReq.PageSize.ToString())
+            };
+
+            // accountReq.Add(items);
+            // main.Add(jsonArrayCollection);
+
+            string _jsonData = reqMain.ToString();
+            _jsonData = _jsonData.Replace("\n", "");
+            _jsonData = _jsonData.Replace("\r", "");
+            _jsonData = _jsonData.Replace("\t", "");
+
+            /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
+
+            string reqResult = ShipStation.ApiResult(url, "GET", _jsonData);
+
+            // response
+            JsonObjectCollection resMain = new JsonObjectCollection();
+            JsonArrayCollection fulfillmentsArray = new JsonArrayCollection("fulfillments");
+            JsonObjectCollection item = new JsonObjectCollection
+            {
+                new JsonStringValue("FulfillmentId", _fulfillmentsReq.FulfillmentId.ToString()),
+                new JsonStringValue("OrderNumber", _fulfillmentsReq.OrderNumber.ToString()),
+                new JsonStringValue("CreateDate", _fulfillmentsReq.CreateDateStart.ToString()),
+                // new JsonStringValue("FulfillmentFee", _fulfillmentsReq.fulfillmentFee.ToString())
+            };
+
+            fulfillmentsArray.Add(item);
+            resMain.Add(fulfillmentsArray);
+
+            /* _jsonData = resMain.ToString();
+            _jsonData = _jsonData.Replace("\n", "");
+            _jsonData = _jsonData.Replace("\r", "");
+            _jsonData = _jsonData.Replace("\t", "");
+
+            JsonTextParser parser = new JsonTextParser();
+            JsonObject obj = parser.Parse(_jsonData);
+            JsonObjectCollection col = (JsonObjectCollection)obj;
+
+            Console.WriteLine(col["FulfillmentId"].GetValue()); */
+
+            FulfillmentResponse fulfillmentsRes = new FulfillmentResponse(item);
+
+            return fulfillmentsRes;
         }
     }
 }
