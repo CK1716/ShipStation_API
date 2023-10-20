@@ -9,22 +9,19 @@ using System.Threading.Tasks;
 
 namespace ShipStation.Models
 {
-    public class AddressVerified
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum AddressVerified
     {
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum _value
-        {
-            [EnumMember(Value = "Address not yet validated")]
-            NotVerified = 0,
+        [EnumMember(Value = "Address not yet validated")]
+        NotVerified = 0,
 
-            [EnumMember(Value = "Address validation warning")]
-            Warning = 1,
+        [EnumMember(Value = "Address validation warning")]
+        Warning = 1,
 
-            [EnumMember(Value = "Address validation failed")]
-            Failed = 2,
+        [EnumMember(Value = "Address validation failed")]
+        Failed = 2,
 
-            [EnumMember(Value = "Address validated successfully")]
-            Successful = 3
-        }
+        [EnumMember(Value = "Address validated successfully")]
+        Successful = 3
     }
 }

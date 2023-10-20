@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\ShipStation",
+    "\\ShipStation\\Entities",
+    "\\ShipStation\\Entities\\Fulfillment",
     "\\ShipStation_Test"
   ],
-  "SelectedNode": "\\API_ShipStation.sln",
+  "SelectedNode": "\\ShipStation\\Entities\\Fulfillment\\fulfillmentRes.cs",
   "PreviewInSolutionExplorer": false
 }

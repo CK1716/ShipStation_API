@@ -9,16 +9,13 @@ using System.Threading.Tasks;
 
 namespace ShipStation.Models
 {
-    public class SortDir
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SortDir
     {
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum _value
-        {
-            [EnumMember(Value = "ASC")]
-            Ascending = 0,
+        [EnumMember(Value = "ASC")]
+        Ascending = 0,
 
-            [EnumMember(Value = "DESC")]
-            Descending = 1
-        }
+        [EnumMember(Value = "DESC")]
+        Descending = 1
     }
 }

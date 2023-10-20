@@ -9,26 +9,13 @@ using System.Threading.Tasks;
 
 namespace ShipStation.Models
 {
-    public class FulfillmentsSortBy
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum FulfillmentsSortBy
     {
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum Value
-        {
-            [EnumMember(Value = "shipDate")]
-            ShipDate = 0,
+        [EnumMember(Value = "shipDate")]
+        ShipDate = 0,
 
-            [EnumMember(Value = "createDate")]
-            CreateDate = 1
-        }
-
-        public Value IntToEnum(int _value)
-        {
-            return (Value)_value;
-        } 
-
-        /*public Value stringToEnum(string _value)
-        {
-            return (Value)Enum.Parse(typeof(Value), _value);
-        }*/
+        [EnumMember(Value = "createDate")]
+        CreateDate = 1
     }
 }

@@ -28,8 +28,8 @@ namespace ShipStation_Test
                 _createDateEnd: DateTime.Parse("2016-06-07T23:50:50.0670000"),
                 _shipDateStart: DateTime.Parse("2016-06-07T00:00:00.0000000"),
                 _shipDateEnd: DateTime.Parse("2016-06-07T00:00:00.0000000"),
-                _sortBy: null,
-                _sortDir: null,
+                _sortBy: FulfillmentsSortBy.CreateDate,
+                _sortDir: SortDir.Ascending,
                 _page: 1,
                 _pageSize: 0);
 

@@ -14,7 +14,7 @@ namespace ShipStation.Entities
     {
         public FulfillmentRequest(int _fulfillmentId, int _orderId, string _orderNumber, string _trackingNumber,
             string _recipientName, DateTime _createDateStart, DateTime _createDateEnd, DateTime _shipDateStart,
-            DateTime _shipDateEnd, string _sortBy, string _sortDir, int _page, int _pageSize)
+            DateTime _shipDateEnd, FulfillmentsSortBy _sortBy, SortDir _sortDir, int _page, int _pageSize)
         {
             FulfillmentId = _fulfillmentId;
             OrderId = _orderId;
@@ -25,7 +25,10 @@ namespace ShipStation.Entities
             CreateDateEnd = _createDateEnd;
             ShipDateStart = _shipDateStart;
             ShipDateEnd = _shipDateEnd;
+
             SortBy = _sortBy;
+            if(_sortBy == null) { SortBy = FulfillmentsSortBy.CreateDate; }
+
             SortDir = _sortDir;
             Page = _page;
             PageSize = _pageSize;
@@ -39,8 +42,8 @@ namespace ShipStation.Entities
         public DateTime? CreateDateEnd { get; set; }
         public DateTime? ShipDateStart { get; set; }
         public DateTime? ShipDateEnd { get; set; }
-        public string SortBy { get; set; }
-        public string SortDir { get; set; }
+        public FulfillmentsSortBy SortBy { get; set; }
+        public SortDir SortDir { get; set; }
         public int? Page { get; set; }
         public int? PageSize { get; set; }
     }
