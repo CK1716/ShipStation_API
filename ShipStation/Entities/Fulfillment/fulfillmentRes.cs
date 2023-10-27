@@ -11,24 +11,25 @@ using System.Net.Json;
 
 namespace ShipStation.Entities
 {
+
     public class FulfillmentResponse
     {
+
+        public FulfillmentResponse() { }
+
         public FulfillmentResponse(JsonObjectCollection _item)
         {
             FulfillmentId = Int32.Parse((string)_item["FulfillmentId"].GetValue());
             OrderNumber = (string)_item["OrderNumber"].GetValue();
             CreatedDate = DateTime.Parse((string)_item["CreateDate"].GetValue());
-/*            FulfillmentFee = double.Parse((string)_item["FulfillmentFee"].GetValue());
-            Console.WriteLine(FulfillmentId);
-            Console.WriteLine(OrderNumber);
-            Console.WriteLine(CreatedDate);
-            Console.WriteLine(FulfillmentFee);*/
+            FulfillmentFee = double.Parse((string)_item["FulfillmentFee"].GetValue());
         }
+
         public FulfillmentResponse(int _fulfillmentId, int _orderId, string _orderNumber, string _userId, string _customerEmail,
             string _trackingNumber, DateTime _createDate, DateTime _shipDate, DateTime _voidDate, DateTime _deliveryDate,
             string _carrierCode, string _sellerFillProviderId, string _sellerFillProviderName, string _fulfillmentProviderCode, 
             string _fulfillmentServiceCode, double _fulfillmentFee, bool _isVoidRequested, bool _isVoided,
-            bool _isMarketpalceNotified, string _notifyErrorMessage) // , Address _shipTo)
+            bool _isMarketpalceNotified, string _notifyErrorMessage, Address _shipTo)
         {
             FulfillmentId = _fulfillmentId;
             OrderId = _orderId;
@@ -50,10 +51,10 @@ namespace ShipStation.Entities
             IsVoided = _isVoided;
             IsMarketplaceNotified = _isMarketpalceNotified;
             NotifyErrorMessage = _notifyErrorMessage;
-            // ShipTo = _shipTo;
+            ShipTo = _shipTo;
         }
-        public int FulfillmentId { get; set; }
-        public int OrderId { get; set; }
+        public int? FulfillmentId { get; set; }
+        public int? OrderId { get; set; }
         public string OrderNumber { get; set; }
         public string UserId { get; set; }
         public string CustomerEmail { get; set; }

@@ -26,8 +26,8 @@ namespace ShipStation.Entities
             ShipDateStart = _shipDateStart;
             ShipDateEnd = _shipDateEnd;
 
-            SortBy = _sortBy;
-            if(_sortBy == null) { SortBy = FulfillmentsSortBy.CreateDate; }
+            SortBy = _sortBy;   
+            if(_sortBy.Equals("")) { SortBy = FulfillmentsSortBy.CreateDate; }
 
             SortDir = _sortDir;
             Page = _page;

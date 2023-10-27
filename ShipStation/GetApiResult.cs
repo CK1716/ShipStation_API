@@ -1,16 +1,10 @@
-﻿using System;
+﻿using ShipStation.Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Net.Json;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using ShipStation.Entities;
-using ShipStation.Models;
+using System.Text;
 
 namespace ShipStation.Api
 {
@@ -35,7 +29,7 @@ namespace ShipStation.Api
             dataStream.Write(byteArray, 0, byteArray.Length);
             // dataStream 개체 닫기
             dataStream.Close();*/
-            
+
             return _postData;
 
             try
@@ -116,47 +110,40 @@ namespace ShipStation.Api
 
             /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
 
-            string reqResult = ShipStation.ApiResult(url, "POST", _jsonData);
+            // string reqResult = ShipStation.ApiResult(url, "POST", _jsonData);
 
+            //response
             /* method : AcReq(), AcRes() 합치기 */
-            // 모델 형식으로 값 입력
-            AccountResponse accountsRes = new AccountResponse(
-                _message: "ShipStation account Created.",
-                _sellerId: 123456,
-                _success: true,
-                _apiKey: "abcdt9845hjmgfklj3498gkljdkuyekl",
-                _apiSecret: "1234iou983lkj8mnxgfwu509hkhdy7u3");
+            /*            AccountResponse accountsRes = new AccountResponse(
+                            _message: "ShipStation account Created.",
+                            _sellerId: 123456,
+                            _success: true,
+                            _apiKey: "abcdt9845hjmgfklj3498gkljdkuyekl",
+                            _apiSecret: "1234iou983lkj8mnxgfwu509hkhdy7u3");*/
 
-            /* { Message = "ShipStation account created.",
+            /* AccountResponse acc = new AccountResponse
+            { Message = "ShipStation account created.",
             SellerId = 123456,
             Success = true,
             ApiKey = "abcdt9845hjmgfklj3498gkljdkuyekl",
-            ApiSecret = "1234iou983lkj8mnxgfwu509hkhdy7u3" } */
+            ApiSecret = "1234iou983lkj8mnxgfwu509hkhdy7u3" }; */
 
-            string resJsonData = JsonConvert.SerializeObject(accountsRes);
+            // string resJsonData = JsonConvert.SerializeObject(accountsRes);
+
+            string resJsonData = "{\r\n  \"message\": \"ShipStation account created.\",\r\n  \"sellerId\": 123456,\r\n  \"success\": true,\r\n  \"apiKey\": \"abcdt9845hjmgfklj3498gkljdkuyekl\",\r\n  \"apiSecret\": \"1234iou983lkj8mnxgfwu509hkhdy7u3\"\r\n}\r\n";
 
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
 
-            try
-            {
-                /* 차이점 뭐지? 
-                 차이점..? : JsonObjectCollection parse 사용 vs model 형식 사용 ?*/
-
-                Console.WriteLine(col["Message"].GetValue());
-                Console.WriteLine(col["SellerId"].GetValue());
-                Console.WriteLine(col["Success"].GetValue());
-                Console.WriteLine(col["ApiKey"].GetValue());
-                Console.WriteLine(col["ApiSecret"].GetValue());
-
-                /* Console.WriteLine(accountRes.Message);
-                Console.WriteLine(accountRes.SellerId);
-                Console.WriteLine(accountRes.Success);
-                Console.WriteLine(accountRes.ApiKey);
-                Console.WriteLine(accountRes.ApiSecret); */
-            }
-            catch (NullReferenceException ex1) { Console.WriteLine(ex1.Message); }
+            //삼항 연산자 
+            // -> (if 조건) ? (참일 때 사용 값) ? (거짓일 때 사용 값)
+            AccountResponse accountsRes = new AccountResponse(
+                _message: (string)(col["message"] != null ? col["message"].GetValue() : string.Empty),
+                _sellerId: int.Parse(col["sellerId"] != null ? col["sellerId"].GetValue().ToString() : string.Empty),
+                _success: bool.Parse(col["success"] != null ? col["success"].GetValue().ToString() : string.Empty),
+                _apiKey: (string)(col["apiKey"] != null ? col["apiKey"].GetValue() : string.Empty),
+                _apiSecret: (string)(col["apiSecret"] != null ? col["apiSecret"].GetValue() : string.Empty));
 
             return accountsRes;
         }
@@ -198,58 +185,109 @@ namespace ShipStation.Api
 
             string reqResult = ShipStation.ApiResult(url, "GET", reqJson);
 
-            /*// response
-            JsonObjectCollection resMain = new JsonObjectCollection();
-            JsonArrayCollection fulfillmentsArray = new JsonArrayCollection("fulfillments");
-            JsonObjectCollection item = new JsonObjectCollection
-            {
-                new JsonStringValue("FulfillmentId", _fulfillmentsReq.FulfillmentId.ToString()),
-                new JsonStringValue("OrderNumber", _fulfillmentsReq.OrderNumber.ToString()),
-                new JsonStringValue("CreateDate", _fulfillmentsReq.CreateDateStart.ToString()),
-            };
+            // response
+            string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
+            /*string jsonText = @"
+            {jsonarray 형식으로 for문 
+                ""fulfillments"": [
+                {   
+                    ""fulfillmentId"": 33974374,
+                    ""orderId"": 191759016,
+                    ""orderNumber"": ""101"",
+                    ""userId"": ""c9f06d74-95de-4263-9b04-e87095cababf"",
+                    ""customerEmail"": ""apisupport@shipstation.com"",
+                    ""trackingNumber"": ""783408231234"",
+                    ""createDate"": ""2016-06-07T08:50:50.0670000"",
+                    ""shipDate"": ""2016-06-07T00:00:00.0000000"",
+                    ""voidDate"": null,
+                    ""deliveryDate"": null,
+                    ""carrierCode"": ""USPS"",
+                    ""fulfillmentProviderCode"": null,
+                    ""fulfillmentServiceCode"": null,
+                    ""fulfillmentFee"": 0,
+                    ""voidRequested"": false,
+                    ""voided"": false,
+                    ""marketplaceNotified"": true,
+                    ""notifyErrorMessage"": null,
+                    ""shipTo"": {
+                        ""name"": ""Yoda"",
+                        ""company"": null,
+                        ""street1"": ""3800 N Lamar Blvd # 220"",
+                        ""street2"": null,
+                        ""street3"": null,
+                        ""city"": ""AUSTIN"",
+                        ""state"": ""TX"",
+                        ""postalCode"": ""78756"",
+                        ""country"": ""US"",
+                        ""phone"": ""512-485-4282"",
+                        ""residential"": null,
+                        ""addressVerified"": null
+                    }
+                },
+                {
+                    ""fulfillmentId"": 246310,
+                    ""orderId"": 193699927,
+                    ""orderNumber"": ""101"",
+                    ""userId"": ""c9f06d74-95de-4263-9b04-e87095cababf"",
+                    ""customerEmail"": ""apisupport@shipstation.com"",
+                    ""trackingNumber"": ""664756278745"",
+                    ""createDate"": ""2016-06-08T12:54:53.3470000"",
+                    ""shipDate"": ""2016-06-08T00:00:00.0000000"",
+                    ""voidDate"": null,
+                    ""deliveryDate"": null,
+                    ""carrierCode"": ""FedEx"",
+                    ""sellerFillProviderId"": 12345,
+                    ""sellerFillProviderName"": ""Example Fulfillment Provider Name"",
+                    ""fulfillmentProviderCode"": null,
+                    ""fulfillmentServiceCode"": null,
+                    ""fulfillmentFee"": 0,
+                    ""voidRequested"": false,
+                    ""voided"": false,
+                    ""marketplaceNotified"": true,
+                    ""notifyErrorMessage"": null,
+                    ""shipTo"": {
+                        ""name"": ""Yoda"",
+                        ""company"": null,
+                        ""street1"": ""3800 N Lamar Blvd # 220"",
+                        ""street2"": null,
+                        ""street3"": null,
+                        ""city"": ""AUSTIN"",
+                        ""state"": ""TX"",
+                        ""postalCode"": ""78756"",
+                        ""country"": ""US"",
+                        ""phone"": ""512-485-4282"",
+                        ""residential"": null,
+                        ""addressVerified"": null
+                    }
+                }
+            ],
+            ""total"": 2,
+            ""page"": 1,
+            ""pages"": 0
+            }";*/
 
-            fulfillmentsArray.Add(item);
-            resMain.Add(fulfillmentsArray);
+            string resJsonData = jsonText.ToString();
+            resJsonData = resJsonData.Replace("\n", "");
+            resJsonData = resJsonData.Replace("\r", "");
+            resJsonData = resJsonData.Replace("\t", "");
 
-            string resJson = resMain.ToString();
-            resJson = resJson.Replace("\n", "");
-            resJson = resJson.Replace("\r", "");
-            resJson = resJson.Replace("\t", "");
-
+            // 여기까지 get 응답이 직렬화되어 서버에서 넘어온 상황.
+                        
             JsonTextParser parser = new JsonTextParser();
-            JsonObject obj = parser.Parse(resJson);
+            JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
 
-            FulfillmentResponse fulfillmentsRes = new FulfillmentResponse(item);*/
+            JsonArrayCollection fulfillmentsArray = (JsonArrayCollection)col["fulfillments"];
 
-            string resJson = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
+            FulfillmentResponse fulfillmentRes = new FulfillmentResponse();
 
-            JObject jobj = JObject.Parse(resJson);
-            FulfillmentResponse fulfillmentsRes = new FulfillmentResponse(
-                _fulfillmentId: (int)jobj["fulfillments"]["fulfillmentId"],
-                _orderId: (int)jobj["fulfillments"]["orderId"],
-                _orderNumber: (string)jobj["fulfillments"]["orderNumber"],
-                _userId: (string)jobj["fulfillments"]["userId"],
-                _customerEmail: (string)jobj["fulfillments"]["customerEmail"],
-                _trackingNumber: (string)jobj["fulfillments"]["trackingNumber"],
-                _createDate: (DateTime)jobj["fulfillments"]["createDate"],
-                _shipDate: (DateTime)jobj["fulfillments"]["shipDate"],
-                _voidDate: (DateTime)jobj["fulfillments"]["voidDate"],
-                _deliveryDate: (DateTime)jobj["fulfillments"]["deliveryDate"],
-                _carrierCode: (string)jobj["fulfillments"]["carrierCode"],
-                _sellerFillProviderId: (string)jobj["fulfillments"]["sellerFillProviderId"],
-                _sellerFillProviderName: (string)jobj["fulfillments"]["sellerFillProviderName"],
-                _fulfillmentProviderCode: (string)jobj["fulfillments"]["fulfillmentProviderCode"],
-                _fulfillmentServiceCode: (string)jobj["fulfillments"]["fulfillmentServiceCode"],
-                _fulfillmentFee: (double)jobj["fulfillments"]["fulfillmentFee"],
-                _isVoidRequested: (bool)jobj["fulfillments"]["voidRequested"],
-                _isVoided: (bool)jobj["fulfillments"]["voided"],
-                _isMarketpalceNotified: (bool)jobj["fulfillments"]["marketplaceNotified"],
-                _notifyErrorMessage: (string)jobj["fulfillments"]["notifyErrorMessage"]);
-            // _shipTo: (Address)jobj["fulfillments"]["shipTo"]); 
+            for (int i = 0; i < fulfillmentsArray.Count; i++)
+            {
+                JsonObjectCollection element = (JsonObjectCollection)fulfillmentsArray[i];
+                fulfillmentRes.FulfillmentId = int.Parse(element["fulfillmentId"].GetValue().ToString());
 
-            Console.WriteLine(fulfillmentsRes.ToString());
-            return fulfillmentsRes;
+            }
+            return fulfillmentRes;
         }
     }
 }

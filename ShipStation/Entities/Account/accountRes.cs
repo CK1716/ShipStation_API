@@ -9,6 +9,8 @@ namespace ShipStation.Entities
 {
     public class AccountResponse
     {
+        /* 모델 사용 x
+        public AccountResponse() { } */
         public AccountResponse(string _message, int _sellerId, bool _success, string _apiKey, string _apiSecret) 
         {
             Message = _message;
