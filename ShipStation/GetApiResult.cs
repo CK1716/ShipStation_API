@@ -1,7 +1,10 @@
-﻿using ShipStation.Entities;
+﻿using Newtonsoft.Json;
+using ShipStation.Entities;
+using ShipStation.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Json;
 using System.Text;
@@ -113,20 +116,23 @@ namespace ShipStation.Api
             // string reqResult = ShipStation.ApiResult(url, "POST", _jsonData);
 
             //response
-            /* method : AcReq(), AcRes() 합치기 */
-            /*            AccountResponse accountsRes = new AccountResponse(
-                            _message: "ShipStation account Created.",
-                            _sellerId: 123456,
-                            _success: true,
-                            _apiKey: "abcdt9845hjmgfklj3498gkljdkuyekl",
-                            _apiSecret: "1234iou983lkj8mnxgfwu509hkhdy7u3");*/
+            /* 
+            AccountResponse accountsRes = new AccountResponse(
+                _message: "ShipStation account Created.",
+                _sellerId: 123456,
+                _success: true,
+                _apiKey: "abcdt9845hjmgfklj3498gkljdkuyekl",
+                _apiSecret: "1234iou983lkj8mnxgfwu509hkhdy7u3");*/
 
-            /* AccountResponse acc = new AccountResponse
-            { Message = "ShipStation account created.",
-            SellerId = 123456,
-            Success = true,
-            ApiKey = "abcdt9845hjmgfklj3498gkljdkuyekl",
-            ApiSecret = "1234iou983lkj8mnxgfwu509hkhdy7u3" }; */
+            /* 
+            AccountResponse acc = new AccountResponse
+            {
+                Message = "ShipStation account created.",
+                SellerId = 123456,
+                Success = true,
+                ApiKey = "abcdt9845hjmgfklj3498gkljdkuyekl",
+                ApiSecret = "1234iou983lkj8mnxgfwu509hkhdy7u3"
+            };*/
 
             // string resJsonData = JsonConvert.SerializeObject(accountsRes);
 
@@ -188,7 +194,7 @@ namespace ShipStation.Api
             // response
             string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
             /*string jsonText = @"
-            {jsonarray 형식으로 for문 
+            {   jsonarray 형식으로 for문 
                 ""fulfillments"": [
                 {   
                     ""fulfillmentId"": 33974374,
@@ -272,20 +278,58 @@ namespace ShipStation.Api
             resJsonData = resJsonData.Replace("\t", "");
 
             // 여기까지 get 응답이 직렬화되어 서버에서 넘어온 상황.
-                        
+
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
 
             JsonArrayCollection fulfillmentsArray = (JsonArrayCollection)col["fulfillments"];
-
+            
             FulfillmentResponse fulfillmentRes = new FulfillmentResponse();
 
             for (int i = 0; i < fulfillmentsArray.Count; i++)
             {
-                JsonObjectCollection element = (JsonObjectCollection)fulfillmentsArray[i];
-                fulfillmentRes.FulfillmentId = int.Parse(element["fulfillmentId"].GetValue().ToString());
+                /* fulfillmentRes의 각 파라미터에 해당하는 값을 저장해야함 <- 구현 중 */
 
+                JsonObjectCollection element = (JsonObjectCollection)fulfillmentsArray[i];
+                JsonObjectCollection elementShipTo = (JsonObjectCollection)element["shipTo"];
+
+                // "fulfillments :" 값 저장
+                fulfillmentRes.FulfillmentId = Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null);
+                fulfillmentRes.OrderId = Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null);
+                fulfillmentRes.OrderNumber = Convert.ToString(element["orderNumber"] != null ? element["orderId"].GetValue() : string.Empty);
+                fulfillmentRes.UserId = Convert.ToString(element["userId"] != null ? element["userId"].GetValue() : string.Empty);
+                fulfillmentRes.CustomerEmail = Convert.ToString(element["customerEmail"] != null ? element["customerEmail"].GetValue() : string.Empty);
+                fulfillmentRes.TrackingNumber = Convert.ToString(element["trackingNumber"] != null ? element["trackingNumber"].GetValue() : string.Empty);
+                fulfillmentRes.CreatedDate = Convert.ToDateTime(element["createDate"] != null ? element["createDate"].GetValue() : string.Empty);
+                fulfillmentRes.ShipDate = Convert.ToDateTime(element["shipDate"] != null ? element["shipDate"].GetValue() : string.Empty);
+                fulfillmentRes.VoidDate = Convert.ToDateTime(element["vaoidDate"] != null ? element["voidDate"].GetValue() : null);
+                fulfillmentRes.DeliveryDate = Convert.ToDateTime(element["deliveryDate"] != null ? element["deliveryDate"].GetValue() : string.Empty);
+                fulfillmentRes.CarrierCode = Convert.ToString(element["carrierCode"] != null ? element["carrierCode"].GetValue() : string.Empty);
+                fulfillmentRes.SellerFillProviderId = Convert.ToInt32(element["sellerFillProviderId"] != null ? element["sellerFillProviderId"].GetValue() : null);
+                fulfillmentRes.SellerFillProviderName = Convert.ToString(element["sellerFillProviderName"] != null ? element["sellerFillProviderName"].GetValue() : string.Empty);
+                fulfillmentRes.FulfillmentProviderCode = Convert.ToString(element["fulfillmentProviderCode"] != null ? element["fulfillmentProviderCode"].GetValue() : string.Empty);
+                fulfillmentRes.FulfillmentServiceCode = Convert.ToString(element["fulfillmentServiceCode"] != null ? element["fulfillmentServiceCode"].GetValue() : string.Empty);
+                fulfillmentRes.FulfillmentFee = Convert.ToDouble(element["fulfillmentFee"] != null ? element["fulfillmentFee"].GetValue() : null);
+                fulfillmentRes.IsVoidRequested = Convert.ToBoolean(element["voidRequested"] != null ? element["voidRequested"].GetValue() : null);
+                fulfillmentRes.IsVoided = Convert.ToBoolean(element["voided"] != null ? element["voided"].GetValue() : null);
+                fulfillmentRes.IsMarketplaceNotified = Convert.ToBoolean(element["marketplaceNotified"] != null ? element["marketplaceNotified"].GetValue() : null);
+                fulfillmentRes.NotifyErrorMessage = Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null);
+
+                //fulfillment { shipTo : } 값 저장
+                // shipTo 저장하는 부분에서 값 저장이 제대로 안 됨 -> NullReferenceException : Object reference not set to an instance of an object.
+                fulfillmentRes.ShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
+                fulfillmentRes.ShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
+                fulfillmentRes.ShipTo.AddressVerified = (AddressVerified)(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() : string.Empty);
             }
             return fulfillmentRes;
         }

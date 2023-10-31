@@ -11,23 +11,12 @@ using System.Net.Json;
 
 namespace ShipStation.Entities
 {
-
     public class FulfillmentResponse
     {
-
         public FulfillmentResponse() { }
-
-        public FulfillmentResponse(JsonObjectCollection _item)
-        {
-            FulfillmentId = Int32.Parse((string)_item["FulfillmentId"].GetValue());
-            OrderNumber = (string)_item["OrderNumber"].GetValue();
-            CreatedDate = DateTime.Parse((string)_item["CreateDate"].GetValue());
-            FulfillmentFee = double.Parse((string)_item["FulfillmentFee"].GetValue());
-        }
-
         public FulfillmentResponse(int _fulfillmentId, int _orderId, string _orderNumber, string _userId, string _customerEmail,
             string _trackingNumber, DateTime _createDate, DateTime _shipDate, DateTime _voidDate, DateTime _deliveryDate,
-            string _carrierCode, string _sellerFillProviderId, string _sellerFillProviderName, string _fulfillmentProviderCode, 
+            string _carrierCode, int _sellerFillProviderId, string _sellerFillProviderName, string _fulfillmentProviderCode, 
             string _fulfillmentServiceCode, double _fulfillmentFee, bool _isVoidRequested, bool _isVoided,
             bool _isMarketpalceNotified, string _notifyErrorMessage, Address _shipTo)
         {
@@ -64,7 +53,7 @@ namespace ShipStation.Entities
         public DateTime? VoidDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public string CarrierCode { get; set; }
-        public string SellerFillProviderId { get; set; }
+        public int? SellerFillProviderId { get; set; }
         public string SellerFillProviderName { get; set; }
         public string FulfillmentProviderCode { get; set; }
         public string FulfillmentServiceCode { get; set; }
