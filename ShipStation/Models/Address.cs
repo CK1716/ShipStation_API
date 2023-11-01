@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Json;
 
 namespace ShipStation.Models
 {
     public class Address
     {
+        public Address() { }
         public Address(string _name, string _company, string _street1, string _street2, string _street3, string _city,
-            string _state, string _postalCode, string _country, string _phone, bool _isResidential, AddressVerified _addressVerified)
+            string _state, string _postalCode, string _country, string _phone, bool _isResidential, string _addressVerified)
         {
             Name = _name;
             Company = _company;
@@ -32,6 +35,6 @@ namespace ShipStation.Models
         public string Country { get; set; }
         public string Phone { get; set; }
         public bool IsResidential { get; set; }
-        public AddressVerified AddressVerified { get; set; }
+        public string AddressVerified { get; set; }
     }
 }

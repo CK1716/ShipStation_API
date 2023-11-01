@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Json;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ShipStation.Api
@@ -282,10 +283,11 @@ namespace ShipStation.Api
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
-
             JsonArrayCollection fulfillmentsArray = (JsonArrayCollection)col["fulfillments"];
-            
+
             FulfillmentResponse fulfillmentRes = new FulfillmentResponse();
+            Address addrShipTo = new Address();
+            List<FulfillmentResponse>listFulFill = new List<FulfillmentResponse>();
 
             for (int i = 0; i < fulfillmentsArray.Count; i++)
             {
@@ -294,7 +296,7 @@ namespace ShipStation.Api
                 JsonObjectCollection element = (JsonObjectCollection)fulfillmentsArray[i];
                 JsonObjectCollection elementShipTo = (JsonObjectCollection)element["shipTo"];
 
-                // "fulfillments :" 값 저장
+                // "fulfillments : { ... }" 값 초기화
                 fulfillmentRes.FulfillmentId = Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null);
                 fulfillmentRes.OrderId = Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null);
                 fulfillmentRes.OrderNumber = Convert.ToString(element["orderNumber"] != null ? element["orderId"].GetValue() : string.Empty);
@@ -316,20 +318,37 @@ namespace ShipStation.Api
                 fulfillmentRes.IsMarketplaceNotified = Convert.ToBoolean(element["marketplaceNotified"] != null ? element["marketplaceNotified"].GetValue() : null);
                 fulfillmentRes.NotifyErrorMessage = Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null);
 
-                //fulfillment { shipTo : } 값 저장
+                //fulfillment { shipTo : { ... } } 값 저장
                 // shipTo 저장하는 부분에서 값 저장이 제대로 안 됨 -> NullReferenceException : Object reference not set to an instance of an object.
-                fulfillmentRes.ShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
-                fulfillmentRes.ShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
-                fulfillmentRes.ShipTo.AddressVerified = (AddressVerified)(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() : string.Empty);
+
+                // var _value = Convert.ToString(elementShipTo["name"].GetValue());
+                // fulfillmentRes.ShipTo.Name = _value;
+                // _value에 값은 초기화 되었는데, fulfillmentRes.ShipTo.Name에는 초기화 되지 않는다
+                // -> 익셉션, 아마 ShipTo가 Name을 연결하지 못 하는 것 같음, fulfillmentRes.ShipTo.Name : 이 방법이 틀린 것 같음 
+
+                addrShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
+                addrShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
+                addrShipTo.Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty);
+                addrShipTo.Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty);
+                addrShipTo.Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty);
+                addrShipTo.City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty);
+                addrShipTo.State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty);
+                addrShipTo.PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty);
+                addrShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
+                addrShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
+                addrShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
+                addrShipTo.AddressVerified = Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() : string.Empty);
+
+                fulfillmentRes.ShipTo = addrShipTo;
+
+                // 위 방식으로 초기화 하면 객체에 값은 있는데 나중에 i값이 커져서 다음 값이 들어오게 되면 이전의 값이 유실되지 않나..? 
+                // 그래서 리스트 사용하는건가? <- 리스트 사용하는 법 찾아보기.
+
+                listFulFill.Add(fulfillmentRes); // 리스트 사용..? 
+
+                // 흠.. 여기까지 일단 끝냈다고 해도 address.addressVerified 값을 불러오는 방식이 이게 맞나?
+                // string  -> addressVerified 이렇게 바뀌어야 하는거 아닌가 
+                // 객체는 만들고 참조는 안 했는데..? 이것도 괜찮은건가..? 인자 통해서 초기화가 아니라 바로 get, set 하는 방식
             }
             return fulfillmentRes;
         }
