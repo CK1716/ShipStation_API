@@ -6,7 +6,9 @@ namespace ShipStation.Models
 {
     public class Address
     {
-        public Address() { }
+        public Address() {
+            Name = string.Empty;
+        }
         public Address(string _name, string _company, string _street1, string _street2, string _street3, string _city,
             string _state, string _postalCode, string _country, string _phone, bool _isResidential, string _addressVerified)
         {
@@ -22,6 +24,8 @@ namespace ShipStation.Models
             Phone = _phone;
             IsResidential = _isResidential;
             AddressVerified = _addressVerified;
+
+
         }
 
         public string Name { get; set; }

@@ -13,7 +13,6 @@ namespace ShipStation.Entities
 {
     public class FulfillmentResponse
     {
-        // public List<FulfillmentResponse> listFulFill { get; set; }
 
         public FulfillmentResponse() { }
         public FulfillmentResponse(int _fulfillmentId, int _orderId, string _orderNumber, string _userId, string _customerEmail,

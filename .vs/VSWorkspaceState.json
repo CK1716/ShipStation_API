@@ -4,6 +4,7 @@
     "\\ShipStation",
     "\\ShipStation\\Entities",
     "\\ShipStation\\Entities\\Fulfillment",
+    "\\ShipStation\\Models",
     "\\ShipStation_Test"
   ],
   "SelectedNode": "\\API_ShipStation.sln",
