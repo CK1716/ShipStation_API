@@ -158,7 +158,7 @@ namespace ShipStation.Api
 
     public class ListFulfillments
     {
-        public static List<FulfillmentResponse> LfReq(FulfillmentRequest _fulfillmentsReq)
+        public static FulfillmentResponse LfReq(FulfillmentRequest _fulfillmentsReq)
         {
             string url = "https://ssapi.shipstation.com/fulfillments";
 
@@ -283,11 +283,15 @@ namespace ShipStation.Api
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
+
             JsonArrayCollection fulfillmentsArray = (JsonArrayCollection)col["fulfillments"];
+            JsonNumericValue setTotal = (JsonNumericValue)col["total"];
+            JsonNumericValue setPage = (JsonNumericValue)col["page"];
+            JsonNumericValue setPageSize = (JsonNumericValue)col["pages"];
 
             List<FulfillmentResponse> listFulFill = new List<FulfillmentResponse>();
-            // FulfillmentResponse fulfillmentRes = new FulfillmentResponse();
             Address addrShipTo = new Address();
+            ElementPage elementPage = new ElementPage();
 
             for (int i = 0; i < fulfillmentsArray.Count; i++)
             {
@@ -295,10 +299,10 @@ namespace ShipStation.Api
 
                 JsonObjectCollection element = (JsonObjectCollection)fulfillmentsArray[i];
                 JsonObjectCollection elementShipTo = (JsonObjectCollection)element["shipTo"];
-                
+
                 // 1. 원래 방식으로 변경하기 -ing
                 // 2. AddressVerified 값 어떻게 넘겨 받아올지 생각해보기
-                // 3. total, page, pageSize 값 받기
+                // 3. total, page, pages 값 받기
                 // 4. 전체적인 값 한 번에 넘긴 후, request에서 제대로 값 들어왔는지 확인하기
                 addrShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
                 addrShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
@@ -311,29 +315,7 @@ namespace ShipStation.Api
                 addrShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
                 addrShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
                 addrShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
-                addrShipTo.AddressVerified = Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() : string.Empty);
-
-                /*fulfillmentRes.FulfillmentId = Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null);
-                fulfillmentRes.OrderId = Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null);
-                fulfillmentRes.OrderNumber = Convert.ToString(element["orderNumber"] != null ? element["orderId"].GetValue() : string.Empty);
-                fulfillmentRes.UserId = Convert.ToString(element["userId"] != null ? element["userId"].GetValue() : string.Empty);
-                fulfillmentRes.CustomerEmail = Convert.ToString(element["customerEmail"] != null ? element["customerEmail"].GetValue() : string.Empty);
-                fulfillmentRes.TrackingNumber = Convert.ToString(element["trackingNumber"] != null ? element["trackingNumber"].GetValue() : string.Empty);
-                fulfillmentRes.CreatedDate = Convert.ToDateTime(element["createDate"] != null ? element["createDate"].GetValue() : string.Empty);
-                fulfillmentRes.ShipDate = Convert.ToDateTime(element["shipDate"] != null ? element["shipDate"].GetValue() : string.Empty);
-                fulfillmentRes.VoidDate = Convert.ToDateTime(element["vaoidDate"] != null ? element["voidDate"].GetValue() : null);
-                fulfillmentRes.DeliveryDate = Convert.ToDateTime(element["deliveryDate"] != null ? element["deliveryDate"].GetValue() : string.Empty);
-                fulfillmentRes.CarrierCode = Convert.ToString(element["carrierCode"] != null ? element["carrierCode"].GetValue() : string.Empty);
-                fulfillmentRes.SellerFillProviderId = Convert.ToInt32(element["sellerFillProviderId"] != null ? element["sellerFillProviderId"].GetValue() : null);
-                fulfillmentRes.SellerFillProviderName = Convert.ToString(element["sellerFillProviderName"] != null ? element["sellerFillProviderName"].GetValue() : string.Empty);
-                fulfillmentRes.FulfillmentProviderCode = Convert.ToString(element["fulfillmentProviderCode"] != null ? element["fulfillmentProviderCode"].GetValue() : string.Empty);
-                fulfillmentRes.FulfillmentServiceCode = Convert.ToString(element["fulfillmentServiceCode"] != null ? element["fulfillmentServiceCode"].GetValue() : string.Empty);
-                fulfillmentRes.FulfillmentFee = Convert.ToDouble(element["fulfillmentFee"] != null ? element["fulfillmentFee"].GetValue() : null);
-                fulfillmentRes.IsVoidRequested = Convert.ToBoolean(element["voidRequested"] != null ? element["voidRequested"].GetValue() : null);
-                fulfillmentRes.IsVoided = Convert.ToBoolean(element["voided"] != null ? element["voided"].GetValue() : null);
-                fulfillmentRes.IsMarketplaceNotified = Convert.ToBoolean(element["marketplaceNotified"] != null ? element["marketplaceNotified"].GetValue() : null);
-                fulfillmentRes.NotifyErrorMessage = Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null);
-                fulfillmentRes.ShipTo= addrShipTo;*/
+                addrShipTo.AddressVerified = /*(AddressVerified)*/Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() :null);
 
                 /*Address addrShipTo = new Address(
                     _name: Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty),
@@ -352,12 +334,31 @@ namespace ShipStation.Api
                 // AddressVerified 값이 enumValue인데 string으로 써도 상관 없나..? -> 형 변환을 어떤 식으로 해서 값을 집어넣어야 할지를 잘 모르겠음. 검색해보기
                 // -> 모델에서 건드리는게 가장 깔끔할 것 같음
 
-
                 listFulFill.Add(new FulfillmentResponse()
                 {
                     FulfillmentId = Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null),
-
+                    OrderId = Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null),
+                    OrderNumber = Convert.ToString(element["orderNumber"] != null ? element["orderId"].GetValue() : string.Empty),
+                    UserId = Convert.ToString(element["userId"] != null ? element["userId"].GetValue() : string.Empty),
+                    CustomerEmail = Convert.ToString(element["customerEmail"] != null ? element["customerEmail"].GetValue() : string.Empty),
+                    TrackingNumber = Convert.ToString(element["trackingNumber"] != null ? element["trackingNumber"].GetValue() : string.Empty),
+                    CreatedDate = Convert.ToDateTime(element["createDate"] != null ? element["createDate"].GetValue() : string.Empty),
+                    ShipDate = Convert.ToDateTime(element["shipDate"] != null ? element["shipDate"].GetValue() : string.Empty),
+                    VoidDate = Convert.ToDateTime(element["vaoidDate"] != null ? element["voidDate"].GetValue() : null),
+                    DeliveryDate = Convert.ToDateTime(element["deliveryDate"] != null ? element["deliveryDate"].GetValue() : string.Empty),
+                    CarrierCode = Convert.ToString(element["carrierCode"] != null ? element["carrierCode"].GetValue() : string.Empty),
+                    SellerFillProviderId = Convert.ToInt32(element["sellerFillProviderId"] != null ? element["sellerFillProviderId"].GetValue() : null),
+                    SellerFillProviderName = Convert.ToString(element["sellerFillProviderName"] != null ? element["sellerFillProviderName"].GetValue() : string.Empty),
+                    FulfillmentServiceCode = Convert.ToString(element["fulfillmentProviderCode"] != null ? element["fulfillmentProviderCode"].GetValue() : string.Empty),
+                    FulfillmentProviderCode = Convert.ToString(element["fulfillmentServiceCode"] != null ? element["fulfillmentServiceCode"].GetValue() : string.Empty),
+                    FulfillmentFee = Convert.ToDouble(element["fulfillmentFee"] != null ? element["fulfillmentFee"].GetValue() : null),
+                    IsVoidRequested = Convert.ToBoolean(element["voidRequested"] != null ? element["voidRequested"].GetValue() : null),
+                    IsVoided = Convert.ToBoolean(element["voided"] != null ? element["voided"].GetValue() : null),
+                    IsMarketplaceNotified = Convert.ToBoolean(element["marketplaceNotified"] != null ? element["marketplaceNotified"].GetValue() : null),
+                    NotifyErrorMessage = Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null),
+                    ShipTo = addrShipTo
                 });
+
                 /*listFulFill.Add(new FulfillmentResponse(
                     _fulfillmentId: Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null),
                     _orderId: Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null),
@@ -381,13 +382,24 @@ namespace ShipStation.Api
                     _notifyErrorMessage: Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null),
                     _shipTo: addrShipTo));*/
 
-                // 다음 할 거 total, page, pageSize 값 받아오기
+                // 다음 할 거 total, page, pages 값 받아오기
                 // -> 위에 방식으로 하는건가..? (for문 최상단)
                 // 1. requset에 값 있으니까 받아와서 listFulfill이랑 함께 출력?
                 // 2. 또 다른 무언가 생성해서 그고 통해서 출력?
                 // 3.아니면 깃 소스처럼 따로 모델 빼서 값 받고 함께 출력?
             }
-            return listFulFill;
+            // elementPage.Page = Convert.ToInt32(setTotal["total"] != null ? setTotal["total"].GetValue() : null);
+
+            elementPage.Total = Convert.ToInt32(setTotal.GetValue());
+            elementPage.Page = Convert.ToInt32(setPage.GetValue());
+            elementPage.PageSize = Convert.ToInt32(setPageSize.GetValue());
+
+            /*string strResMain = FulfillmentResponse.resMain(listFulFill, elementPage);
+            Console.WriteLine(strResMain);
+            *//* listFulFill + elementPage 하나로 만들어서 리턴? 어떻게?*/
+
+
+            return null;
         }
     }
 }

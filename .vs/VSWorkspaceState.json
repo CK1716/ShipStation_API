@@ -7,6 +7,6 @@
     "\\ShipStation\\Models",
     "\\ShipStation_Test"
   ],
-  "SelectedNode": "\\API_ShipStation.sln",
+  "SelectedNode": "\\ShipStation\\Entities\\Fulfillment\\fulfillmentReq.cs",
   "PreviewInSolutionExplorer": false
 }

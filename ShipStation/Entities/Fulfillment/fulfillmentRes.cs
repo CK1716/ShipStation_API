@@ -13,8 +13,36 @@ namespace ShipStation.Entities
 {
     public class FulfillmentResponse
     {
+        /*public static string resMain(List<FulfillmentResponse> _list, ElementPage _elePage)
+        {
+            string resMain = string.Empty;
+            resMain = _list.to() + _elePage.ToString();
 
-        public FulfillmentResponse() { }
+            return resMain;
+        }*/
+        public FulfillmentResponse() {
+            FulfillmentId = null;
+            OrderId = null;
+            OrderNumber = string.Empty;
+            UserId = string.Empty;
+            CustomerEmail = string.Empty;
+            TrackingNumber = string.Empty;
+            CreatedDate = null;
+            ShipDate = null;
+            VoidDate= null;
+            DeliveryDate = null;
+            CarrierCode = string.Empty;
+            SellerFillProviderId = null;
+            SellerFillProviderName = string.Empty;
+            FulfillmentProviderCode = string.Empty;
+            FulfillmentServiceCode = string.Empty;
+            FulfillmentFee = null;
+            IsVoidRequested = null;
+            IsVoided = null;
+            IsMarketplaceNotified = null;
+            NotifyErrorMessage = null;
+            ShipTo = null;
+        }
         public FulfillmentResponse(int _fulfillmentId, int _orderId, string _orderNumber, string _userId, string _customerEmail,
             string _trackingNumber, DateTime _createDate, DateTime _shipDate, DateTime _voidDate, DateTime _deliveryDate,
             string _carrierCode, int _sellerFillProviderId, string _sellerFillProviderName, string _fulfillmentProviderCode, 

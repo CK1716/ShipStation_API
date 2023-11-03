@@ -61,6 +61,7 @@
     <Compile Include="Entities\Fulfillment\fulfillmentRes.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\FulfillmentsSortBy.cs" />
+    <Compile Include="Models\ElementPage.cs" />
     <Compile Include="Models\SortDir.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
