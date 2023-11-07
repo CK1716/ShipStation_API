@@ -85,7 +85,7 @@ namespace ShipStation.Api
         {
             string url = "https://ssapi.shipstation.com/accounts/registeraccount";
 
-            JsonObjectCollection main = new JsonObjectCollection
+            JsonObjectCollection reqMain = new JsonObjectCollection
             /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
             JsonObjectCollection items = new JsonObjectCollection */
             {
@@ -107,14 +107,14 @@ namespace ShipStation.Api
             // accountReq.Add(items);
             // main.Add(jsonArrayCollection);
 
-            string _jsonData = main.ToString();
-            _jsonData = _jsonData.Replace("\n", "");
-            _jsonData = _jsonData.Replace("\r", "");
-            _jsonData = _jsonData.Replace("\t", "");
+            string reqJson = reqMain.ToString();
+            reqJson = reqJson.Replace("\n", "");
+            reqJson = reqJson.Replace("\r", "");
+            reqJson = reqJson.Replace("\t", "");
 
             /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
 
-            // string reqResult = ShipStation.ApiResult(url, "POST", _jsonData);
+            // string reqResult = ShipStation.ApiResult(url, "POST", reqJson);
 
             //response
             /* 
@@ -190,7 +190,7 @@ namespace ShipStation.Api
             reqJson = reqJson.Replace("\t", "");
             /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
 
-            string reqResult = ShipStation.ApiResult(url, "GET", reqJson);
+            // string reqResult = ShipStation.ApiResult(url, "GET", reqJson);
 
             // response
             string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": \"Address validation warning\"\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
@@ -290,7 +290,6 @@ namespace ShipStation.Api
             JsonNumericValue setPageSize = (JsonNumericValue)col["pages"];
 
             List<Fulfillments> listFulFill = new List<Fulfillments>();
-            Address addrShipTo = new Address();
             ElementPage elementPage = new ElementPage();
 
             for (int i = 0; i < fulfillmentsArray.Count; i++)
@@ -381,7 +380,7 @@ namespace ShipStation.Api
                     
                     case "Address not yet validated":
                         // "Address not yet validated";
-                        AddressVerified status = AddressVerified.NotVerified; // 상태를 마지막에 함께 넘겨줘야 하나? 
+                        AddressVerified status =  AddressVerified.NotVerified; // 상태를 마지막에 함께 넘겨줘야 하나? 
                         listFulFill[i].ShipTo.AddressVerified = "Address not yet validated";
                         break;
 
@@ -439,6 +438,50 @@ namespace ShipStation.Api
             FulfillmentResponse fulfillmentRes = new FulfillmentResponse(listFulFill, elementPage);
             
             return fulfillmentRes;
+        }
+    }
+
+    public class CreateLabelForOrder
+    {
+        public static CreateLabelForOrderResponse ClReq(CreateLabelForOrderRequest _createLabelForOrderReq)
+        {
+            string url = "https://ssapi.shipstation.com/orders/createlabelfororder";
+
+
+            JsonObjectCollection reqMain = new JsonObjectCollection
+            /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
+            JsonObjectCollection items = new JsonObjectCollection */
+            {
+                new JsonStringValue("OrderId", _createLabelForOrderReq.OrderID != null ? _createLabelForOrderReq.OrderID.ToString() : string.Empty),
+                new JsonStringValue("CarrierCode", _createLabelForOrderReq.CarrierCode != null ? _createLabelForOrderReq.CarrierCode.ToString() : string.Empty),
+                new JsonStringValue("ServiceCode", _createLabelForOrderReq.ServiceCode != null ? _createLabelForOrderReq.ServiceCode.ToString() : string.Empty),
+                new JsonStringValue("PackageCode", _createLabelForOrderReq.PackageCode != null ? _createLabelForOrderReq.PackageCode.ToString() : string.Empty),
+                new JsonStringValue("Confirmation", _createLabelForOrderReq.Confirmation != null ? _createLabelForOrderReq.Confirmation.ToString() : string.Empty),
+                new JsonStringValue("ShipDate", _createLabelForOrderReq.ShipDate != null ? _createLabelForOrderReq.ShipDate.ToString() : string.Empty),
+                new JsonStringValue("Weight", null),
+                new JsonStringValue("Dimensions", _createLabelForOrderReq.Dimensions != null ? _createLabelForOrderReq.Dimensions.ToString() : string.Empty),
+                new JsonStringValue("InsuranceOptions", _createLabelForOrderReq.InsuranceOptions != null ? _createLabelForOrderReq.InsuranceOptions.ToString() : string.Empty),
+                new JsonStringValue("InternationalOptions", _createLabelForOrderReq.InternationalOptions != null ? _createLabelForOrderReq.InternationalOptions.ToString() : string.Empty),
+                new JsonStringValue("AdvancedOptions", _createLabelForOrderReq.AdvancedOptions != null ? _createLabelForOrderReq.AdvancedOptions.ToString() : string.Empty),
+                new JsonStringValue("TestLabel", _createLabelForOrderReq.TestLabel != null ? _createLabelForOrderReq.TestLabel.ToString() : string.Empty)
+            };
+
+            /*JsonObjectCollection jcol = (JsonObjectCollection)reqMain["Weight"];
+            reqMain.Add(new JsonObjectCollection()
+            {
+                new JsonStringValue("value", jcol["value"].ToString())
+            });*/
+            
+            
+
+            Console.WriteLine(reqMain);
+            string reqJson = reqMain.ToString();
+            reqJson = reqJson.Replace("\n", "");
+            reqJson = reqJson.Replace("\r", "");
+            reqJson = reqJson.Replace("\t", "");
+
+            Console.WriteLine(reqJson);
+            return null;
         }
     }
 }
