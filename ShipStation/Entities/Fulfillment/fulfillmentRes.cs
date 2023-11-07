@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using ShipStation.Models;
@@ -13,14 +12,19 @@ namespace ShipStation.Entities
 {
     public class FulfillmentResponse
     {
-        /*public static string resMain(List<FulfillmentResponse> _list, ElementPage _elePage)
+        public FulfillmentResponse(List<Fulfillments> _listFulfill, ElementPage _elementPage)
         {
-            string resMain = string.Empty;
-            resMain = _list.to() + _elePage.ToString();
+            Response = _listFulfill;
+            ElementPage = _elementPage;
+        }
 
-            return resMain;
-        }*/
-        public FulfillmentResponse() {
+        public List<Fulfillments> Response { get; set; }
+        public ElementPage ElementPage { get; set;}
+    }
+
+    public class Fulfillments
+    {
+        public Fulfillments() {
             FulfillmentId = null;
             OrderId = null;
             OrderNumber = string.Empty;
@@ -43,7 +47,7 @@ namespace ShipStation.Entities
             NotifyErrorMessage = null;
             ShipTo = null;
         }
-        public FulfillmentResponse(int _fulfillmentId, int _orderId, string _orderNumber, string _userId, string _customerEmail,
+        public Fulfillments(int _fulfillmentId, int _orderId, string _orderNumber, string _userId, string _customerEmail,
             string _trackingNumber, DateTime _createDate, DateTime _shipDate, DateTime _voidDate, DateTime _deliveryDate,
             string _carrierCode, int _sellerFillProviderId, string _sellerFillProviderName, string _fulfillmentProviderCode, 
             string _fulfillmentServiceCode, double _fulfillmentFee, bool _isVoidRequested, bool _isVoided,

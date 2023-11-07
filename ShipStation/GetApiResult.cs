@@ -24,7 +24,7 @@ namespace ShipStation.Api
             webRequest.Timeout = 30 * 1000; // 30초
                                             // ContentType은 지정된 것이 있으면 그것을 사용해준다.
             webRequest.ContentType = "application/json; charset=utf-8";
-
+            
             /* _postData 변수에 api request body 초기화*//*
             byte[] byteArray = Encoding.UTF8.GetBytes(_postData);
             // 요청 Data를 쓰는 데 사용할 Stream 개체를 가져온다.
@@ -193,7 +193,7 @@ namespace ShipStation.Api
             string reqResult = ShipStation.ApiResult(url, "GET", reqJson);
 
             // response
-            string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
+            string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": \"Address validation warning\"\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
             /*string jsonText = @"
             {   jsonarray 형식으로 for문 
                 ""fulfillments"": [
@@ -289,7 +289,7 @@ namespace ShipStation.Api
             JsonNumericValue setPage = (JsonNumericValue)col["page"];
             JsonNumericValue setPageSize = (JsonNumericValue)col["pages"];
 
-            List<FulfillmentResponse> listFulFill = new List<FulfillmentResponse>();
+            List<Fulfillments> listFulFill = new List<Fulfillments>();
             Address addrShipTo = new Address();
             ElementPage elementPage = new ElementPage();
 
@@ -300,22 +300,22 @@ namespace ShipStation.Api
                 JsonObjectCollection element = (JsonObjectCollection)fulfillmentsArray[i];
                 JsonObjectCollection elementShipTo = (JsonObjectCollection)element["shipTo"];
 
-                // 1. 원래 방식으로 변경하기 -ing
+                // 1. 원래 방식으로 변경하기 v
                 // 2. AddressVerified 값 어떻게 넘겨 받아올지 생각해보기
-                // 3. total, page, pages 값 받기
-                // 4. 전체적인 값 한 번에 넘긴 후, request에서 제대로 값 들어왔는지 확인하기
-                addrShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
-                addrShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
-                addrShipTo.Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty);
-                addrShipTo.Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty);
-                addrShipTo.Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty);
-                addrShipTo.City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty);
-                addrShipTo.State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty);
-                addrShipTo.PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty);
-                addrShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
-                addrShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
-                addrShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
-                addrShipTo.AddressVerified = /*(AddressVerified)*/Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() :null);
+                // 3. total, page, pages 값 받기 v 
+                // 4. 전체적인 값 한 번에 넘긴 후, request에서 제대로 값 들어왔는지 확인하기 v
+                /*                addrShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
+                                addrShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
+                                addrShipTo.Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty);
+                                addrShipTo.Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty);
+                                addrShipTo.Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty);
+                                addrShipTo.City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty);
+                                addrShipTo.State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty);
+                                addrShipTo.PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty);
+                                addrShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
+                                addrShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
+                                addrShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
+                                addrShipTo.AddressVerified = Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() :null);*/
 
                 /*Address addrShipTo = new Address(
                     _name: Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty),
@@ -334,7 +334,7 @@ namespace ShipStation.Api
                 // AddressVerified 값이 enumValue인데 string으로 써도 상관 없나..? -> 형 변환을 어떤 식으로 해서 값을 집어넣어야 할지를 잘 모르겠음. 검색해보기
                 // -> 모델에서 건드리는게 가장 깔끔할 것 같음
 
-                listFulFill.Add(new FulfillmentResponse()
+                listFulFill.Add(new Fulfillments()
                 {
                     FulfillmentId = Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null),
                     OrderId = Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null),
@@ -356,8 +356,57 @@ namespace ShipStation.Api
                     IsVoided = Convert.ToBoolean(element["voided"] != null ? element["voided"].GetValue() : null),
                     IsMarketplaceNotified = Convert.ToBoolean(element["marketplaceNotified"] != null ? element["marketplaceNotified"].GetValue() : null),
                     NotifyErrorMessage = Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null),
-                    ShipTo = addrShipTo
+                    ShipTo = new Address()
+                    {
+                        Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty),
+                        Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty),
+                        Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty),
+                        Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty),
+                        Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty),
+                        City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty),
+                        State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty),
+                        PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty),
+                        Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty),
+                        Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty),
+                        IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null),
+                        AddressVerified = Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() : null)
+                    }
+                        
                 });
+
+                // 상태도 같이 리턴??
+                string _statusToStr = listFulFill[i].ShipTo.AddressVerified;
+                switch (_statusToStr)
+                {
+                    
+                    case "Address not yet validated":
+                        // "Address not yet validated";
+                        AddressVerified status = AddressVerified.NotVerified; // 상태를 마지막에 함께 넘겨줘야 하나? 
+                        listFulFill[i].ShipTo.AddressVerified = "Address not yet validated";
+                        break;
+
+                    case "Address validation warning":
+                        // "Address validation warning";
+                        status = AddressVerified.Warning;
+                        listFulFill[i].ShipTo.AddressVerified = "Address validation warning";
+                        break;
+
+                    case "Address validation failed":
+                        // "Address validation failed";
+                        status = AddressVerified.Failed;
+                        listFulFill[i].ShipTo.AddressVerified = "Address validation failed";
+                        break;
+
+                    case "Address validated successfully":
+                        // "Address validated successfully";
+                        status = AddressVerified.Successful;
+                        listFulFill[i].ShipTo.AddressVerified = "Address validated successfully";
+                        break;
+                        
+                    case null:
+                        // null
+                        break;
+                } 
 
                 /*listFulFill.Add(new FulfillmentResponse(
                     _fulfillmentId: Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null),
@@ -381,25 +430,15 @@ namespace ShipStation.Api
                     _isMarketpalceNotified: Convert.ToBoolean(element["marketplaceNotified"] != null ? element["marketplaceNotified"].GetValue() : null),
                     _notifyErrorMessage: Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null),
                     _shipTo: addrShipTo));*/
-
-                // 다음 할 거 total, page, pages 값 받아오기
-                // -> 위에 방식으로 하는건가..? (for문 최상단)
-                // 1. requset에 값 있으니까 받아와서 listFulfill이랑 함께 출력?
-                // 2. 또 다른 무언가 생성해서 그고 통해서 출력?
-                // 3.아니면 깃 소스처럼 따로 모델 빼서 값 받고 함께 출력?
             }
-            // elementPage.Page = Convert.ToInt32(setTotal["total"] != null ? setTotal["total"].GetValue() : null);
-
+           
             elementPage.Total = Convert.ToInt32(setTotal.GetValue());
             elementPage.Page = Convert.ToInt32(setPage.GetValue());
             elementPage.PageSize = Convert.ToInt32(setPageSize.GetValue());
-
-            /*string strResMain = FulfillmentResponse.resMain(listFulFill, elementPage);
-            Console.WriteLine(strResMain);
-            *//* listFulFill + elementPage 하나로 만들어서 리턴? 어떻게?*/
-
-
-            return null;
+            
+            FulfillmentResponse fulfillmentRes = new FulfillmentResponse(listFulFill, elementPage);
+            
+            return fulfillmentRes;
         }
     }
 }

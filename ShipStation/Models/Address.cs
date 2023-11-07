@@ -7,7 +7,6 @@ namespace ShipStation.Models
 {
     public class Address
     {
-        /*static dynamic _value = null;*/
         public Address() {
             Name = string.Empty;
             Company = string.Empty;
@@ -22,15 +21,18 @@ namespace ShipStation.Models
             IsResidential = null;
             AddressVerified = null;
 
-            /*switch(AddressVerified.Value)
+            /*dynamic _value = null;
+
+            switch(AddressVerified)
             {
-                case Models.AddressVerified.NotVerified:
+                case "Address not yet validated":
                     // _value = "Address not yet validated";
-                    AddressVerified = Models.AddressVerified.NotVerified;
+                    _value = Models.AddressVerified.NotVerified;
+                    AddressVerified = _value;
                     break;
 
-                case Models.AddressVerified.Warning:
-                    _value = "Address validation warning";
+                case "Address validation warning":
+                    _value = Models.AddressVerified.Warning;
                     AddressVerified = _value;
                     break;
 
@@ -44,10 +46,10 @@ namespace ShipStation.Models
                     AddressVerified = _value;
                     break;
             }*/
-            
+
         }
         public Address(string _name, string _company, string _street1, string _street2, string _street3, string _city,
-            string _state, string _postalCode, string _country, string _phone, bool _isResidential, /*AddressVerified*/ string _addressVerified)
+            string _state, string _postalCode, string _country, string _phone, bool _isResidential, string _addressVerified)
         {
             Name = _name;
             Company = _company;
@@ -74,6 +76,6 @@ namespace ShipStation.Models
         public string Country { get; set; }
         public string Phone { get; set; }
         public bool? IsResidential { get; set; }
-        public /*AddressVerified?*/ string AddressVerified { get; set; }
+        public string AddressVerified { get; set; }
     }
 }
