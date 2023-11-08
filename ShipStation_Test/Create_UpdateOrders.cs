@@ -50,7 +50,7 @@ namespace ShipStation_Test
                     _isResidential: true,
                     _addressVerified: null),
                 //Json안에 List값 초기화 시키는 법 찾기! Line 53 - 76
-                _items: new List<OrderItem>(new OrderItem( 
+/*                _items: new List<OrderItem>(new OrderItem( 
                     _orderItemId: null,
                     _lineItemKey: "vd08-MSLbtx",
                     _sku: "ABC123",
@@ -73,7 +73,7 @@ namespace ShipStation_Test
                     _adjustment: false,
                     _upc: "32-65-98",
                     _createDate: null,
-                    _modifyDate: null)),
+                    _modifyDate: null)),*/
                 
                     // _amountPaid: 218.73, 
                     // ...
