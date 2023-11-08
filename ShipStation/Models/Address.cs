@@ -20,36 +20,9 @@ namespace ShipStation.Models
             Phone = string.Empty;
             IsResidential = null;
             AddressVerified = null;
-
-            /*dynamic _value = null;
-
-            switch(AddressVerified)
-            {
-                case "Address not yet validated":
-                    // _value = "Address not yet validated";
-                    _value = Models.AddressVerified.NotVerified;
-                    AddressVerified = _value;
-                    break;
-
-                case "Address validation warning":
-                    _value = Models.AddressVerified.Warning;
-                    AddressVerified = _value;
-                    break;
-
-                case Models.AddressVerified.Failed:
-                    _value = "Address validation failed";
-                    AddressVerified = _value;
-                    break;
-
-                case Models.AddressVerified.Successful:
-                    _value = "Address validated successfully";
-                    AddressVerified = _value;
-                    break;
-            }*/
-
         }
         public Address(string _name, string _company, string _street1, string _street2, string _street3, string _city,
-            string _state, string _postalCode, string _country, string _phone, bool _isResidential, string _addressVerified)
+            string _state, string _postalCode, string _country, string _phone, bool? _isResidential, string _addressVerified)
         {
             Name = _name;
             Company = _company;

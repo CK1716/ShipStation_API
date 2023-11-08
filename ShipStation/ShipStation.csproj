@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Entities\Orders\CreateLabelForOrderReq.cs" />
     <Compile Include="Entities\Orders\CreateLabelForOrderRes.cs" />
+    <Compile Include="Entities\Orders\Create_UpdateOrderReq.cs" />
     <Compile Include="Models\AddressVerified.cs" />
     <Compile Include="GetApiResult.cs" />
     <Compile Include="Entities\Accounts\accountReq.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Models\ElementPage.cs" />
     <Compile Include="Models\InsuranceOptions.cs" />
     <Compile Include="Models\InternationalOptions.cs" />
+    <Compile Include="Models\ItemOption.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\SortDir.cs" />
     <Compile Include="Models\Weight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

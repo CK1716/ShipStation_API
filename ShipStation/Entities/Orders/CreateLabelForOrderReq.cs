@@ -11,7 +11,7 @@ namespace ShipStation.Entities
     public class CreateLabelForOrderRequest
     {
         public CreateLabelForOrderRequest() { }
-        public CreateLabelForOrderRequest(int? _orderId, string _carrierCode, string _serviceCode, string _packageCode, string _confirmation, DateTime _shipDate,
+        public CreateLabelForOrderRequest(int? _orderId, string _carrierCode, string _serviceCode, string _packageCode, string _confirmation, DateTime? _shipDate,
             Weight _weight, Dimensions _dimensions, InsuranceOptions _insuranceOptions, InternationalOptions _internationalOptions, AdvancedOptions _advancedOptions,
             bool? _testLabel)
         {
@@ -35,7 +35,7 @@ namespace ShipStation.Entities
         public string ServiceCode { get; set; }
         public string PackageCode { get; set; }
         public string Confirmation { get; set; }
-        public DateTime ShipDate { get; set; }
+        public DateTime? ShipDate { get; set; }
         public Weight Weight { get; set; }
         public Dimensions Dimensions { get; set; }
         public InsuranceOptions InsuranceOptions { get; set; }

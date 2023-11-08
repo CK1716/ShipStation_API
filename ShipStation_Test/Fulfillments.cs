@@ -12,7 +12,7 @@ namespace ShipStation_Test
 {
     public class Fulfillments
     {
-        public static void Fulfillment(String[] args)
+        public static void Main(String[] args)
         {
             /* sortBy, sortDir 형 변환 하는 법 찾아보기 
              * github 자료에서는 공통 메소드 만들고 enum 사용 <- 관련해서 찾아보기

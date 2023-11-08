@@ -14,27 +14,8 @@ namespace ShipStation_Test
 {
     public class CreateLabelForOrders
     {
-        static void Main(string[] args)
+        static void CreateLabelForOrder(string[] args)
         {
-            /*CreateLabelForOrderRequest createLabelForOrderReq = new CreateLabelForOrderRequest()
-            {
-                OrderID = 93348442,
-                CarrierCode = "fedex",
-                ServiceCode = "fedex_2day",
-                PackageCode = "package",
-                Confirmation = null,
-                ShipDate = DateTime.Parse("2014 - 04 - 03"),
-                Weight = new Weight(
-                    _value: 2,
-                    _units: "pounds",
-                    _weightUnits: null),
-                Dimensions = null,
-                InsuranceOptions = null,
-                InternationalOptions = null,
-                AdvancedOptions = null,
-                TestLabel = false
-            };*/
-
             CreateLabelForOrderRequest createLabelForOrderReq = new CreateLabelForOrderRequest(
                 _orderId: 93348442,
                 _carrierCode: "fedex",
@@ -55,7 +36,7 @@ namespace ShipStation_Test
             
 
 
-            CreateLabelForOrderResponse createLabelForOrderRes = CreateLabelForOrder.ClReq(createLabelForOrderReq);
+            CreateLabelForOrderResponse createLabelForOrderRes = CreateLabel.ClReq(createLabelForOrderReq);
         }
     }
 }

@@ -193,7 +193,7 @@ namespace ShipStation.Api
             // string reqResult = ShipStation.ApiResult(url, "GET", reqJson);
 
             // response
-            string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": \"Address validation warning\"\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
+            string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null \r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
             /*string jsonText = @"
             {   jsonarray 형식으로 for문 
                 ""fulfillments"": [
@@ -406,7 +406,7 @@ namespace ShipStation.Api
                         // null
                         break;
                 } 
-
+                
                 /*listFulFill.Add(new FulfillmentResponse(
                     _fulfillmentId: Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null),
                     _orderId: Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null),
@@ -441,12 +441,20 @@ namespace ShipStation.Api
         }
     }
 
-    public class CreateLabelForOrder
+    public class CreateLabel
     {
         public static CreateLabelForOrderResponse ClReq(CreateLabelForOrderRequest _createLabelForOrderReq)
         {
             string url = "https://ssapi.shipstation.com/orders/createlabelfororder";
 
+            JsonObjectCollection weight = new JsonObjectCollection
+            {
+                new JsonStringValue("value", _createLabelForOrderReq.Weight.Value != null ? _createLabelForOrderReq.Weight.Value.ToString() : null),
+                new JsonStringValue("units", _createLabelForOrderReq.Weight.Units != null ? _createLabelForOrderReq.Weight.Units.ToString() : string.Empty),
+                new JsonStringValue("weightUnits", _createLabelForOrderReq.Weight.WeightUnits != null ? _createLabelForOrderReq.Weight.WeightUnits.ToString() : null)
+            };
+
+               
 
             JsonObjectCollection reqMain = new JsonObjectCollection
             /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
@@ -458,30 +466,39 @@ namespace ShipStation.Api
                 new JsonStringValue("PackageCode", _createLabelForOrderReq.PackageCode != null ? _createLabelForOrderReq.PackageCode.ToString() : string.Empty),
                 new JsonStringValue("Confirmation", _createLabelForOrderReq.Confirmation != null ? _createLabelForOrderReq.Confirmation.ToString() : string.Empty),
                 new JsonStringValue("ShipDate", _createLabelForOrderReq.ShipDate != null ? _createLabelForOrderReq.ShipDate.ToString() : string.Empty),
-                new JsonStringValue("Weight", null),
+                new JsonObjectCollection("Weight", weight),
                 new JsonStringValue("Dimensions", _createLabelForOrderReq.Dimensions != null ? _createLabelForOrderReq.Dimensions.ToString() : string.Empty),
                 new JsonStringValue("InsuranceOptions", _createLabelForOrderReq.InsuranceOptions != null ? _createLabelForOrderReq.InsuranceOptions.ToString() : string.Empty),
                 new JsonStringValue("InternationalOptions", _createLabelForOrderReq.InternationalOptions != null ? _createLabelForOrderReq.InternationalOptions.ToString() : string.Empty),
                 new JsonStringValue("AdvancedOptions", _createLabelForOrderReq.AdvancedOptions != null ? _createLabelForOrderReq.AdvancedOptions.ToString() : string.Empty),
                 new JsonStringValue("TestLabel", _createLabelForOrderReq.TestLabel != null ? _createLabelForOrderReq.TestLabel.ToString() : string.Empty)
             };
-
-            /*JsonObjectCollection jcol = (JsonObjectCollection)reqMain["Weight"];
-            reqMain.Add(new JsonObjectCollection()
-            {
-                new JsonStringValue("value", jcol["value"].ToString())
-            });*/
             
-            
-
-            Console.WriteLine(reqMain);
             string reqJson = reqMain.ToString();
             reqJson = reqJson.Replace("\n", "");
             reqJson = reqJson.Replace("\r", "");
             reqJson = reqJson.Replace("\t", "");
 
-            Console.WriteLine(reqJson);
-            return null;
+            // string reqResult = ShipStation.ApiResult(url, "POST", reqJson);
+
+            string resJsonData = "{\r\n  \"shipmentId\": 72513480,\r\n  \"shipmentCost\": 7.3,\r\n  \"insuranceCost\": 0,\r\n  \"trackingNumber\": \"248201115029520\",\r\n  \"labelData\": \"JVBERi0xLjQKJeLjz9MKMiAwIG9iago8PC9MZW5ndGggNjIvRmlsdGVyL0ZsYXRlRGVjb2RlPj5zdHJlYW0KeJwr5HIK4TI2UzC2NFMISeFyDeEK5CpUMFQwAEJDBV0jCz0LBV1jY0M9I4XkXAX9iDRDBZd8hUAuAEdGC7cKZW5kc3RyZWFtCmVuZG9iago0IDAgb2JqCjw8L1R5cGUvUGFnZS9NZWRpYUJveFswIDAgMjg4IDQzMl0vUmVzb3VyY2VzPDwvUHJvY1NldCBbL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSV0vWE9iamVjdDw8L1hmMSAxIDAgUj4+Pj4vQ29udGVudHMgMiAwIFIvUGFyZW50....\",\r\n  \"formData\": null\r\n}\r\n";
+            
+            JsonTextParser parser = new JsonTextParser();
+            JsonObject obj = parser.Parse(resJsonData);
+            JsonObjectCollection col = (JsonObjectCollection)obj;
+
+            CreateLabelForOrderResponse createLabelForOrderRes = new CreateLabelForOrderResponse()
+            {
+                ShipmentId = Convert.ToInt32(col["shipmentId"] != null ? col["shipmentId"].GetValue() : null),
+                ShipmentCost = Convert.ToDouble(col["shipmentCost"] != null ? col["shipmentCost"].GetValue() : null),
+                InsuranceCost = Convert.ToInt32(col["insuranceCost"] != null ? col["insuranceCost"].GetValue() : null),
+                TrackingNumber = Convert.ToString(col["trackingNumber"] != null ? col["trackingNumber"].GetValue() : string.Empty),
+                LabelData = Convert.ToString(col["labelData"] != null ? col["labelData"].GetValue() : string.Empty),
+                FormData = Convert.ToString(col["formData"] != null ? col["formData"].GetValue() : string.Empty)
+            };
+            
+
+            return createLabelForOrderRes;
         }
     }
 }

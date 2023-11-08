@@ -8,12 +8,22 @@ namespace ShipStation.Entities
 {
     public class CreateLabelForOrderResponse
     {
-        public CreateLabelForOrderResponse(int? _shipmentId, double? shipmentCost, int? insuranceCost, string _trackingNumber,
+
+        public CreateLabelForOrderResponse()
+        {
+            ShipmentId = null;
+            ShipmentCost = null;
+            InsuranceCost = null;
+            TrackingNumber = string.Empty;
+            LabelData = string.Empty;
+            FormData = string.Empty;
+        }
+        public CreateLabelForOrderResponse(int? _shipmentId, double? _shipmentCost, int? _insuranceCost, string _trackingNumber,
             string _labelData, string _formData)
         {
             ShipmentId = _shipmentId;
-            ShipmentCost = shipmentCost;
-            InsuranceCost = insuranceCost;
+            ShipmentCost = _shipmentCost;
+            InsuranceCost = _insuranceCost;
             TrackingNumber = _trackingNumber;
             LabelData = _labelData;
             FormData = _formData;
