@@ -8,6 +8,7 @@ namespace ShipStation.Models
 {
     public class OrderItem
     {
+        
         public OrderItem()
         {
             OrderItemId = null;
@@ -30,7 +31,7 @@ namespace ShipStation.Models
             ModifyDate = null;
         }
         public OrderItem(int? _orderItemId, string _lineItemKey, string _sku, string _name, string _imageUrl, Weight _weight,
-            int _quantity, double? _unitPrice, double? _taxAmount, int _shippingAmount, string _warehouseLocation, ItemOption _option,
+            int _quantity, double? _unitPrice, double? _taxAmount, int? _shippingAmount, string _warehouseLocation, ItemOption _option,
             int _productId, string _fulfillmentSku, bool _adjustment, string _upc, DateTime? _createDate, DateTime? _modifyDate)
         {
             OrderItemId = _orderItemId;

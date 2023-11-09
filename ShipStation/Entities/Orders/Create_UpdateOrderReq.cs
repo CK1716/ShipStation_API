@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 using ShipStation.Models;
 
-namespace ShipStation.Entities.Orders
+namespace ShipStation.Entities
 {
-    public class Create_UpdateOrderReq
+    public class Create_UpdateOrderRequest
     {
-        public Create_UpdateOrderReq()
+        public Create_UpdateOrderRequest()
         {
             OrderId = null;
             OrderNumber = string.Empty;
@@ -46,11 +46,11 @@ namespace ShipStation.Entities.Orders
             AdvancedOptions = null;
             TagIds = null;  
         }
-        public Create_UpdateOrderReq(int? _orderId, string _orderNumber, string _orderKey, DateTime? _orderDate, DateTime? _paymentDate, DateTime? _shipByDate, string _orderStatus,
-            string _customerUsername, string _customerEmail, Address _billTo, Address _shipTo, List<OrderItem> _items, int? _amountPaid, int? _taxAmount, int? _shippingAmount, string _customerNotes,
-            string _internalNotes, bool? _gift, string _giftMessage, string _paymentMethod, string _requestedShippingService, string _carrierCode, string _serviceCode,
-            string _packageCode, string _confirmation, DateTime? _shipDate, Weight _weight, Dimensions _dimensions, InsuranceOptions _insuranceOptions, InternationalOptions _internationalOptions,
-            string _customsCountryCode, AdvancedOptions _advancedOptions, List<int?> _tagIds)
+        public Create_UpdateOrderRequest(int? _orderId, string _orderNumber, string _orderKey, DateTime? _orderDate, DateTime? _paymentDate, DateTime? _shipByDate, string _orderStatus,
+            string _customerUsername, string _customerEmail, Address _billTo, Address _shipTo, List<OrderItem> _items, double? _amountPaid, int? _taxAmount, int? _shippingAmount,
+            string _customerNotes,string _internalNotes, bool? _gift, string _giftMessage, string _paymentMethod, string _requestedShippingService, string _carrierCode,
+            string _serviceCode, string _packageCode, string _confirmation, DateTime? _shipDate, Weight _weight, Dimensions _dimensions, InsuranceOptions _insuranceOptions,
+            InternationalOptions _internationalOptions, string _customsCountryCode, AdvancedOptions _advancedOptions, List<int?> _tagIds)
         {
             OrderId = _orderId;
             OrderNumber = _orderNumber;
@@ -99,7 +99,7 @@ namespace ShipStation.Entities.Orders
         public Address BillTo { get; set; }
         public Address ShipTo { get; set; }
         public List<OrderItem> Items { get; set; }
-        public int? AmountPaid { get; set; }
+        public double? AmountPaid { get; set; }
         public int? TaxAmount { get; set; }
         public int? ShippingAmount { get; set; }
         public string CustomerNotes { get; set; }

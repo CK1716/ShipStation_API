@@ -24,7 +24,7 @@ namespace ShipStation.Api
             webRequest.Timeout = 30 * 1000; // 30초
                                             // ContentType은 지정된 것이 있으면 그것을 사용해준다.
             webRequest.ContentType = "application/json; charset=utf-8";
-            
+
             /* _postData 변수에 api request body 초기화*//*
             byte[] byteArray = Encoding.UTF8.GetBytes(_postData);
             // 요청 Data를 쓰는 데 사용할 Stream 개체를 가져온다.
@@ -299,22 +299,19 @@ namespace ShipStation.Api
                 JsonObjectCollection element = (JsonObjectCollection)fulfillmentsArray[i];
                 JsonObjectCollection elementShipTo = (JsonObjectCollection)element["shipTo"];
 
-                // 1. 원래 방식으로 변경하기 v
-                // 2. AddressVerified 값 어떻게 넘겨 받아올지 생각해보기
-                // 3. total, page, pages 값 받기 v 
-                // 4. 전체적인 값 한 번에 넘긴 후, request에서 제대로 값 들어왔는지 확인하기 v
-                /*                addrShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
-                                addrShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
-                                addrShipTo.Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty);
-                                addrShipTo.Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty);
-                                addrShipTo.Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty);
-                                addrShipTo.City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty);
-                                addrShipTo.State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty);
-                                addrShipTo.PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty);
-                                addrShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
-                                addrShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
-                                addrShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
-                                addrShipTo.AddressVerified = Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() :null);*/
+                /*
+                addrShipTo.Name = Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty);
+                addrShipTo.Company = Convert.ToString(elementShipTo["company"] != null ? elementShipTo["company"].GetValue() : string.Empty);
+                addrShipTo.Street1 = Convert.ToString(elementShipTo["street1"] != null ? elementShipTo["street1"].GetValue() : string.Empty);
+                addrShipTo.Street2 = Convert.ToString(elementShipTo["street2"] != null ? elementShipTo["street2"].GetValue() : string.Empty);
+                addrShipTo.Street3 = Convert.ToString(elementShipTo["street3"] != null ? elementShipTo["street3"].GetValue() : string.Empty);
+                addrShipTo.City = Convert.ToString(elementShipTo["city"] != null ? elementShipTo["city"].GetValue() : string.Empty);
+                addrShipTo.State = Convert.ToString(elementShipTo["state"] != null ? elementShipTo["state"].GetValue() : string.Empty);
+                addrShipTo.PostalCode = Convert.ToString(elementShipTo["postalCode"] != null ? elementShipTo["postalCode"].GetValue() : string.Empty);
+                addrShipTo.Country = Convert.ToString(elementShipTo["country"] != null ? elementShipTo["country"].GetValue() : string.Empty);
+                addrShipTo.Phone = Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty);
+                addrShipTo.IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null);
+                addrShipTo.AddressVerified = Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() :null);*/
 
                 /*Address addrShipTo = new Address(
                     _name: Convert.ToString(elementShipTo["name"] != null ? elementShipTo["name"].GetValue() : string.Empty),
@@ -329,9 +326,6 @@ namespace ShipStation.Api
                     _phone: Convert.ToString(elementShipTo["phone"] != null ? elementShipTo["phone"].GetValue() : string.Empty),
                     _isResidential: Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null),
                     _addressVerified: Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() : string.Empty));*/
-
-                // AddressVerified 값이 enumValue인데 string으로 써도 상관 없나..? -> 형 변환을 어떤 식으로 해서 값을 집어넣어야 할지를 잘 모르겠음. 검색해보기
-                // -> 모델에서 건드리는게 가장 깔끔할 것 같음
 
                 listFulFill.Add(new Fulfillments()
                 {
@@ -370,17 +364,17 @@ namespace ShipStation.Api
                         IsResidential = Convert.ToBoolean(elementShipTo["residential"] != null ? elementShipTo["residential"].GetValue() : null),
                         AddressVerified = Convert.ToString(elementShipTo["addressVerified"] != null ? elementShipTo["addressVerified"].GetValue() : null)
                     }
-                        
+
                 });
 
                 // 상태도 같이 리턴??
                 string _statusToStr = listFulFill[i].ShipTo.AddressVerified;
                 switch (_statusToStr)
                 {
-                    
+
                     case "Address not yet validated":
                         // "Address not yet validated";
-                        AddressVerified status =  AddressVerified.NotVerified; // 상태를 마지막에 함께 넘겨줘야 하나? 
+                        AddressVerified status = AddressVerified.NotVerified; // 상태를 마지막에 함께 넘겨줘야 하나? 
                         listFulFill[i].ShipTo.AddressVerified = "Address not yet validated";
                         break;
 
@@ -401,12 +395,12 @@ namespace ShipStation.Api
                         status = AddressVerified.Successful;
                         listFulFill[i].ShipTo.AddressVerified = "Address validated successfully";
                         break;
-                        
+
                     case null:
                         // null
                         break;
-                } 
-                
+                }
+
                 /*listFulFill.Add(new FulfillmentResponse(
                     _fulfillmentId: Convert.ToInt32(element["fulfillmentId"] != null ? element["fulfillmentId"].GetValue() : null),
                     _orderId: Convert.ToInt32(element["orderId"] != null ? element["orderId"].GetValue() : null),
@@ -430,13 +424,13 @@ namespace ShipStation.Api
                     _notifyErrorMessage: Convert.ToString(element["notifyErrorMessage"] != null ? element["notifyErrorMessage"].GetValue() : null),
                     _shipTo: addrShipTo));*/
             }
-           
+
             elementPage.Total = Convert.ToInt32(setTotal.GetValue());
             elementPage.Page = Convert.ToInt32(setPage.GetValue());
             elementPage.PageSize = Convert.ToInt32(setPageSize.GetValue());
-            
+
             FulfillmentResponse fulfillmentRes = new FulfillmentResponse(listFulFill, elementPage);
-            
+
             return fulfillmentRes;
         }
     }
@@ -454,7 +448,7 @@ namespace ShipStation.Api
                 new JsonStringValue("weightUnits", _createLabelForOrderReq.Weight.WeightUnits != null ? _createLabelForOrderReq.Weight.WeightUnits.ToString() : null)
             };
 
-               
+
 
             JsonObjectCollection reqMain = new JsonObjectCollection
             /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
@@ -473,7 +467,7 @@ namespace ShipStation.Api
                 new JsonStringValue("AdvancedOptions", _createLabelForOrderReq.AdvancedOptions != null ? _createLabelForOrderReq.AdvancedOptions.ToString() : string.Empty),
                 new JsonStringValue("TestLabel", _createLabelForOrderReq.TestLabel != null ? _createLabelForOrderReq.TestLabel.ToString() : string.Empty)
             };
-            
+
             string reqJson = reqMain.ToString();
             reqJson = reqJson.Replace("\n", "");
             reqJson = reqJson.Replace("\r", "");
@@ -482,7 +476,7 @@ namespace ShipStation.Api
             // string reqResult = ShipStation.ApiResult(url, "POST", reqJson);
 
             string resJsonData = "{\r\n  \"shipmentId\": 72513480,\r\n  \"shipmentCost\": 7.3,\r\n  \"insuranceCost\": 0,\r\n  \"trackingNumber\": \"248201115029520\",\r\n  \"labelData\": \"JVBERi0xLjQKJeLjz9MKMiAwIG9iago8PC9MZW5ndGggNjIvRmlsdGVyL0ZsYXRlRGVjb2RlPj5zdHJlYW0KeJwr5HIK4TI2UzC2NFMISeFyDeEK5CpUMFQwAEJDBV0jCz0LBV1jY0M9I4XkXAX9iDRDBZd8hUAuAEdGC7cKZW5kc3RyZWFtCmVuZG9iago0IDAgb2JqCjw8L1R5cGUvUGFnZS9NZWRpYUJveFswIDAgMjg4IDQzMl0vUmVzb3VyY2VzPDwvUHJvY1NldCBbL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSV0vWE9iamVjdDw8L1hmMSAxIDAgUj4+Pj4vQ29udGVudHMgMiAwIFIvUGFyZW50....\",\r\n  \"formData\": null\r\n}\r\n";
-            
+
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
@@ -496,9 +490,80 @@ namespace ShipStation.Api
                 LabelData = Convert.ToString(col["labelData"] != null ? col["labelData"].GetValue() : string.Empty),
                 FormData = Convert.ToString(col["formData"] != null ? col["formData"].GetValue() : string.Empty)
             };
-            
+
 
             return createLabelForOrderRes;
+        }
+    }
+    public class CreateUpdateOrder
+    {
+        public static Create_UpdateOrderResponse CuOrder(Create_UpdateOrderRequest _create_updateOrderReq)
+        {
+            string url = "https://ssapi.shipstation.com/orders/createorder";
+
+            JsonObjectCollection elementBillTo = new JsonObjectCollection
+            {
+                new JsonStringValue("name", _create_updateOrderReq.BillTo.Name != null ? _create_updateOrderReq.BillTo.Name.ToString() : string.Empty),
+                new JsonStringValue("company", _create_updateOrderReq.BillTo.Company != null ? _create_updateOrderReq.BillTo.Company.ToString() : string.Empty),
+                new JsonStringValue("street1", _create_updateOrderReq.BillTo.Street1 != null ? _create_updateOrderReq.BillTo.Street1.ToString() : string.Empty),
+                new JsonStringValue("street2", _create_updateOrderReq.BillTo.Street2 != null ? _create_updateOrderReq.BillTo.Street2.ToString() : string.Empty),
+                new JsonStringValue("street3", _create_updateOrderReq.BillTo.Street3 != null ? _create_updateOrderReq.BillTo .Street3.ToString() : string.Empty),
+                new JsonStringValue("city", _create_updateOrderReq.BillTo.City != null ? _create_updateOrderReq .BillTo .City.ToString() : string.Empty),
+                new JsonStringValue("state", _create_updateOrderReq.BillTo.State != null ? _create_updateOrderReq.BillTo.State.ToString() : string.Empty),
+                new JsonStringValue("postalCode", _create_updateOrderReq.BillTo.PostalCode != null ? _create_updateOrderReq.BillTo.PostalCode.ToString() : string.Empty),
+                new JsonStringValue("country", _create_updateOrderReq.BillTo.Country != null ? _create_updateOrderReq.BillTo.Country.ToString() : string.Empty),
+                new JsonStringValue("phone", _create_updateOrderReq.BillTo.Phone != null ? _create_updateOrderReq.BillTo.Phone.ToString() : string.Empty),
+                new JsonStringValue("residential", _create_updateOrderReq.BillTo.IsResidential != null ? _create_updateOrderReq.BillTo.IsResidential.ToString() : string.Empty),
+                new JsonStringValue("addressVerifed", _create_updateOrderReq.BillTo.AddressVerified != null ? _create_updateOrderReq.BillTo.AddressVerified.ToString() : string.Empty),
+            };
+            JsonObjectCollection elementShipTo = new JsonObjectCollection
+            {
+                new JsonStringValue("name", _create_updateOrderReq.ShipTo.Name != null ? _create_updateOrderReq.ShipTo.Name.ToString() : string.Empty),
+                new JsonStringValue("company", _create_updateOrderReq.ShipTo.Company != null ? _create_updateOrderReq.ShipTo.Company.ToString() : string.Empty),
+                new JsonStringValue("street1", _create_updateOrderReq.ShipTo.Street1 != null ? _create_updateOrderReq.ShipTo.Street1.ToString() : string.Empty),
+                new JsonStringValue("street2", _create_updateOrderReq.ShipTo.Street2 != null ? _create_updateOrderReq.ShipTo.Street2.ToString() : string.Empty),
+                new JsonStringValue("street3", _create_updateOrderReq.ShipTo.Street3 != null ? _create_updateOrderReq.ShipTo .Street3.ToString() : string.Empty),
+                new JsonStringValue("city", _create_updateOrderReq.ShipTo.City != null ? _create_updateOrderReq .ShipTo .City.ToString() : string.Empty),
+                new JsonStringValue("state", _create_updateOrderReq.ShipTo.State != null ? _create_updateOrderReq.ShipTo.State.ToString() : string.Empty),
+                new JsonStringValue("postalCode", _create_updateOrderReq.ShipTo.PostalCode != null ? _create_updateOrderReq.ShipTo.PostalCode.ToString() : string.Empty),
+                new JsonStringValue("country", _create_updateOrderReq.ShipTo.Country != null ? _create_updateOrderReq.ShipTo.Country.ToString() : string.Empty),
+                new JsonStringValue("phone", _create_updateOrderReq.ShipTo.Phone != null ? _create_updateOrderReq.ShipTo.Phone.ToString() : string.Empty),
+                new JsonStringValue("residential", _create_updateOrderReq.ShipTo.IsResidential != null ? _create_updateOrderReq.ShipTo.IsResidential.ToString() : string.Empty),
+                new JsonStringValue("addressVerifed", _create_updateOrderReq.ShipTo.AddressVerified != null ? _create_updateOrderReq.ShipTo.AddressVerified.ToString() : string.Empty),
+            };
+            
+            JsonArrayCollection itemArray = new JsonArrayCollection();
+
+            for (int i = 0; i < _create_updateOrderReq.Items.Count; i++)
+            {
+               
+                JsonObjectCollection elementWeight = new JsonObjectCollection
+                {
+                    new JsonStringValue("value", _create_updateOrderReq.Items[i].Weight.Value != null ? _create_updateOrderReq.Items[i].Weight.Value.ToString() : null),
+                    new JsonStringValue("units", _create_updateOrderReq.Items[i].Weight.Units != null ? _create_updateOrderReq.Items[i].Weight.Units.ToString() : string.Empty),
+                    new JsonStringValue("weightUnits", _create_updateOrderReq.Items[i].Weight.WeightUnits != null ? _create_updateOrderReq.Items[i].Weight.WeightUnits.ToString() : null),
+                };
+
+
+                JsonObjectCollection elementItmes = new JsonObjectCollection
+                {
+                    new JsonStringValue("orderItemId", _create_updateOrderReq.Items[i].OrderItemId != null ? _create_updateOrderReq.Items[i].OrderItemId.ToString() : null),
+                    new JsonStringValue("llineItemKey", _create_updateOrderReq.Items[i].LineItemKey != null ? _create_updateOrderReq.Items[i].LineItemKey.ToString() : string.Empty),
+                    new JsonStringValue("sku", _create_updateOrderReq.Items[i].Sku != null ? _create_updateOrderReq.Items[i].Sku.ToString() : string.Empty),
+                    new JsonStringValue("name", _create_updateOrderReq.Items[i].Name != null ? _create_updateOrderReq.Items[i].Name.ToString() : string.Empty),
+                    new JsonStringValue("imageUrl", _create_updateOrderReq.Items[i].ImageUrl != null ? _create_updateOrderReq.Items[i].ImageUrl.ToString() : string.Empty),
+                    new JsonObjectCollection("weight", elementWeight)
+                };
+
+                itemArray.Add(elementItmes);
+            }
+
+            
+
+            JsonArrayCollection optionArray = new JsonArrayCollection();
+
+
+            return null;
         }
     }
 }

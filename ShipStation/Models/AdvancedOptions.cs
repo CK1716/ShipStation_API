@@ -9,7 +9,7 @@ namespace ShipStation.Models
     public class AdvancedOptions
     {
         public AdvancedOptions(int? _warehouseId, bool? _nonMachinable, bool? _saturdayDelivery, bool? _containsAlcohol, int? _storeId,
-            string _customField1, string _cusomField2, string _customField3, string _source, bool? _mergedOrSplit, List<int> _mergedIds,
+            string _customField1, string _customField2, string _customField3, string _source, bool? _mergedOrSplit, List<int> _mergedIds,
             int? _parentId, string _billToParty, string _billToAccount, string _billToPostalCode, string _billToCountryCode, string _billToMyOtherAcoount)
         {
             WarehouseId = _warehouseId;
@@ -18,7 +18,7 @@ namespace ShipStation.Models
             ContainsAlcohol = _containsAlcohol;
             StoreId = _storeId;
             CustomField1 = _customField1;
-            CustomField2 = _cusomField2;
+            CustomField2 = _customField2;
             CustomField3 = _customField3;
             Source = _source;
             MergedOrSplit = _mergedOrSplit;

@@ -36,7 +36,7 @@ namespace ShipStation_Test
             
 
 
-            CreateLabelForOrderResponse createLabelForOrderRes = CreateLabel.ClReq(createLabelForOrderReq);
+            CreateLabelForOrderResponse resData = CreateLabel.ClReq(createLabelForOrderReq);
         }
     }
 }
