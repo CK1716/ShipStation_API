@@ -3,10 +3,9 @@
     "",
     "\\ShipStation",
     "\\ShipStation\\Entities",
-    "\\ShipStation\\Entities\\Fulfillment",
     "\\ShipStation\\Models",
     "\\ShipStation_Test"
   ],
-  "SelectedNode": "\\ShipStation\\Entities\\Fulfillment\\fulfillmentReq.cs",
+  "SelectedNode": "\\ShipStation\\Entities\\Orders",
   "PreviewInSolutionExplorer": false
 }

@@ -145,7 +145,7 @@ namespace ShipStation_Test
                         _saturdayDelivery: false,
                         _containsAlcohol: false,
                         _mergedOrSplit: false,
-                        _mergedIds: new List<int>(),
+                        _mergedIds: new List<int?>(),
                         _parentId: null,
                         _storeId: null,
                         _customField1: "Custom data that you can add to an order. See Custom Field #2 & #3 for more info!",
@@ -157,7 +157,7 @@ namespace ShipStation_Test
                         _billToPostalCode: null,
                         _billToCountryCode: null,
                         _billToMyOtherAcoount: null),
-                    _tagIds: new List<int?>(53974));
+                    _tagIds: new List<int?> { 53974 });
 
             Create_UpdateOrderResponse resData = CreateUpdateOrder.CuOrder(create_updateOrderReq);
         }

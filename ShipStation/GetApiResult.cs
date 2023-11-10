@@ -448,8 +448,6 @@ namespace ShipStation.Api
                 new JsonStringValue("weightUnits", _createLabelForOrderReq.Weight.WeightUnits != null ? _createLabelForOrderReq.Weight.WeightUnits.ToString() : null)
             };
 
-
-
             JsonObjectCollection reqMain = new JsonObjectCollection
             /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
             JsonObjectCollection items = new JsonObjectCollection */
@@ -516,6 +514,7 @@ namespace ShipStation.Api
                 new JsonStringValue("residential", _create_updateOrderReq.BillTo.IsResidential != null ? _create_updateOrderReq.BillTo.IsResidential.ToString() : string.Empty),
                 new JsonStringValue("addressVerifed", _create_updateOrderReq.BillTo.AddressVerified != null ? _create_updateOrderReq.BillTo.AddressVerified.ToString() : string.Empty),
             };
+
             JsonObjectCollection elementShipTo = new JsonObjectCollection
             {
                 new JsonStringValue("name", _create_updateOrderReq.ShipTo.Name != null ? _create_updateOrderReq.ShipTo.Name.ToString() : string.Empty),
@@ -531,19 +530,74 @@ namespace ShipStation.Api
                 new JsonStringValue("residential", _create_updateOrderReq.ShipTo.IsResidential != null ? _create_updateOrderReq.ShipTo.IsResidential.ToString() : string.Empty),
                 new JsonStringValue("addressVerifed", _create_updateOrderReq.ShipTo.AddressVerified != null ? _create_updateOrderReq.ShipTo.AddressVerified.ToString() : string.Empty),
             };
-            
+
+            JsonObjectCollection elementWeight = new JsonObjectCollection
+            {
+                new JsonStringValue("value", _create_updateOrderReq.Weight.Value != null ? _create_updateOrderReq.Weight.Value.ToString() : string.Empty),
+                new JsonStringValue("units", _create_updateOrderReq.Weight.Units != null ? _create_updateOrderReq.Weight.Units.ToString() : string.Empty),
+                new JsonStringValue("weightUnits", _create_updateOrderReq.Weight.WeightUnits != null ? _create_updateOrderReq.Weight.WeightUnits.ToString() : string.Empty)
+            };
+
+            JsonObjectCollection elemnetDimensions = new JsonObjectCollection
+            {
+                new JsonStringValue("units", _create_updateOrderReq.Dimensions.Units != null ? _create_updateOrderReq.Dimensions.Units.ToString() : string.Empty),
+                new JsonStringValue("length", _create_updateOrderReq.Dimensions.Length != null ? _create_updateOrderReq.Dimensions.Length.ToString() : null),
+                new JsonStringValue("width", _create_updateOrderReq.Dimensions.Width != null ? _create_updateOrderReq.Dimensions.Width.ToString() : null),
+                new JsonStringValue("height", _create_updateOrderReq.Dimensions.Height != null ? _create_updateOrderReq.Dimensions.Height.ToString() : null)
+            };
+
+            JsonObjectCollection elementInsuranceOption = new JsonObjectCollection
+            {
+                new JsonStringValue("provider", _create_updateOrderReq.InsuranceOptions.Provider != null ? _create_updateOrderReq.InsuranceOptions.Provider.ToString() : string.Empty),
+                new JsonStringValue("insureShipment", _create_updateOrderReq.InsuranceOptions.InsureShipment != null ? _create_updateOrderReq.InsuranceOptions.InsureShipment.ToString() : null),
+                new JsonStringValue("insuredValue", _create_updateOrderReq.InsuranceOptions.InsuredValue != null ? _create_updateOrderReq.InsuranceOptions.InsuredValue.ToString() : null)
+            };
+
+            JsonObjectCollection elementInternationalOptions = new JsonObjectCollection
+            {
+                new JsonStringValue("contents", _create_updateOrderReq.InternationalOptions.Contents != null ? _create_updateOrderReq.InternationalOptions.Contents.ToString() : string.Empty),
+                new JsonStringValue("customsItems", _create_updateOrderReq.InternationalOptions.CustomsItems != null ? _create_updateOrderReq.InternationalOptions.CustomsItems.ToString() : null)
+            };
+
+            JsonObjectCollection elementAdvancedOptions = new JsonObjectCollection
+            {
+                new JsonStringValue("warehouseId", _create_updateOrderReq.AdvancedOptions.WarehouseId != null ? _create_updateOrderReq.AdvancedOptions.WarehouseId.ToString() : null),
+                new JsonStringValue("nonMachinable", _create_updateOrderReq.AdvancedOptions.NonMachinable != null ? _create_updateOrderReq.AdvancedOptions.NonMachinable.ToString() : null),
+                new JsonStringValue("saturdayDelivery", _create_updateOrderReq.AdvancedOptions.SaturdayDelivery != null ? _create_updateOrderReq.AdvancedOptions.SaturdayDelivery.ToString() : null),
+                new JsonStringValue("containsAlcohol", _create_updateOrderReq.AdvancedOptions.ContainsAlcohol != null ? _create_updateOrderReq.AdvancedOptions.ContainsAlcohol.ToString() : null),
+                new JsonStringValue("mergedOrSplit", _create_updateOrderReq.AdvancedOptions.MergedOrSplit != null ? _create_updateOrderReq.AdvancedOptions.MergedOrSplit.ToString() : null),
+                new JsonArrayCollection("mergedIds"),
+                new JsonStringValue("parentId", _create_updateOrderReq.AdvancedOptions.ParentId != null ? _create_updateOrderReq.AdvancedOptions.ParentId.ToString() : null),
+                new JsonStringValue("storedId", _create_updateOrderReq.AdvancedOptions.StoreId != null ? _create_updateOrderReq.AdvancedOptions.StoreId.ToString() : null),
+                new JsonStringValue("customField1", _create_updateOrderReq.AdvancedOptions.CustomField1 != null ? _create_updateOrderReq.AdvancedOptions.CustomField1.ToString() : string.Empty),
+                new JsonStringValue("customField2", _create_updateOrderReq.AdvancedOptions.CustomField2 != null ? _create_updateOrderReq.AdvancedOptions.CustomField2.ToString() : string.Empty),
+                new JsonStringValue("customField3", _create_updateOrderReq.AdvancedOptions.CustomField3 != null ? _create_updateOrderReq.AdvancedOptions.CustomField3.ToString() : string.Empty),
+                new JsonStringValue("source", _create_updateOrderReq.AdvancedOptions.Source != null ? _create_updateOrderReq.AdvancedOptions.Source.ToString() : string.Empty),
+                new JsonStringValue("billToParty", _create_updateOrderReq.AdvancedOptions.BillToParty != null ? _create_updateOrderReq.AdvancedOptions.BillToParty.ToString() : string.Empty),
+                new JsonStringValue("billToAccount", _create_updateOrderReq.AdvancedOptions.BillToAccount != null ? _create_updateOrderReq.AdvancedOptions.BillToAccount.ToString() : string.Empty),
+                new JsonStringValue("billToPostalCode", _create_updateOrderReq.AdvancedOptions.BillToPostalCode != null ? _create_updateOrderReq.AdvancedOptions.BillToPostalCode.ToString() : string.Empty),
+                new JsonStringValue("billToCountryCode", _create_updateOrderReq.AdvancedOptions.BillToCountryCode != null ? _create_updateOrderReq.AdvancedOptions.BillToCountryCode.ToString() : string.Empty),
+                new JsonStringValue("billToMyOtherAccount", _create_updateOrderReq.AdvancedOptions.BillToMyOtherAccount != null ? _create_updateOrderReq.AdvancedOptions.BillToMyOtherAccount.ToString() : string.Empty)
+            };
+
             JsonArrayCollection itemArray = new JsonArrayCollection();
 
             for (int i = 0; i < _create_updateOrderReq.Items.Count; i++)
             {
-               
-                JsonObjectCollection elementWeight = new JsonObjectCollection
+                JsonArrayCollection optionArray = new JsonArrayCollection();
+                JsonObjectCollection elementOption = new JsonObjectCollection
+                {
+                    new JsonStringValue("name", _create_updateOrderReq.Items[i].Options.Name != null ? _create_updateOrderReq.Items[i].Options.Name.ToString() : string.Empty),
+                    new JsonStringValue("value", _create_updateOrderReq.Items[i].Options.Value != null ? _create_updateOrderReq.Items[i].Options.Value.ToString() : string.Empty)
+                };
+                optionArray.Add(elementOption);
+
+                JsonObjectCollection elementItemsWeight = new JsonObjectCollection
                 {
                     new JsonStringValue("value", _create_updateOrderReq.Items[i].Weight.Value != null ? _create_updateOrderReq.Items[i].Weight.Value.ToString() : null),
                     new JsonStringValue("units", _create_updateOrderReq.Items[i].Weight.Units != null ? _create_updateOrderReq.Items[i].Weight.Units.ToString() : string.Empty),
                     new JsonStringValue("weightUnits", _create_updateOrderReq.Items[i].Weight.WeightUnits != null ? _create_updateOrderReq.Items[i].Weight.WeightUnits.ToString() : null),
                 };
-
 
                 JsonObjectCollection elementItmes = new JsonObjectCollection
                 {
@@ -552,16 +606,58 @@ namespace ShipStation.Api
                     new JsonStringValue("sku", _create_updateOrderReq.Items[i].Sku != null ? _create_updateOrderReq.Items[i].Sku.ToString() : string.Empty),
                     new JsonStringValue("name", _create_updateOrderReq.Items[i].Name != null ? _create_updateOrderReq.Items[i].Name.ToString() : string.Empty),
                     new JsonStringValue("imageUrl", _create_updateOrderReq.Items[i].ImageUrl != null ? _create_updateOrderReq.Items[i].ImageUrl.ToString() : string.Empty),
-                    new JsonObjectCollection("weight", elementWeight)
+                    new JsonObjectCollection("weight", elementItemsWeight),
+                    new JsonStringValue("quantity", _create_updateOrderReq.Items[i].Quantity != null ? _create_updateOrderReq.Items[i].Quantity.ToString() : null),
+                    new JsonStringValue("unitPrice", _create_updateOrderReq.Items[i].UnitPrice != null ? _create_updateOrderReq.Items[i].UnitPrice.ToString() : null),
+                    new JsonStringValue("taxAmount", _create_updateOrderReq.Items[i].TaxAmount != null ? _create_updateOrderReq.Items[i].TaxAmount.ToString() : null),
+                    new JsonStringValue("shippingAmount", _create_updateOrderReq.Items[i].ShippingAmount != null ? _create_updateOrderReq.Items[i].ShippingAmount.ToString() : null),
+                    new JsonStringValue("warehouseLocation", _create_updateOrderReq.Items[i].WarehouseLocation != null? _create_updateOrderReq.Items[i].WarehouseLocation.ToString() : string.Empty),
+                    new JsonArrayCollection("options", optionArray),
+                    new JsonStringValue("productId", _create_updateOrderReq.Items[i].ProductId != null ? _create_updateOrderReq.Items[i].ProductId.ToString() : null),
+                    new JsonStringValue("fulfillmentSku", _create_updateOrderReq.Items[i].FulfillmentSku != null ? _create_updateOrderReq.Items[i].FulfillmentSku.ToString() : string.Empty),
+                    new JsonStringValue("adjustment", _create_updateOrderReq.Items[i].Adjustment != null ? _create_updateOrderReq.Items[i].Adjustment.ToString() : null),
+                    new JsonStringValue("upc", _create_updateOrderReq.Items[i].Upc != null ? _create_updateOrderReq.Items[i].Upc.ToString() : string.Empty)
                 };
 
                 itemArray.Add(elementItmes);
             }
 
-            
-
-            JsonArrayCollection optionArray = new JsonArrayCollection();
-
+            // Json Request Text
+            JsonObjectCollection reqMain = new JsonObjectCollection
+            {
+                new JsonStringValue("orderNumber", _create_updateOrderReq.OrderNumber != null ? _create_updateOrderReq.OrderNumber.ToString() : string.Empty),
+                new JsonStringValue("orderKey", _create_updateOrderReq.OrderKey != null ? _create_updateOrderReq.OrderKey.ToString() : null),
+                new JsonStringValue("orderDate", _create_updateOrderReq.OrderDate != null ? _create_updateOrderReq.OrderDate.ToString() : null),
+                new JsonStringValue("paymentDate", _create_updateOrderReq.PaymentDate != null ? _create_updateOrderReq.PaymentDate.ToString() : null),
+                new JsonStringValue("shipByDate", _create_updateOrderReq.ShipByDate != null ? _create_updateOrderReq.ShipByDate.ToString() : null),
+                new JsonStringValue("orderStatus", _create_updateOrderReq.OrderStatus != null ? _create_updateOrderReq.OrderStatus.ToString() : string.Empty),
+                new JsonStringValue("customerId", _create_updateOrderReq.OrderId != null? _create_updateOrderReq.OrderId.ToString() : null),
+                new JsonStringValue("customerUserName", _create_updateOrderReq.CustomerUsername != null ?_create_updateOrderReq.CustomerUsername.ToString() : string.Empty),
+                new JsonStringValue("customerEmail", _create_updateOrderReq.CustomerEmail != null ? _create_updateOrderReq.CustomerEmail.ToString() : string.Empty),
+                new JsonObjectCollection("billTo", elementBillTo),
+                new JsonObjectCollection("shipTo", elementShipTo),
+                new JsonArrayCollection("items", itemArray),
+                new JsonStringValue("amountPaid", _create_updateOrderReq.AmountPaid != null ? _create_updateOrderReq.AmountPaid.ToString() : null),
+                new JsonStringValue("taxAmount", _create_updateOrderReq.TaxAmount != null ? _create_updateOrderReq.TaxAmount.ToString() : null),
+                new JsonStringValue("shippingAmount", _create_updateOrderReq.ShippingAmount != null ? _create_updateOrderReq.ShippingAmount.ToString() : null),
+                new JsonStringValue("customerNotes", _create_updateOrderReq.CustomerNotes != null ? _create_updateOrderReq.CustomerNotes.ToString() : string.Empty),
+                new JsonStringValue("internalNotes", _create_updateOrderReq.InternalNotes != null ? _create_updateOrderReq.InternalNotes.ToString() : string.Empty),
+                new JsonStringValue("gift", _create_updateOrderReq.Gift != null ? _create_updateOrderReq.Gift.ToString() : null),
+                new JsonStringValue("giftMessage", _create_updateOrderReq.GiftMessage != null ? _create_updateOrderReq.GiftMessage.ToString() : string.Empty),
+                new JsonStringValue("paymentMethod", _create_updateOrderReq.PaymentMethod != null ? _create_updateOrderReq.PaymentMethod.ToString() : string.Empty),
+                new JsonStringValue("requestedShippingService", _create_updateOrderReq.RequestedShippingService != null ? _create_updateOrderReq.RequestedShippingService.ToString() : string.Empty),
+                new JsonStringValue("carrierCode", _create_updateOrderReq.CarrierCode != null ? _create_updateOrderReq.CarrierCode.ToString() : string.Empty),
+                new JsonStringValue("serviceCode", _create_updateOrderReq.ServiceCode != null ? _create_updateOrderReq.ServiceCode.ToString() : string.Empty),
+                new JsonStringValue("packageCode", _create_updateOrderReq.PackageCode != null ? _create_updateOrderReq.PackageCode.ToString() : string.Empty),
+                new JsonStringValue("confirmation", _create_updateOrderReq.Confirmation != null ? _create_updateOrderReq.Confirmation.ToString() : string.Empty),
+                new JsonStringValue("shipDate", _create_updateOrderReq.ShipDate != null ? _create_updateOrderReq.ShipDate.ToString() : null),
+                new JsonObjectCollection("weight", elementWeight),
+                new JsonObjectCollection("dimnesions", elemnetDimensions),
+                new JsonObjectCollection("insuranceOptions", elementInsuranceOption),
+                new JsonObjectCollection("internationalOptions", elementInternationalOptions),
+                new JsonObjectCollection("advancedOptions", elementAdvancedOptions),
+                // new JsonArrayCollection("tagIds", ) <- 해당 부분 Json Request 어떤 식으로 만들어야하는지 찾아보기
+            };
 
             return null;
         }
