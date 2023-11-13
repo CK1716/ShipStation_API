@@ -10,6 +10,48 @@ namespace ShipStation.Entities
 {
     public class Create_UpdateOrderResponse
     {
+        public Create_UpdateOrderResponse() 
+        {
+            OrderId = null;
+            Number = string.Empty;
+            OrderKey = string.Empty;
+            OrderDate = null;
+            CreateDate = null;
+            ModifyDate = null;
+            PaymentDate = null;
+            ShipByDate = null;
+            OrderStatus = string.Empty;
+            CustomerId = null;
+            CustomerUserName = string.Empty;
+            CustomerEmail = string.Empty;
+            BillTo = null;
+            ShipTo = null;
+            Items = null;
+            OrderTotal = null;
+            AmountTotal = null;
+            TaxAmount = null;
+            CustomerNotes = string.Empty;
+            InternalNotes = string.Empty;
+            Gift = null;
+            GiftMessage = string.Empty;
+            PayMentMethod = string.Empty;
+            RequestedShippingService = string.Empty;
+            CarrierCode = string.Empty;
+            Service = string.Empty;
+            PackageCode = string.Empty;
+            Confirmation = string.Empty;
+            ShipDate = null;
+            HoldUntillDate = null;
+            Weight = null;
+            Dimensions = null;
+            InsuranceOptions = null;
+            InternationalOptions = null;
+            AdvancedOptions = null;
+            TagIds = null;
+            UserId = null;
+            ExternallyFulfilled = null;
+            ExternallyFulfilledBy = string.Empty;
+        }
 
         public int? OrderId { get; set; }
         public string Number { get; set; }
