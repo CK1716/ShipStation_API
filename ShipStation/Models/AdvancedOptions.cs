@@ -8,6 +8,26 @@ namespace ShipStation.Models
 {
     public class AdvancedOptions
     {
+        public AdvancedOptions() 
+        {
+            WarehouseId = null;
+            NonMachinable = null;
+            SaturdayDelivery = null;
+            ContainsAlcohol = null;
+            StoreId = null;
+            CustomField1 = string.Empty;
+            CustomField2 = string.Empty;
+            CustomField3 = string.Empty;
+            Source = string.Empty;
+            MergedOrSplit = null;
+            MergedIds = null;
+            ParentId = null;
+            BillToParty = string.Empty;
+            BillToAccount = string.Empty;
+            BillToPostalCode = string.Empty;
+            BillToCountryCode = string.Empty;
+            BillToMyOtherAccount = string.Empty;
+        }
         public AdvancedOptions(int? _warehouseId, bool? _nonMachinable, bool? _saturdayDelivery, bool? _containsAlcohol, int? _storeId,
             string _customField1, string _customField2, string _customField3, string _source, bool? _mergedOrSplit, List<int?> _mergedIds,
             int? _parentId, string _billToParty, string _billToAccount, string _billToPostalCode, string _billToCountryCode, string _billToMyOtherAcoount)

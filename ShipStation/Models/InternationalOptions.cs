@@ -8,6 +8,12 @@ namespace ShipStation.Models
 {
     public class InternationalOptions
     {
+        public InternationalOptions() 
+        {
+            Contents = string.Empty;
+            CustomsItems = null;
+            NonDelivery = string.Empty;
+        }
         public InternationalOptions(string _contents, CustomsItems _customsItems, string _nonDelivery)
         {
             Contents = _contents;

@@ -8,6 +8,13 @@ namespace ShipStation.Models
 {
     public class Dimensions
     {
+        public Dimensions() 
+        {
+            Length = null;
+            Width = null;
+            Height = null;
+            Units = string.Empty;
+        }
         public Dimensions(int? _length, int? _width, int? _height, string _units)
         {
             Length = _length;

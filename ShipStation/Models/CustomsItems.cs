@@ -8,6 +8,15 @@ namespace ShipStation.Models
 {
     public class CustomsItems
     {
+        public CustomsItems() 
+        {
+            CustomsItemsId = string.Empty;
+            Description = string.Empty;
+            Quantity = null;
+            Value = null;
+            HarmonizedTariffCode = string.Empty;
+            CountryOfOrigin = string.Empty;
+        }
         public CustomsItems(string _customsItemsId, string _description, int? _quantity, int? _value, 
             string _harmonizedTariffCode, string _countryOfOrigin)
         {

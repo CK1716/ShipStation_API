@@ -8,6 +8,12 @@ namespace ShipStation.Models
 {
     public class InsuranceOptions
     {
+        public InsuranceOptions() 
+        {
+            Provider = string.Empty;
+            InsureShipment = null;
+            InsuredValue = null;
+        }
         public InsuranceOptions(string _provider, bool? _insureShipment, int? _insuredValue)
         {
             Provider = _provider;

@@ -534,7 +534,7 @@ namespace ShipStation.Api
                 new JsonStringValue("billToCountryCode", _create_updateOrderReq.AdvancedOptions.BillToCountryCode != null ? _create_updateOrderReq.AdvancedOptions.BillToCountryCode.ToString() : string.Empty),
                 new JsonStringValue("billToMyOtherAccount", _create_updateOrderReq.AdvancedOptions.BillToMyOtherAccount != null ? _create_updateOrderReq.AdvancedOptions.BillToMyOtherAccount.ToString() : string.Empty)
             };
-
+            
             // Create JsonArray.
             JsonArrayCollection itemArray = new JsonArrayCollection();
 
@@ -576,8 +576,18 @@ namespace ShipStation.Api
                 };
 
                 itemArray.Add(elementsItmes);
+            } 
+            
+            JsonArrayCollection jarry = new JsonArrayCollection();
+            for(int i = 0; i < _create_updateOrderReq.TagIds.Count; i++)
+            {
+                jarry.Add(new JsonNumericValue(Convert.ToInt32(_create_updateOrderReq.TagIds[i])));
             }
+            
+            
 
+            // Console.WriteLine(jarryItems);
+            
             // Json Request Text
             JsonObjectCollection reqMain = new JsonObjectCollection
             {
@@ -611,19 +621,11 @@ namespace ShipStation.Api
                 new JsonObjectCollection("dimnesions", elementsDimensions),
                 new JsonObjectCollection("insuranceOptions", elementsInsuranceOption),
                 new JsonObjectCollection("internationalOptions", elementsInternationalOptions),
-                new JsonObjectCollection("advancedOptions", elementsAdvancedOptions)
-                
-                /*
-                 JsonArray형태
-                 
-                    tagIds: [
-                        53974
-                    ]
-
-                */
-                // new JsonArrayCollection("tagIds", ??? )
+                new JsonObjectCollection("advancedOptions", elementsAdvancedOptions),
+                new JsonArrayCollection("tagIds", jarry)
             };
 
+            Console.WriteLine(reqMain);
             // response
             string resJsonData = "{\r\n  \"orderId\": 140335319,\r\n  \"orderNumber\": \"TEST-ORDER-API-DOCS\",\r\n  \"orderKey\": \"0f6bec18-3e89-4881-83aa-f392d84f4c74\",\r\n  \"orderDate\": \"2015-06-29T08:46:27.0000000\",\r\n  \"createDate\": \"2016-02-16T15:16:53.7070000\",\r\n  \"modifyDate\": \"2016-02-16T15:16:53.7070000\",\r\n  \"paymentDate\": \"2015-06-29T08:46:27.0000000\",\r\n  \"shipByDate\": \"2015-07-05T00:00:00.0000000\",\r\n  \"orderStatus\": \"awaiting_shipment\",\r\n  \"customerId\": null,\r\n  \"customerUsername\": \"headhoncho@whitehouse.gov\",\r\n  \"customerEmail\": \"headhoncho@whitehouse.gov\",\r\n  \"billTo\": {\r\n    \"name\": \"The President\",\r\n    \"company\": null,\r\n    \"street1\": null,\r\n    \"street2\": null,\r\n    \"street3\": null,\r\n    \"city\": null,\r\n    \"state\": null,\r\n    \"postalCode\": null,\r\n    \"country\": null,\r\n    \"phone\": null,\r\n    \"residential\": null,\r\n    \"addressVerified\": null\r\n  },\r\n  \"shipTo\": {\r\n    \"name\": \"The President\",\r\n    \"company\": \"US Govt\",\r\n    \"street1\": \"1600 Pennsylvania Ave\",\r\n    \"street2\": \"Oval Office\",\r\n    \"street3\": null,\r\n    \"city\": \"Washington\",\r\n    \"state\": \"DC\",\r\n    \"postalCode\": \"20500\",\r\n    \"country\": \"US\",\r\n    \"phone\": \"555-555-5555\",\r\n    \"residential\": false,\r\n    \"addressVerified\": \"Address validation warning\"\r\n  },\r\n  \"items\": [\r\n    {\r\n      \"orderItemId\": 192210956,\r\n      \"lineItemKey\": \"vd08-MSLbtx\",\r\n      \"sku\": \"ABC123\",\r\n      \"name\": \"Test item #1\",\r\n      \"imageUrl\": null,\r\n      \"weight\": {\r\n        \"value\": 24,\r\n        \"units\": \"ounces\"\r\n      },\r\n      \"quantity\": 2,\r\n      \"unitPrice\": 99.99,\r\n      \"taxAmount\": 2.5,\r\n      \"shippingAmount\": 5,\r\n      \"warehouseLocation\": \"Aisle 1, Bin 7\",\r\n      \"options\": [\r\n        {\r\n          \"name\": \"Size\",\r\n          \"value\": \"Large\"\r\n        }\r\n      ],\r\n      \"productId\": null,\r\n      \"fulfillmentSku\": null,\r\n      \"adjustment\": false,\r\n      \"upc\": \"32-65-98\",\r\n      \"createDate\": \"2016-02-16T15:16:53.707\",\r\n      \"modifyDate\": \"2016-02-16T15:16:53.707\"\r\n    },\r\n    {\r\n      \"orderItemId\": 192210957,\r\n      \"lineItemKey\": null,\r\n      \"sku\": \"DISCOUNT CODE\",\r\n      \"name\": \"10% OFF\",\r\n      \"imageUrl\": null,\r\n      \"weight\": {\r\n        \"value\": 0,\r\n        \"units\": \"ounces\"\r\n      },\r\n      \"quantity\": 1,\r\n      \"unitPrice\": -20.55,\r\n      \"taxAmount\": null,\r\n      \"shippingAmount\": null,\r\n      \"warehouseLocation\": null,\r\n      \"options\": [],\r\n      \"productId\": null,\r\n      \"fulfillmentSku\": \"SKU-Discount\",\r\n      \"adjustment\": true,\r\n      \"upc\": null,\r\n      \"createDate\": \"2016-02-16T15:16:53.707\",\r\n      \"modifyDate\": \"2016-02-16T15:16:53.707\"\r\n    }\r\n  ],\r\n  \"orderTotal\": 194.43,\r\n  \"amountPaid\": 218.73,\r\n  \"taxAmount\": 5,\r\n  \"shippingAmount\": 10,\r\n  \"customerNotes\": \"Please ship as soon as possible!\",\r\n  \"internalNotes\": \"Customer called and would like to upgrade shipping\",\r\n  \"gift\": true,\r\n  \"giftMessage\": \"Thank you!\",\r\n  \"paymentMethod\": \"Credit Card\",\r\n  \"requestedShippingService\": \"Priority Mail\",\r\n  \"carrierCode\": \"fedex\",\r\n  \"serviceCode\": \"fedex_2day\",\r\n  \"packageCode\": \"package\",\r\n  \"confirmation\": \"delivery\",\r\n  \"shipDate\": \"2015-07-02\",\r\n  \"holdUntilDate\": null,\r\n  \"weight\": {\r\n    \"value\": 25,\r\n    \"units\": \"ounces\"\r\n  },\r\n  \"dimensions\": {\r\n    \"units\": \"inches\",\r\n    \"length\": 7,\r\n    \"width\": 5,\r\n    \"height\": 6\r\n  },\r\n  \"insuranceOptions\": {\r\n    \"provider\": \"carrier\",\r\n    \"insureShipment\": true,\r\n    \"insuredValue\": 200\r\n  },\r\n  \"internationalOptions\": {\r\n    \"contents\": null,\r\n    \"customsItems\": null,\r\n    \"nonDelivery\": null\r\n  },\r\n  \"advancedOptions\": {\r\n    \"warehouseId\": 9876,\r\n    \"nonMachinable\": false,\r\n    \"saturdayDelivery\": false,\r\n    \"containsAlcohol\": false,\r\n    \"mergedOrSplit\": false,\r\n    \"mergedIds\": [],\r\n    \"parentId\": null,\r\n    \"storeId\": 12345,\r\n    \"customField1\": \"Custom data that you can add to an order. See Custom Field #2 & #3 for more info!\",\r\n    \"customField2\": \"Per UI settings, this information can appear on some carrier's shipping labels. See link below\",\r\n    \"customField3\": \"https://help.shipstation.com/hc/en-us/articles/206639957\",\r\n    \"source\": \"Webstore\",\r\n    \"billToParty\": null,\r\n    \"billToAccount\": null,\r\n    \"billToPostalCode\": null,\r\n    \"billToCountryCode\": null\r\n  },\r\n  \"tagIds\": null,\r\n  \"userId\": null,\r\n  \"externallyFulfilled\": false,\r\n  \"externallyFulfilledBy\": null\r\n}\r\n";
 
@@ -634,12 +636,17 @@ namespace ShipStation.Api
             JsonArrayCollection resItems = (JsonArrayCollection)col["items"];
             JsonObjectCollection elementsBillToRes = (JsonObjectCollection)col["billTo"];
             JsonObjectCollection elementsShipToRes = (JsonObjectCollection)col["shipTo"];
+            JsonObjectCollection elementsWeightRes = (JsonObjectCollection)col["weight"];
+            JsonObjectCollection elementsDimensionsRes = (JsonObjectCollection)col["dimensions"];
+            JsonObjectCollection elementsInsuranceRes = (JsonObjectCollection)col["insuranceOptions"];
+            JsonObjectCollection elementsInternationalRes = (JsonObjectCollection)col["internationalOptions"];
+            JsonObjectCollection elementsAdvancedRes = (JsonObjectCollection)col["advancedOptions"];
             List <OrderItem> listItems = new List<OrderItem>();
 
             for (int i =0; i < resItems.Count; i++)
             {
                 JsonObjectCollection elements = (JsonObjectCollection)resItems[i];
-                JsonObjectCollection elementsWeightRes = (JsonObjectCollection)elements["weight"];
+                JsonObjectCollection elementsItemWeight = (JsonObjectCollection)elements["weight"];
 
                 /*for( int j = 0; j < resItems.Count; j++)
                 {
@@ -655,8 +662,8 @@ namespace ShipStation.Api
                     ImageUrl = Convert.ToString(elements["imageUrl"] != null ? elements["imageUrl"].GetValue() : string.Empty),
                     Weight = new Weight()
                     {
-                        Value = Convert.ToInt32(elementsWeightRes["value"] != null ? elementsWeightRes["value"].GetValue() : null),
-                        Units = Convert.ToString(elementsWeightRes["units"] != null ? elementsWeightRes["units"].GetValue() : string.Empty)
+                        Value = Convert.ToInt32(elementsItemWeight["value"] != null ? elementsItemWeight["value"].GetValue() : null),
+                        Units = Convert.ToString(elementsItemWeight["units"] != null ? elementsItemWeight["units"].GetValue() : string.Empty)
                     },
                     Quantity = Convert.ToInt32(elements["quantity"] != null ? elements["quantity"].GetValue() : null),
                     UnitPrice = Convert.ToDouble(elements["unitPrice"] != null ? elements["unitPrice"].GetValue() : null),
@@ -718,7 +725,72 @@ namespace ShipStation.Api
                     AddressVerified = Convert.ToString(elementsShipToRes["addressVerified"] != null ? elementsShipToRes["addressVerified"].GetValue() : string.Empty)
                 },
                 Items = listItems,
+                OrderTotal = Convert.ToDouble(col["orderTotal"] != null ? col["orderTotal"].GetValue() : null),
+                AmountTotal = Convert.ToDouble(col["amountTotal"] != null ? col["amountTotal"].GetValue() : null),
+                TaxAmount = Convert.ToInt32(col["taxAmount"] != null ? col["taxAmount"].GetValue() : null),
+                CustomerNotes = Convert.ToString(col["customerNotes"] != null ? col["customerNotes"].GetValue() : string.Empty),
+                InternalNotes = Convert.ToString(col["internalNotes"] != null ? col["internalNotes"].GetValue() : string.Empty),
+                Gift = Convert.ToBoolean(col["gift"] != null ? col["gift"].GetValue() : null),
+                GiftMessage = Convert.ToString(col["giftMessage"] != null ? col["giftMessage"].GetValue() : string.Empty),
+                PayMentMethod = Convert.ToString(col["paymentMethod"] != null ? col["paymentMethod"].GetValue() : string.Empty),
+                RequestedShippingService = Convert.ToString(col["requestedShippingService"] != null ? col["requestedShippingService"].GetValue() : string.Empty),
+                CarrierCode = Convert.ToString(col["carrierCode"] != null ? col["carrierCode"].GetValue() : string.Empty),
+                Service = Convert.ToString(col["service"] != null ? col["service"].GetValue() : string.Empty),
+                PackageCode = Convert.ToString(col["packageCode"] != null ? col["packageCode"].GetValue() : string.Empty),
+                Confirmation = Convert.ToString(col["confirmation"] != null ? col["confirmation"].GetValue() : string.Empty),
+                ShipDate = Convert.ToDateTime(col["shipDate"] != null ? col["shipDate"].GetValue() : null),
+                HoldUntillDate = Convert.ToDateTime(col["holdUntillDate"] != null ? col["holdUntilDate"].GetValue() : null),
+                Weight = new Weight()
+                {
+                    Value = Convert.ToInt32(elementsWeightRes["value"] != null ? elementsWeightRes["value"].GetValue() : null),
+                    Units = Convert.ToString(elementsWeightRes["units"] != null ? elementsWeightRes["units"].GetValue() : string.Empty)
+                },
+                Dimensions = new Dimensions()
+                {
+                    Units = Convert.ToString(elementsDimensionsRes["units"] != null ? elementsDimensionsRes["units"].GetValue() : string.Empty),
+                    Length = Convert.ToInt32(elementsDimensionsRes["length"] != null ? elementsDimensionsRes["length"].GetValue() : null),
+                    Width = Convert.ToInt32(elementsDimensionsRes["width"] != null ? elementsDimensionsRes["width"].GetValue() : null),
+                    Height = Convert.ToInt32(elementsDimensionsRes["height"] != null ? elementsDimensionsRes["height"].GetValue() : null)
+                },
+                InsuranceOptions = new InsuranceOptions()
+                {
+                    Provider = Convert.ToString(elementsInsuranceRes["provider"] != null ? elementsInsuranceRes["provider"].GetValue() : string.Empty),
+                    InsureShipment = Convert.ToBoolean(elementsInsuranceRes["insureShipment"] != null ? elementsInsuranceRes["insureShipment"].GetValue() : null),
+                    InsuredValue = Convert.ToInt32(elementsInsuranceRes["insuredValue"] != null ? elementsInsuranceRes["insuredValue"].GetValue() : null),
+                },
+                InternationalOptions = new InternationalOptions()
+                {
+                    Contents = Convert.ToString(elementsInternationalRes["content"] != null ? elementsInternationalRes["content"].GetValue() : string.Empty),
+                    CustomsItems = (CustomsItems)(elementsInternationalRes["customsItems"]!=null ? elementsInternationalRes["customsItems"].GetValue() : null),
+                    NonDelivery = Convert.ToString(elementsInternationalRes["nonDelivery"] != null ? elementsInternationalRes["nonDelivery"].GetValue() : string.Empty)
+                },
+                AdvancedOptions = new AdvancedOptions()
+                {
+                    WarehouseId = Convert.ToInt32(elementsAdvancedRes["warehouseId"] != null ? elementsAdvancedRes["warehouseId"].GetValue() : null),
+                    NonMachinable = Convert.ToBoolean(elementsAdvancedRes["nonMachinable"] != null ? elementsAdvancedRes["nonMachinable"].GetValue() : null),
+                    SaturdayDelivery = Convert.ToBoolean(elementsAdvancedRes["saturdayDelivery"] != null ? elementsAdvancedRes["saturdayDelivery"].GetValue() : null),
+                    ContainsAlcohol = Convert.ToBoolean(elementsAdvancedRes["containsAlcohol"] != null ? elementsAdvancedRes["containsAlcohol"].GetValue() : null),
+                    MergedOrSplit = Convert.ToBoolean(elementsAdvancedRes["mergedOrSplit"] != null ? elementsAdvancedRes["mergedOrSplit"].GetValue() : null),
 
+                    /*
+                     "mergedIds" : []
+                     */
+                    MergedIds = new List<int?>() { },
+                    ParentId = Convert.ToInt32(elementsAdvancedRes["parentId"] != null ? elementsAdvancedRes["parentId"].GetValue() : null),
+                    StoreId = Convert.ToInt32(elementsAdvancedRes["storeId"] != null ? elementsAdvancedRes["storeId"].GetValue() : null),
+                    CustomField1 = Convert.ToString(elementsAdvancedRes["customField1"] != null ? elementsAdvancedRes["customField1"].GetValue() : string.Empty),
+                    CustomField2 = Convert.ToString(elementsAdvancedRes["customFiedl2"] != null ? elementsAdvancedRes["customField2"].GetValue() : string.Empty),
+                    CustomField3 = Convert.ToString(elementsAdvancedRes["customField3"] != null ? elementsAdvancedRes["customField3"].GetValue() : string.Empty),
+                    Source = Convert.ToString(elementsAdvancedRes["source"] != null ? elementsAdvancedRes["source"].GetValue() : string.Empty),
+                    BillToParty = Convert.ToString(elementsAdvancedRes["billToParty"] != null ? elementsAdvancedRes["billToParty"].GetValue() : string.Empty),
+                    BillToAccount = Convert.ToString(elementsAdvancedRes["billToAccount"] != null ? elementsAdvancedRes["billToAccount"].GetValue() : string.Empty),
+                    BillToPostalCode = Convert.ToString(elementsAdvancedRes["billToPostalCode"] != null ? elementsAdvancedRes["billToPostalCode"].GetValue() : string.Empty),
+                    BillToCountryCode = Convert.ToString(elementsAdvancedRes["billToCountryCode"] != null ? elementsAdvancedRes["billToCountryCode"].GetValue() : string.Empty)
+                },
+                TagIds = new List<int?> { },
+                UserId = Convert.ToInt32(col["userId"] != null ? col["userId"].GetValue() : null),
+                ExternallyFulfilled = Convert.ToBoolean(col["externallyFulfilled"] != null ? col["externallyFulfilled"].GetValue() : null),
+                ExternallyFulfilledBy = Convert.ToString(col["externallyFulfilledBy"] != null ? col["externallyFulfilledBy"].GetValue() : string.Empty)
             };
 
             return null;
