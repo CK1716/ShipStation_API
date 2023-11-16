@@ -279,8 +279,6 @@ namespace ShipStation.Api
             resJsonData = resJsonData.Replace("\r", "");
             resJsonData = resJsonData.Replace("\t", "");
 
-            // 여기까지 get 응답이 직렬화되어 서버에서 넘어온 상황.
-
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
             JsonObjectCollection col = (JsonObjectCollection)obj;
@@ -397,8 +395,6 @@ namespace ShipStation.Api
             };
 
             JsonObjectCollection reqMain = new JsonObjectCollection
-            /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
-            JsonObjectCollection items = new JsonObjectCollection */
             {
                 new JsonStringValue("OrderId", _createLabelForOrderReq.OrderID != null ? _createLabelForOrderReq.OrderID.ToString() : string.Empty),
                 new JsonStringValue("CarrierCode", _createLabelForOrderReq.CarrierCode != null ? _createLabelForOrderReq.CarrierCode.ToString() : string.Empty),
@@ -437,7 +433,6 @@ namespace ShipStation.Api
                 FormData = Convert.ToString(col["formData"] != null ? col["formData"].GetValue() : string.Empty)
             };
 
-
             return createLabelForOrderRes;
         }
     }
@@ -446,7 +441,7 @@ namespace ShipStation.Api
         public static Create_UpdateOrderResponse CuOrder(Create_UpdateOrderRequest _create_updateOrderReq)
         {
             string url = "https://ssapi.shipstation.com/orders/createorder";
-            
+
             // Create new object. type : Address
             JsonObjectCollection elementsBillTo = new JsonObjectCollection
             {
@@ -534,26 +529,33 @@ namespace ShipStation.Api
                 new JsonStringValue("billToCountryCode", _create_updateOrderReq.AdvancedOptions.BillToCountryCode != null ? _create_updateOrderReq.AdvancedOptions.BillToCountryCode.ToString() : string.Empty),
                 new JsonStringValue("billToMyOtherAccount", _create_updateOrderReq.AdvancedOptions.BillToMyOtherAccount != null ? _create_updateOrderReq.AdvancedOptions.BillToMyOtherAccount.ToString() : string.Empty)
             };
-            
-            // Create JsonArray.
+
+            // Create new ItemArray : type OrderItem
             JsonArrayCollection itemArray = new JsonArrayCollection();
+            JsonArrayCollection optionArray = new JsonArrayCollection();
 
             for (int i = 0; i < _create_updateOrderReq.Items.Count; i++)
             {
-                JsonArrayCollection optionArray = new JsonArrayCollection();
-                JsonObjectCollection elementsOption = new JsonObjectCollection
-                {
-                    new JsonStringValue("name", _create_updateOrderReq.Items[i].Options.Name != null ? _create_updateOrderReq.Items[i].Options.Name.ToString() : string.Empty),
-                    new JsonStringValue("value", _create_updateOrderReq.Items[i].Options.Value != null ? _create_updateOrderReq.Items[i].Options.Value.ToString() : string.Empty)
-                };
-                optionArray.Add(elementsOption);
-
                 JsonObjectCollection elementsItemsWeight = new JsonObjectCollection
                 {
                     new JsonStringValue("value", _create_updateOrderReq.Items[i].Weight.Value != null ? _create_updateOrderReq.Items[i].Weight.Value.ToString() : null),
                     new JsonStringValue("units", _create_updateOrderReq.Items[i].Weight.Units != null ? _create_updateOrderReq.Items[i].Weight.Units.ToString() : string.Empty),
                     new JsonStringValue("weightUnits", _create_updateOrderReq.Items[i].Weight.WeightUnits != null ? _create_updateOrderReq.Items[i].Weight.WeightUnits.ToString() : null),
                 };
+
+
+                JsonObjectCollection elementsOptions = new JsonObjectCollection();
+                for (int j = 0; j < _create_updateOrderReq.Items[i].Options.Count; j++)
+                {
+                    elementsOptions = new JsonObjectCollection
+                    {
+                        new JsonStringValue("name", _create_updateOrderReq.Items[i].Options[j].Name != null ? _create_updateOrderReq.Items[i].Options[j].Name.ToString(): string.Empty),
+                        new JsonStringValue("value", _create_updateOrderReq.Items[i].Options[j].Value != null ? _create_updateOrderReq.Items[i].Options[j].Value.ToString() : string.Empty)
+                    };
+                }
+                optionArray.Clear();
+                optionArray.Add(elementsOptions);
+
 
                 JsonObjectCollection elementsItmes = new JsonObjectCollection
                 {
@@ -576,18 +578,14 @@ namespace ShipStation.Api
                 };
 
                 itemArray.Add(elementsItmes);
-            } 
-            
+            }
+
             JsonArrayCollection jarry = new JsonArrayCollection();
-            for(int i = 0; i < _create_updateOrderReq.TagIds.Count; i++)
+            for (int i = 0; i < _create_updateOrderReq.TagIds.Count; i++)
             {
                 jarry.Add(new JsonNumericValue(Convert.ToInt32(_create_updateOrderReq.TagIds[i])));
             }
-            
-            
 
-            // Console.WriteLine(jarryItems);
-            
             // Json Request Text
             JsonObjectCollection reqMain = new JsonObjectCollection
             {
@@ -625,9 +623,8 @@ namespace ShipStation.Api
                 new JsonArrayCollection("tagIds", jarry)
             };
 
-            Console.WriteLine(reqMain);
             // response
-            string resJsonData = "{\r\n  \"orderId\": 140335319,\r\n  \"orderNumber\": \"TEST-ORDER-API-DOCS\",\r\n  \"orderKey\": \"0f6bec18-3e89-4881-83aa-f392d84f4c74\",\r\n  \"orderDate\": \"2015-06-29T08:46:27.0000000\",\r\n  \"createDate\": \"2016-02-16T15:16:53.7070000\",\r\n  \"modifyDate\": \"2016-02-16T15:16:53.7070000\",\r\n  \"paymentDate\": \"2015-06-29T08:46:27.0000000\",\r\n  \"shipByDate\": \"2015-07-05T00:00:00.0000000\",\r\n  \"orderStatus\": \"awaiting_shipment\",\r\n  \"customerId\": null,\r\n  \"customerUsername\": \"headhoncho@whitehouse.gov\",\r\n  \"customerEmail\": \"headhoncho@whitehouse.gov\",\r\n  \"billTo\": {\r\n    \"name\": \"The President\",\r\n    \"company\": null,\r\n    \"street1\": null,\r\n    \"street2\": null,\r\n    \"street3\": null,\r\n    \"city\": null,\r\n    \"state\": null,\r\n    \"postalCode\": null,\r\n    \"country\": null,\r\n    \"phone\": null,\r\n    \"residential\": null,\r\n    \"addressVerified\": null\r\n  },\r\n  \"shipTo\": {\r\n    \"name\": \"The President\",\r\n    \"company\": \"US Govt\",\r\n    \"street1\": \"1600 Pennsylvania Ave\",\r\n    \"street2\": \"Oval Office\",\r\n    \"street3\": null,\r\n    \"city\": \"Washington\",\r\n    \"state\": \"DC\",\r\n    \"postalCode\": \"20500\",\r\n    \"country\": \"US\",\r\n    \"phone\": \"555-555-5555\",\r\n    \"residential\": false,\r\n    \"addressVerified\": \"Address validation warning\"\r\n  },\r\n  \"items\": [\r\n    {\r\n      \"orderItemId\": 192210956,\r\n      \"lineItemKey\": \"vd08-MSLbtx\",\r\n      \"sku\": \"ABC123\",\r\n      \"name\": \"Test item #1\",\r\n      \"imageUrl\": null,\r\n      \"weight\": {\r\n        \"value\": 24,\r\n        \"units\": \"ounces\"\r\n      },\r\n      \"quantity\": 2,\r\n      \"unitPrice\": 99.99,\r\n      \"taxAmount\": 2.5,\r\n      \"shippingAmount\": 5,\r\n      \"warehouseLocation\": \"Aisle 1, Bin 7\",\r\n      \"options\": [\r\n        {\r\n          \"name\": \"Size\",\r\n          \"value\": \"Large\"\r\n        }\r\n      ],\r\n      \"productId\": null,\r\n      \"fulfillmentSku\": null,\r\n      \"adjustment\": false,\r\n      \"upc\": \"32-65-98\",\r\n      \"createDate\": \"2016-02-16T15:16:53.707\",\r\n      \"modifyDate\": \"2016-02-16T15:16:53.707\"\r\n    },\r\n    {\r\n      \"orderItemId\": 192210957,\r\n      \"lineItemKey\": null,\r\n      \"sku\": \"DISCOUNT CODE\",\r\n      \"name\": \"10% OFF\",\r\n      \"imageUrl\": null,\r\n      \"weight\": {\r\n        \"value\": 0,\r\n        \"units\": \"ounces\"\r\n      },\r\n      \"quantity\": 1,\r\n      \"unitPrice\": -20.55,\r\n      \"taxAmount\": null,\r\n      \"shippingAmount\": null,\r\n      \"warehouseLocation\": null,\r\n      \"options\": [],\r\n      \"productId\": null,\r\n      \"fulfillmentSku\": \"SKU-Discount\",\r\n      \"adjustment\": true,\r\n      \"upc\": null,\r\n      \"createDate\": \"2016-02-16T15:16:53.707\",\r\n      \"modifyDate\": \"2016-02-16T15:16:53.707\"\r\n    }\r\n  ],\r\n  \"orderTotal\": 194.43,\r\n  \"amountPaid\": 218.73,\r\n  \"taxAmount\": 5,\r\n  \"shippingAmount\": 10,\r\n  \"customerNotes\": \"Please ship as soon as possible!\",\r\n  \"internalNotes\": \"Customer called and would like to upgrade shipping\",\r\n  \"gift\": true,\r\n  \"giftMessage\": \"Thank you!\",\r\n  \"paymentMethod\": \"Credit Card\",\r\n  \"requestedShippingService\": \"Priority Mail\",\r\n  \"carrierCode\": \"fedex\",\r\n  \"serviceCode\": \"fedex_2day\",\r\n  \"packageCode\": \"package\",\r\n  \"confirmation\": \"delivery\",\r\n  \"shipDate\": \"2015-07-02\",\r\n  \"holdUntilDate\": null,\r\n  \"weight\": {\r\n    \"value\": 25,\r\n    \"units\": \"ounces\"\r\n  },\r\n  \"dimensions\": {\r\n    \"units\": \"inches\",\r\n    \"length\": 7,\r\n    \"width\": 5,\r\n    \"height\": 6\r\n  },\r\n  \"insuranceOptions\": {\r\n    \"provider\": \"carrier\",\r\n    \"insureShipment\": true,\r\n    \"insuredValue\": 200\r\n  },\r\n  \"internationalOptions\": {\r\n    \"contents\": null,\r\n    \"customsItems\": null,\r\n    \"nonDelivery\": null\r\n  },\r\n  \"advancedOptions\": {\r\n    \"warehouseId\": 9876,\r\n    \"nonMachinable\": false,\r\n    \"saturdayDelivery\": false,\r\n    \"containsAlcohol\": false,\r\n    \"mergedOrSplit\": false,\r\n    \"mergedIds\": [],\r\n    \"parentId\": null,\r\n    \"storeId\": 12345,\r\n    \"customField1\": \"Custom data that you can add to an order. See Custom Field #2 & #3 for more info!\",\r\n    \"customField2\": \"Per UI settings, this information can appear on some carrier's shipping labels. See link below\",\r\n    \"customField3\": \"https://help.shipstation.com/hc/en-us/articles/206639957\",\r\n    \"source\": \"Webstore\",\r\n    \"billToParty\": null,\r\n    \"billToAccount\": null,\r\n    \"billToPostalCode\": null,\r\n    \"billToCountryCode\": null\r\n  },\r\n  \"tagIds\": null,\r\n  \"userId\": null,\r\n  \"externallyFulfilled\": false,\r\n  \"externallyFulfilledBy\": null\r\n}\r\n";
+            string resJsonData = "{\r\n  \"orderId\": 140335319,\r\n  \"orderNumber\": \"TEST-ORDER-API-DOCS\",\r\n  \"orderKey\": \"0f6bec18-3e89-4881-83aa-f392d84f4c74\",\r\n  \"orderDate\": \"2015-06-29T08:46:27.0000000\",\r\n  \"createDate\": \"2016-02-16T15:16:53.7070000\",\r\n  \"modifyDate\": \"2016-02-16T15:16:53.7070000\",\r\n  \"paymentDate\": \"2015-06-29T08:46:27.0000000\",\r\n  \"shipByDate\": \"2015-07-05T00:00:00.0000000\",\r\n  \"orderStatus\": \"awaiting_shipment\",\r\n  \"customerId\": null,\r\n  \"customerUsername\": \"headhoncho@whitehouse.gov\",\r\n  \"customerEmail\": \"headhoncho@whitehouse.gov\",\r\n  \"billTo\": {\r\n    \"name\": \"The President\",\r\n    \"company\": null,\r\n    \"street1\": null,\r\n    \"street2\": null,\r\n    \"street3\": null,\r\n    \"city\": null,\r\n    \"state\": null,\r\n    \"postalCode\": null,\r\n    \"country\": null,\r\n    \"phone\": null,\r\n    \"residential\": null,\r\n    \"addressVerified\": null\r\n  },\r\n  \"shipTo\": {\r\n    \"name\": \"The President\",\r\n    \"company\": \"US Govt\",\r\n    \"street1\": \"1600 Pennsylvania Ave\",\r\n    \"street2\": \"Oval Office\",\r\n    \"street3\": null,\r\n    \"city\": \"Washington\",\r\n    \"state\": \"DC\",\r\n    \"postalCode\": \"20500\",\r\n    \"country\": \"US\",\r\n    \"phone\": \"555-555-5555\",\r\n    \"residential\": false,\r\n    \"addressVerified\": \"Address validation warning\"\r\n  },\r\n  \"items\": [\r\n    {\r\n      \"orderItemId\": 192210956,\r\n      \"lineItemKey\": \"vd08-MSLbtx\",\r\n      \"sku\": \"ABC123\",\r\n      \"name\": \"Test item #1\",\r\n      \"imageUrl\": null,\r\n      \"weight\": {\r\n        \"value\": 24,\r\n        \"units\": \"ounces\"\r\n      },\r\n      \"quantity\": 2,\r\n      \"unitPrice\": 99.99,\r\n      \"taxAmount\": 2.5,\r\n      \"shippingAmount\": 5,\r\n      \"warehouseLocation\": \"Aisle 1, Bin 7\",\r\n      \"options\": [\r\n        {\r\n          \"name\": \"Size\",\r\n          \"value\": \"Large\"\r\n        }\r\n      ],\r\n      \"productId\": null,\r\n      \"fulfillmentSku\": null,\r\n      \"adjustment\": false,\r\n      \"upc\": \"32-65-98\",\r\n      \"createDate\": \"2016-02-16T15:16:53.707\",\r\n      \"modifyDate\": \"2016-02-16T15:16:53.707\"\r\n    },\r\n    {\r\n      \"orderItemId\": 192210957,\r\n      \"lineItemKey\": null,\r\n      \"sku\": \"DISCOUNT CODE\",\r\n      \"name\": \"10% OFF\",\r\n      \"imageUrl\": null,\r\n      \"weight\": {\r\n        \"value\": 0,\r\n        \"units\": \"ounces\"\r\n      },\r\n      \"quantity\": 1,\r\n      \"unitPrice\": -20.55,\r\n      \"taxAmount\": null,\r\n      \"shippingAmount\": null,\r\n      \"warehouseLocation\": null,\r\n      \"options\": [\r\n        {\r\n          \"name\": null,\r\n          \"value\": null\r\n        }\r\n      ],\r\n      \"productId\": null,\r\n      \"fulfillmentSku\": \"SKU-Discount\",\r\n      \"adjustment\": true,\r\n      \"upc\": null,\r\n      \"createDate\": \"2016-02-16T15:16:53.707\",\r\n      \"modifyDate\": \"2016-02-16T15:16:53.707\"\r\n    }\r\n  ],\r\n  \"orderTotal\": 194.43,\r\n  \"amountPaid\": 218.73,\r\n  \"taxAmount\": 5,\r\n  \"shippingAmount\": 10,\r\n  \"customerNotes\": \"Please ship as soon as possible!\",\r\n  \"internalNotes\": \"Customer called and would like to upgrade shipping\",\r\n  \"gift\": true,\r\n  \"giftMessage\": \"Thank you!\",\r\n  \"paymentMethod\": \"Credit Card\",\r\n  \"requestedShippingService\": \"Priority Mail\",\r\n  \"carrierCode\": \"fedex\",\r\n  \"serviceCode\": \"fedex_2day\",\r\n  \"packageCode\": \"package\",\r\n  \"confirmation\": \"delivery\",\r\n  \"shipDate\": \"2015-07-02\",\r\n  \"holdUntilDate\": null,\r\n  \"weight\": {\r\n    \"value\": 25,\r\n    \"units\": \"ounces\"\r\n  },\r\n  \"dimensions\": {\r\n    \"units\": \"inches\",\r\n    \"length\": 7,\r\n    \"width\": 5,\r\n    \"height\": 6\r\n  },\r\n  \"insuranceOptions\": {\r\n    \"provider\": \"carrier\",\r\n    \"insureShipment\": true,\r\n    \"insuredValue\": 200\r\n  },\r\n  \"internationalOptions\": {\r\n    \"contents\": null,\r\n    \"customsItems\": null,\r\n    \"nonDelivery\": null\r\n  },\r\n  \"advancedOptions\": {\r\n    \"warehouseId\": 9876,\r\n    \"nonMachinable\": false,\r\n    \"saturdayDelivery\": false,\r\n    \"containsAlcohol\": false,\r\n    \"mergedOrSplit\": false,\r\n    \"mergedIds\": [ null ],\r\n    \"parentId\": null,\r\n    \"storeId\": 12345,\r\n    \"customField1\": \"Custom data that you can add to an order. See Custom Field #2 & #3 for more info!\",\r\n    \"customField2\": \"Per UI settings, this information can appear on some carrier's shipping labels. See link below\",\r\n    \"customField3\": \"https://help.shipstation.com/hc/en-us/articles/206639957\",\r\n    \"source\": \"Webstore\",\r\n    \"billToParty\": null,\r\n    \"billToAccount\": null,\r\n    \"billToPostalCode\": null,\r\n    \"billToCountryCode\": null\r\n  },\r\n  \"tagIds\": null,\r\n  \"userId\": null,\r\n  \"externallyFulfilled\": false,\r\n  \"externallyFulfilledBy\": null\r\n}\r\n";
 
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(resJsonData);
@@ -641,17 +638,27 @@ namespace ShipStation.Api
             JsonObjectCollection elementsInsuranceRes = (JsonObjectCollection)col["insuranceOptions"];
             JsonObjectCollection elementsInternationalRes = (JsonObjectCollection)col["internationalOptions"];
             JsonObjectCollection elementsAdvancedRes = (JsonObjectCollection)col["advancedOptions"];
-            List <OrderItem> listItems = new List<OrderItem>();
 
-            for (int i =0; i < resItems.Count; i++)
+            List<OrderItem> listItems = new List<OrderItem>();
+
+            for (int i = 0; i < resItems.Count; i++)
             {
                 JsonObjectCollection elements = (JsonObjectCollection)resItems[i];
                 JsonObjectCollection elementsItemWeight = (JsonObjectCollection)elements["weight"];
 
-                /*for( int j = 0; j < resItems.Count; j++)
+                JsonArrayCollection elementsItemsOptionsArry = (JsonArrayCollection)elements["options"];
+                
+                List<ItemOption> listItemsOptions = new List<ItemOption>();
+
+                for (int j = 0; j < elementsItemsOptionsArry.Count; j++)
                 {
-                    JsonObjectCollection elementItemsOptionsRes = (JsonObjectCollection)elements["options"];
-                }*/
+                    JsonObjectCollection elementsItemsOptions = (JsonObjectCollection)elementsItemsOptionsArry[j];
+                    listItemsOptions.Add(new ItemOption()
+                    {
+                        Name = Convert.ToString(elementsItemsOptions["name"] != null ? elementsItemsOptions["name"].GetValue() : string.Empty),
+                        Value = Convert.ToString(elementsItemsOptions["value"] != null ? elementsItemsOptions["value"].GetValue() : string.Empty)
+                    });
+                }
 
                 listItems.Add(new OrderItem()
                 {
@@ -670,16 +677,19 @@ namespace ShipStation.Api
                     TaxAmount = Convert.ToDouble(elements["taxAmount"] != null ? elements["taxAmount"].GetValue() : null),
                     ShippingAmount = Convert.ToInt32(elements["shippingAmount"] != null ? elements["shippingAmount"].GetValue() : null),
                     WarehouseLocation = Convert.ToString(elements["warehouseLocation"] != null ? elements["warehouseLocation"].GetValue() : string.Empty),
-                    // Options = ,
+                    Options = listItemsOptions,
                     ProductId = Convert.ToInt32(elements["productId"] != null ? elements["productId"].GetValue() : null),
                     FulfillmentSku = Convert.ToString(elements["fulfillmentSku"] != null ? elements["fulfillmentSku"].GetValue() : string.Empty),
                     Adjustment = Convert.ToBoolean(elements["adjustment"] != null ? elements["adjustment"].GetValue() : null),
                     Upc = Convert.ToString(elements["upc"] != null ? elements["upc"].GetValue() : string.Empty),
                     CreateDate = Convert.ToDateTime(elements["createDate"] != null ? elements["createDate"].GetValue() : null),
                     ModifyDate = Convert.ToDateTime(elements["modifyDate"] != null ? elements["modifyDate"].GetValue() : null)
-                });  
+                });
+
             }
 
+            List<int?> listMergedIds = new List<int?>();
+            
             Create_UpdateOrderResponse create_UpdateOrderResponse = new Create_UpdateOrderResponse()
             {
                 OrderId = Convert.ToInt32(col["orderId"] != null ? col["orderId"].GetValue() : null),
@@ -761,7 +771,7 @@ namespace ShipStation.Api
                 InternationalOptions = new InternationalOptions()
                 {
                     Contents = Convert.ToString(elementsInternationalRes["content"] != null ? elementsInternationalRes["content"].GetValue() : string.Empty),
-                    CustomsItems = (CustomsItems)(elementsInternationalRes["customsItems"]!=null ? elementsInternationalRes["customsItems"].GetValue() : null),
+                    CustomsItems = (CustomsItems)(elementsInternationalRes["customsItems"] != null ? elementsInternationalRes["customsItems"].GetValue() : null),
                     NonDelivery = Convert.ToString(elementsInternationalRes["nonDelivery"] != null ? elementsInternationalRes["nonDelivery"].GetValue() : string.Empty)
                 },
                 AdvancedOptions = new AdvancedOptions()
@@ -771,11 +781,7 @@ namespace ShipStation.Api
                     SaturdayDelivery = Convert.ToBoolean(elementsAdvancedRes["saturdayDelivery"] != null ? elementsAdvancedRes["saturdayDelivery"].GetValue() : null),
                     ContainsAlcohol = Convert.ToBoolean(elementsAdvancedRes["containsAlcohol"] != null ? elementsAdvancedRes["containsAlcohol"].GetValue() : null),
                     MergedOrSplit = Convert.ToBoolean(elementsAdvancedRes["mergedOrSplit"] != null ? elementsAdvancedRes["mergedOrSplit"].GetValue() : null),
-
-                    /*
-                     "mergedIds" : []
-                     */
-                    MergedIds = new List<int?>() { },
+                    MergedIds = listMergedIds,
                     ParentId = Convert.ToInt32(elementsAdvancedRes["parentId"] != null ? elementsAdvancedRes["parentId"].GetValue() : null),
                     StoreId = Convert.ToInt32(elementsAdvancedRes["storeId"] != null ? elementsAdvancedRes["storeId"].GetValue() : null),
                     CustomField1 = Convert.ToString(elementsAdvancedRes["customField1"] != null ? elementsAdvancedRes["customField1"].GetValue() : string.Empty),
@@ -792,8 +798,7 @@ namespace ShipStation.Api
                 ExternallyFulfilled = Convert.ToBoolean(col["externallyFulfilled"] != null ? col["externallyFulfilled"].GetValue() : null),
                 ExternallyFulfilledBy = Convert.ToString(col["externallyFulfilledBy"] != null ? col["externallyFulfilledBy"].GetValue() : string.Empty)
             };
-
-            return null;
+            return create_UpdateOrderResponse;
         }
     }
 }

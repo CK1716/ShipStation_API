@@ -31,7 +31,7 @@ namespace ShipStation.Models
             ModifyDate = null;
         }
         public OrderItem(int? _orderItemId, string _lineItemKey, string _sku, string _name, string _imageUrl, Weight _weight,
-            int _quantity, double? _unitPrice, double? _taxAmount, int? _shippingAmount, string _warehouseLocation, ItemOption _option,
+            int _quantity, double? _unitPrice, double? _taxAmount, int? _shippingAmount, string _warehouseLocation, List<ItemOption> _option,
             int _productId, string _fulfillmentSku, bool _adjustment, string _upc, DateTime? _createDate, DateTime? _modifyDate)
         {
             OrderItemId = _orderItemId;
@@ -65,7 +65,7 @@ namespace ShipStation.Models
         public double? TaxAmount { get; set; }
         public int? ShippingAmount { get; set; }
         public string WarehouseLocation { get; set; }
-        public ItemOption Options { get; set; }
+        public List<ItemOption> Options { get; set; }
         public int? ProductId { get; set; }
         public string FulfillmentSku { get; set; }
         public bool? Adjustment { get; set; }

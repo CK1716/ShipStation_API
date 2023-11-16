@@ -3,6 +3,7 @@
     "",
     "\\ShipStation",
     "\\ShipStation\\Entities",
+    "\\ShipStation\\Entities\\Orders",
     "\\ShipStation\\Models",
     "\\ShipStation_Test"
   ],

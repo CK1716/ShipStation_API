@@ -14,7 +14,20 @@ namespace ShipStation_Test
     {
         static void Main(string[] args)
         {
+            List<ItemOption> optionList01 = new List<ItemOption>();
+            ItemOption itemOptions01 = new ItemOption (
+                _name: "Size",
+                _value: "Large");
+            optionList01.Add (itemOptions01);
+
+            List<ItemOption> optionList02 = new List<ItemOption>();
+            ItemOption itemOptions02 = new ItemOption(
+                _name: null,
+                _value: null);
+            optionList02.Add(itemOptions02);
+
             List<OrderItem> itemList = new List<OrderItem>();
+
             OrderItem item01 = new OrderItem(
                 _orderItemId: null,
                     _lineItemKey: "vd08-MSLbtx",
@@ -30,9 +43,7 @@ namespace ShipStation_Test
                     _taxAmount: 2.5,
                     _shippingAmount: 5,
                     _warehouseLocation: "Aisle 1, Bin 7",
-                    _option: new ItemOption(
-                        _name: "Size",
-                        _value: "Large"),
+                    _option: new List<ItemOption>(optionList01),
                     _productId: 123456,
                     _fulfillmentSku: null,
                     _adjustment: false,
@@ -55,9 +66,7 @@ namespace ShipStation_Test
                         _taxAmount: null,
                         _shippingAmount: null,
                         _warehouseLocation: null,
-                        _option: new ItemOption(
-                            _name: null,
-                            _value: null),
+                        _option: new List<ItemOption>(optionList02),
                         _productId: 123456,
                         _fulfillmentSku: "SKU-Discount",
                         _adjustment: true,
