@@ -12,7 +12,7 @@ namespace ShipStation_Test
 {
     public class Create_UpdateOrders
     {
-        static void Main(string[] args)
+        static void Create_UpdateOrder(string[] args)
         {
             List<ItemOption> optionList01 = new List<ItemOption>();
             ItemOption itemOptions01 = new ItemOption (
@@ -79,7 +79,7 @@ namespace ShipStation_Test
             itemList.Add(item02);
 
             Create_UpdateOrderRequest create_updateOrderReq = new Create_UpdateOrderRequest(
-                _orderId: 37701499, // orderId == customerId
+                _orderId: 37701499, 
                 _orderNumber: "TEST-ORDER-API-DOCS",
                 _orderKey: "0f6bec18-3e89-4881-83aa-f392d84f4c74",
                 _orderDate: DateTime.Parse("2015-06-29T08:46:27.0000000"),

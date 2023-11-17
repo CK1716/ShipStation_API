@@ -8,7 +8,6 @@ namespace ShipStation.Models
 {
     public class OrderItem
     {
-        
         public OrderItem()
         {
             OrderItemId = null;
