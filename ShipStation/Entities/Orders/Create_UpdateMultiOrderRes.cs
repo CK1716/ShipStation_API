@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShipStation.Entities.Orders
+namespace ShipStation.Entities
 {
-    public class Create_UpdateMultiOrderRes
+    public class Create_UpdateMultiOrderResponse
     {
 
-        public Create_UpdateMultiOrderRes()
+        public Create_UpdateMultiOrderResponse()
         {
             HasError = null;
             OrderId = null;
@@ -18,7 +18,7 @@ namespace ShipStation.Entities.Orders
             Success = null;
             ErrorMessage = string.Empty;
         }
-        public Create_UpdateMultiOrderRes(bool? _hasError, int? _orderId, string _orderNumber, string _orderKey, bool? _success, string _errorMessage)
+        public Create_UpdateMultiOrderResponse(bool? _hasError, int? _orderId, string _orderNumber, string _orderKey, bool? _success, string _errorMessage)
         {
             HasError = _hasError;
             OrderId = _orderId;

@@ -1,4 +1,5 @@
-﻿using ShipStation.Entities;
+﻿using ShipStation.Api;
+using ShipStation.Entities;
 using ShipStation.Models;
 using System;
 using System.Collections.Generic;
@@ -178,15 +179,89 @@ namespace ShipStation_Test
                     _billToPostalCode: null,
                     _billToCountryCode: null,
                     _billToMyOtherAcoount: null),
-                _tagIds: new List<int?>(),
+                _tagIds: new List<int?> { 53974 },
                 _userId: null,
                 _externallyFulfilled: null,
                 _externallyFulfilledBy: null);
-                
 
+            order.Add(order01);
 
+            Order order02 = new Order(
+                _orderId: null,
+                _orderNumber: "TEST-ORDER-API-DOCS-02",
+                _orderKey: "0d6bec18-3e79-4981-83ca-f392d84f4c19",
+                _orderDate: DateTime.Parse("2015-06-29T08:46:27.0000000"),
+                _createDate: null,
+                _modifyDate: null,
+                _paymentDate: DateTime.Parse("2015-06-29T08:46:27.0000000"),
+                _shipByDate: DateTime.Parse("2015-07-05T00:00:00.0000000"),
+                _orderStatus: "awaiting_shipment",
+                _customerId: 37701499,
+                _customerUsername: "headhoncho@whitehouse.gov",
+                _customerEmail: "headhoncho@whitehouse.gov",
+                _billTo: objBillTo,
+                _shipTo: objShipTo,
+                _items: itemsArr,
+                _orderTotal: null,
+                _amountPaid: 218.73,
+                _taxAmount: 5,
+                _shippingAmount: 10,
+                _customerNotes: "Please ship as soon as possible!",
+                _internalNotes: "Customer called and would like to upgrade shipping",
+                _gift: null,
+                _giftMessage: "Thank you",
+                _paymentMethod: "Credit Card",
+                _requestedShippingService: "Priority Mail",
+                _carrierCode: "fedex",
+                _serviceCode: "fedex_2day",
+                _packageCode: "package",
+                _confirmation: "delivery",
+                _shipDate: DateTime.Parse("2015-07-02"),
+                _holdUntilDate: null,
+                _weight: new Weight(
+                    _value: 25,
+                    _units: "ounces",
+                    _weightUnits: null),
+                _dimensions: new Dimensions(
+                    _units: "inches",
+                    _length: 7,
+                    _width: 5,
+                    _height: 6),
+                _insuranceOptions: new InsuranceOptions(
+                    _provider: "carrier",
+                    _insureShipment: true,
+                    _insuredValue: 200),
+                _internationalOptions: new InternationalOptions(
+                    _contents: null,
+                    _customsItems: null,
+                    _nonDelivery: null),
+                _advancedOptions: new AdvancedOptions(
+                    _warehouseId: null,
+                    _nonMachinable: false,
+                    _saturdayDelivery: false,
+                    _containsAlcohol: false,
+                    _mergedOrSplit: false,
+                    _mergedIds: new List<int?>(),
+                    _parentId: null,
+                    _storeId: null,
+                    _customField1: "Custom data that you can add to an order. See Custom Field #2 & #3 for more info!",
+                    _customField2: "Per UI settings, this information can appear on some carrier's shipping labels. See link below",
+                    _customField3: "https://help.shipstation.com/hc/en-us/articles/206639957",
+                    _source: "Webstore",
+                    _billToParty: null,
+                    _billToAccount: null,
+                    _billToPostalCode: null,
+                    _billToCountryCode: null,
+                    _billToMyOtherAcoount: null),
+                _tagIds: new List<int?> { 53974 },
+                _userId: null,
+                _externallyFulfilled: false,
+                _externallyFulfilledBy: null);
 
-            Create_UpdateMultiOrderReq createUpdateMultiOrderReq = new Create_UpdateMultiOrderReq(_orders: order);
+            order.Add(order02);
+
+            Create_UpdateMultiOrderRequest createUpdateMultiOrderReq = new Create_UpdateMultiOrderRequest(_orders: order);
+            Create_UpdateMultiOrderResponse resDate = CreateUpdateMultiOrder.MultiOrder(createUpdateMultiOrderReq);
 
         }
     }

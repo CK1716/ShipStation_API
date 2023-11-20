@@ -647,7 +647,7 @@ namespace ShipStation.Api
                 JsonObjectCollection elementsItemWeight = (JsonObjectCollection)elements["weight"];
 
                 JsonArrayCollection elementsItemsOptionsArry = (JsonArrayCollection)elements["options"];
-                
+
                 List<ItemOption> listItemsOptions = new List<ItemOption>();
 
                 for (int j = 0; j < elementsItemsOptionsArry.Count; j++)
@@ -689,7 +689,7 @@ namespace ShipStation.Api
             }
 
             List<int?> listMergedIds = new List<int?>();
-            
+
             Create_UpdateOrderResponse create_UpdateOrderResponse = new Create_UpdateOrderResponse()
             {
                 OrderId = Convert.ToInt32(col["orderId"] != null ? col["orderId"].GetValue() : null),
@@ -799,6 +799,141 @@ namespace ShipStation.Api
                 ExternallyFulfilledBy = Convert.ToString(col["externallyFulfilledBy"] != null ? col["externallyFulfilledBy"].GetValue() : string.Empty)
             };
             return create_UpdateOrderResponse;
+        }
+
+
+    }
+    public class CreateUpdateMultiOrder
+    {
+        public static Create_UpdateMultiOrderResponse MultiOrder(Create_UpdateMultiOrderRequest _createUpdateMultiOrderReq)
+        {
+            string url = "http://ssapi.shipstation.com//orders/createorders";
+
+            for (int i = 0; i < _createUpdateMultiOrderReq.Orders.Count; i++)
+            {
+                JsonObjectCollection elementBillTo = new JsonObjectCollection
+                {
+                    new JsonStringValue("name", _createUpdateMultiOrderReq.Orders[i].BillTo.Name != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.Name.ToString() : string.Empty),
+                    new JsonStringValue("company", _createUpdateMultiOrderReq.Orders[i].BillTo.Company != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.Company.ToString() : string.Empty),
+                    new JsonStringValue("street1", _createUpdateMultiOrderReq.Orders[i].BillTo.Street1 != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.Street1.ToString() : string.Empty),
+                    new JsonStringValue("street2", _createUpdateMultiOrderReq.Orders[i].BillTo.Street2 != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.Street2.ToString() : string.Empty),
+                    new JsonStringValue("street3", _createUpdateMultiOrderReq.Orders[i].BillTo.Street3 != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.Street3.ToString() : string.Empty),
+                    new JsonStringValue("city", _createUpdateMultiOrderReq.Orders[i].BillTo.City != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.City.ToString() : string.Empty),
+                    new JsonStringValue("state", _createUpdateMultiOrderReq.Orders[i].BillTo.State != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.State.ToString() : string.Empty),
+                    new JsonStringValue("postalCode", _createUpdateMultiOrderReq.Orders[i].BillTo.PostalCode != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.PostalCode.ToString() : string.Empty),
+                    new JsonStringValue("country", _createUpdateMultiOrderReq.Orders[i].BillTo.Country != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.Country.ToString() : string.Empty),
+                    new JsonStringValue("phone", _createUpdateMultiOrderReq.Orders[i].BillTo.Phone != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.Phone.ToString() : string.Empty),
+                    new JsonStringValue("residential", _createUpdateMultiOrderReq.Orders[i].BillTo.IsResidential != null ? _createUpdateMultiOrderReq.Orders[i].BillTo.IsResidential.ToString() : string.Empty)
+                };
+
+                JsonObjectCollection elementShipTo = new JsonObjectCollection
+                {
+                    new JsonStringValue("name", _createUpdateMultiOrderReq.Orders[i].ShipTo.Name != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.Name.ToString() : string.Empty),
+                    new JsonStringValue("company", _createUpdateMultiOrderReq.Orders[i].ShipTo.Company != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.Company.ToString() : string.Empty),
+                    new JsonStringValue("street1", _createUpdateMultiOrderReq.Orders[i].ShipTo.Street1 != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.Street1.ToString() : string.Empty),
+                    new JsonStringValue("street2", _createUpdateMultiOrderReq.Orders[i].ShipTo.Street2 != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.Street2.ToString() : string.Empty),
+                    new JsonStringValue("street3", _createUpdateMultiOrderReq.Orders[i].ShipTo.Street3 != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.Street3.ToString() : string.Empty),
+                    new JsonStringValue("city", _createUpdateMultiOrderReq.Orders[i].ShipTo.City != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.City.ToString() : string.Empty),
+                    new JsonStringValue("state", _createUpdateMultiOrderReq.Orders[i].ShipTo.State != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.State.ToString() : string.Empty),
+                    new JsonStringValue("postalCode", _createUpdateMultiOrderReq.Orders[i].ShipTo.PostalCode != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.PostalCode.ToString() : string.Empty),
+                    new JsonStringValue("country", _createUpdateMultiOrderReq.Orders[i].ShipTo.Country != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.Country.ToString() : string.Empty),
+                    new JsonStringValue("phone", _createUpdateMultiOrderReq.Orders[i].ShipTo.Phone != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.Phone.ToString() : string.Empty),
+                    new JsonStringValue("residential", _createUpdateMultiOrderReq.Orders[i].ShipTo.IsResidential != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.IsResidential.ToString() : string.Empty)
+                };
+
+                JsonObjectCollection elementWeight = new JsonObjectCollection
+                {
+                    new JsonStringValue("value", _createUpdateMultiOrderReq.Orders[i].Weight.Value != null ? _createUpdateMultiOrderReq.Orders[i].Weight.Value.ToString() : null),
+                    new JsonStringValue("units", _createUpdateMultiOrderReq.Orders[i].Weight.Units != null ? _createUpdateMultiOrderReq.Orders[i].Weight.Units.ToString() : string.Empty)
+
+                };
+
+                JsonObjectCollection elementDimensions = new JsonObjectCollection
+                {
+                    new JsonStringValue("units", _createUpdateMultiOrderReq.Orders[i].Dimensions.Units != null ? _createUpdateMultiOrderReq.Orders[i].Dimensions.Units.ToString() : string.Empty),
+                    new JsonStringValue("length", _createUpdateMultiOrderReq.Orders[i].Dimensions.Length != null ? _createUpdateMultiOrderReq.Orders[i].Dimensions.Length.ToString() : string.Empty),
+                    new JsonStringValue("width", _createUpdateMultiOrderReq.Orders[i].Dimensions.Width != null ? _createUpdateMultiOrderReq.Orders[i].Dimensions.Width.ToString() : string.Empty),
+                    new JsonStringValue("height", _createUpdateMultiOrderReq.Orders[i].Dimensions.Height != null ? _createUpdateMultiOrderReq.Orders[i].Dimensions.Height.ToString() : string.Empty),
+                };
+
+                JsonObjectCollection elementInsuranceOptions = new JsonObjectCollection
+                {
+                    new JsonStringValue("provider", _createUpdateMultiOrderReq.Orders[i].InsuranceOptions.Provider != null ? _createUpdateMultiOrderReq.Orders[i].InsuranceOptions.Provider.ToString() : string.Empty),
+                    new JsonStringValue("insureShipment", _createUpdateMultiOrderReq.Orders[i].InsuranceOptions.InsureShipment != null ? _createUpdateMultiOrderReq.Orders[i].InsuranceOptions.InsureShipment.ToString() : null),
+                    new JsonStringValue("insuredValue", _createUpdateMultiOrderReq.Orders[i].InsuranceOptions.InsuredValue != null ? _createUpdateMultiOrderReq.Orders[i].InsuranceOptions.InsuredValue.ToString() : null)
+                };
+
+                JsonObjectCollection elementInternationalOptions = new JsonObjectCollection
+                {
+                    new JsonStringValue("contents", _createUpdateMultiOrderReq.Orders[i].InternationalOptions.Contents != null ? _createUpdateMultiOrderReq.Orders[i].InternationalOptions.Contents.ToString() : string.Empty),
+                    new JsonStringValue("customsItems", _createUpdateMultiOrderReq.Orders[i].InternationalOptions.CustomsItems != null ? _createUpdateMultiOrderReq.Orders[i].InternationalOptions.CustomsItems.ToString() : string.Empty)
+                };
+
+                JsonArrayCollection jarr = new JsonArrayCollection();
+                for (int j = 0; j < _createUpdateMultiOrderReq.Orders[i].TagIds.Count; j++)
+                {
+                    jarr.Add(new JsonNumericValue(Convert.ToInt32(_createUpdateMultiOrderReq.Orders[i].TagIds[j])));
+                }
+
+                JsonObjectCollection elemenAdvancedOptions = new JsonObjectCollection
+                {
+                    new JsonStringValue("warehouseId", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.WarehouseId != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.WarehouseId.ToString() : null),
+                    new JsonStringValue("nonMachinable", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.NonMachinable != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.NonMachinable.ToString() : null),
+                    new JsonStringValue("saturdayDelivery", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.SaturdayDelivery != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.SaturdayDelivery.ToString() : null),
+                    new JsonStringValue("containsAlcohol", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.ContainsAlcohol != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.SaturdayDelivery.ToString() : null),
+                    new JsonStringValue("mergedOrSplit", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.MergedOrSplit != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.MergedOrSplit.ToString() : null),
+                    new JsonObjectCollection("mergedIds"),
+                    new JsonStringValue("parentId", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.ParentId != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.ParentId.ToString() : null),
+                    new JsonStringValue("storeId", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.StoreId != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.StoreId.ToString() : null),
+                    new JsonStringValue("customField1", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.CustomField1 != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.CustomField1.ToString() : null),
+                    new JsonStringValue("customField2", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.CustomField2 != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.CustomField2.ToString() : null),
+                    new JsonStringValue("customField3", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.CustomField3 != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.CustomField3.ToString() : null),
+                    new JsonStringValue("source", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.Source != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.Source.ToString() : null),
+                    new JsonStringValue("billToParty", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToParty != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToParty.ToString() : null),
+                    new JsonStringValue("billToAccount", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToAccount != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToAccount.ToString() : null),
+                    new JsonStringValue("billToPostalCode", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToPostalCode != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToPostalCode.ToString() : null),
+                    new JsonStringValue("billToCountryCode", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToCountryCode != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToCountryCode.ToString() : null)
+                };
+
+                JsonArrayCollection reqMain = new JsonArrayCollection();
+                JsonObjectCollection jobj = new JsonObjectCollection
+                {
+                    new JsonStringValue("orderNumber", _createUpdateMultiOrderReq.Orders[i].OrderNumber != null ? _createUpdateMultiOrderReq.Orders[i].OrderNumber.ToString() : string.Empty),
+                    new JsonStringValue("orderKey", _createUpdateMultiOrderReq.Orders[i].OrderKey != null ? _createUpdateMultiOrderReq.Orders[i].OrderKey.ToString() : string.Empty),
+                    new JsonStringValue("orderDate", _createUpdateMultiOrderReq.Orders[i].OrderDate != null ? _createUpdateMultiOrderReq.Orders[i].OrderDate.ToString() : null),
+                    new JsonStringValue("paymentDate", _createUpdateMultiOrderReq.Orders[i].PaymentDate != null ? _createUpdateMultiOrderReq.Orders[i].PaymentDate.ToString() : null),
+                    new JsonStringValue("shipByDate", _createUpdateMultiOrderReq.Orders[i].ShipByDate != null ? _createUpdateMultiOrderReq.Orders[i].ShipByDate.ToString() : null),
+                    new JsonStringValue("orderStatus", _createUpdateMultiOrderReq.Orders[i].OrderStatus != null ? _createUpdateMultiOrderReq.Orders[i].OrderStatus.ToString() : string.Empty),
+                    new JsonStringValue("customerId", _createUpdateMultiOrderReq.Orders[i].CustomerId != null ? _createUpdateMultiOrderReq.Orders[i].OrderId.ToString() : null),
+                    new JsonStringValue("customerUsername", _createUpdateMultiOrderReq.Orders[i].CustomerUsername != null ? _createUpdateMultiOrderReq.Orders[i].CustomerUsername.ToString() : string.Empty),
+                    new JsonStringValue("customerEmail", _createUpdateMultiOrderReq.Orders[i].CustomerEmail != null ? _createUpdateMultiOrderReq.Orders[i].CustomerEmail.ToString() : null),
+                    new JsonObjectCollection("billTo", elementBillTo),
+                    new JsonObjectCollection("shipTo", elementShipTo),
+                    new JsonArrayCollection("items"), 
+                    new JsonStringValue("amountPaid", _createUpdateMultiOrderReq.Orders[i].AmountPaid != null ? _createUpdateMultiOrderReq.Orders[i].AmountPaid.ToString() : null),
+                    new JsonStringValue("taxAmount", _createUpdateMultiOrderReq.Orders[i].TaxAmount != null ? _createUpdateMultiOrderReq.Orders[i].TaxAmount.ToString() : null),
+                    new JsonStringValue("shippingAmount", _createUpdateMultiOrderReq.Orders[i].ShippingAmount != null ? _createUpdateMultiOrderReq.Orders[i].ShippingAmount.ToString() : null),
+                    new JsonStringValue("customerNotes", _createUpdateMultiOrderReq.Orders[i].CustomerNotes != null ? _createUpdateMultiOrderReq.Orders[i].CustomerNotes.ToString() : string.Empty),
+                    new JsonStringValue("internalNotes", _createUpdateMultiOrderReq.Orders[i].InternalNotes != null ? _createUpdateMultiOrderReq.Orders[i].InternalNotes.ToString() : string.Empty),
+                    new JsonStringValue("gift", _createUpdateMultiOrderReq.Orders[i].Gift != null ? _createUpdateMultiOrderReq.Orders[i].Gift.ToString() : null),
+                    new JsonStringValue("giftMessage", _createUpdateMultiOrderReq.Orders[i].GiftMessage != null ? _createUpdateMultiOrderReq.Orders[i].GiftMessage.ToString() : string.Empty),
+                    new JsonStringValue("paymentMethod", _createUpdateMultiOrderReq.Orders[i].PaymentMethod != null ? _createUpdateMultiOrderReq.Orders[i].PaymentMethod.ToString() : string.Empty),
+                    new JsonStringValue("requestedShippingService", _createUpdateMultiOrderReq.Orders[i].RequestedShippingService != null ? _createUpdateMultiOrderReq.Orders[i].RequestedShippingService.ToString() : string.Empty),
+                    new JsonStringValue("carrierCode", _createUpdateMultiOrderReq.Orders[i].CarrierCode != null ? _createUpdateMultiOrderReq.Orders[i].CarrierCode.ToString() : string.Empty),
+                    new JsonStringValue("serviceCode", _createUpdateMultiOrderReq.Orders[i].ServiceCode != null ? _createUpdateMultiOrderReq.Orders[i].ServiceCode.ToString() : string.Empty),
+                    new JsonStringValue("packageCode", _createUpdateMultiOrderReq.Orders[i].PackageCode != null ? _createUpdateMultiOrderReq.Orders[i].PackageCode.ToString() : string.Empty),
+                    new JsonStringValue("confirmation", _createUpdateMultiOrderReq.Orders[i].Confirmation != null ? _createUpdateMultiOrderReq.Orders[i].Confirmation.ToString() : string.Empty),
+                    new JsonStringValue("shipDate", _createUpdateMultiOrderReq.Orders[i].ShipDate != null ? _createUpdateMultiOrderReq.Orders[i].ShipDate.ToString() : null),
+                    new JsonObjectCollection("weight", elementWeight),
+                    new JsonObjectCollection("dimensions", elementDimensions),
+                    new JsonObjectCollection("insuranceOptions", elementInsuranceOptions),
+                    new JsonObjectCollection("internationalOptions", elementInternationalOptions),
+                    new JsonObjectCollection("advancedOptions", elemenAdvancedOptions),
+                    new JsonArrayCollection("tagIds", jarr)
+                };
+                reqMain.Add(jobj);
+            }
+            return null;
         }
     }
 }

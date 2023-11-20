@@ -8,13 +8,13 @@ using ShipStation.Models;
 
 namespace ShipStation.Entities
 {
-    public class Create_UpdateMultiOrderReq
+    public class Create_UpdateMultiOrderRequest
     { 
-        public Create_UpdateMultiOrderReq()
+        public Create_UpdateMultiOrderRequest()
         {
             Orders = null;
         }
-        public Create_UpdateMultiOrderReq(List<Order> _orders)
+        public Create_UpdateMultiOrderRequest(List<Order> _orders)
         {
             Orders = _orders;
         }
