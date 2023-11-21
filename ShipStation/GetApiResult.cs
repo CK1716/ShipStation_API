@@ -1,14 +1,10 @@
-﻿using Newtonsoft.Json;
-using ShipStation.Entities;
+﻿using ShipStation.Entities;
 using ShipStation.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Json;
-using System.Runtime.InteropServices;
-using System.Security.Policy;
 using System.Text;
 
 namespace ShipStation.Api
@@ -841,6 +837,51 @@ namespace ShipStation.Api
                     new JsonStringValue("residential", _createUpdateMultiOrderReq.Orders[i].ShipTo.IsResidential != null ? _createUpdateMultiOrderReq.Orders[i].ShipTo.IsResidential.ToString() : string.Empty)
                 };
 
+                JsonArrayCollection itemList = new JsonArrayCollection();
+
+                for (int j = 0; j < _createUpdateMultiOrderReq.Orders[i].Items.Count; j++)
+                {
+                    JsonObjectCollection elementItemsWeight = new JsonObjectCollection
+                    {
+                        new JsonStringValue("value", _createUpdateMultiOrderReq.Orders[i].Items[j].Weight.Value != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Weight.Value.ToString() : null),
+                        new JsonStringValue("units", _createUpdateMultiOrderReq.Orders[i].Items[j].Weight.Units != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Weight.Units.ToString() : string.Empty)
+                    };
+
+                    JsonArrayCollection itemsOptions = new JsonArrayCollection();
+                    JsonObjectCollection elementItemsOptions = null;
+                    for (int k = 0; k < _createUpdateMultiOrderReq.Orders[i].Items[j].Options.Count; k++)
+                    {
+                        elementItemsOptions = new JsonObjectCollection
+                        {
+                            new JsonStringValue("name", _createUpdateMultiOrderReq.Orders[i].Items[j].Options[k].Name != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Options[k].Name.ToString() : string.Empty),
+                            new JsonStringValue("value", _createUpdateMultiOrderReq.Orders[i].Items[j].Options[k].Value != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Options[k].Value.ToString() : string.Empty)
+                        };
+                        itemsOptions.Add(elementItemsOptions);
+                    }
+
+                    JsonObjectCollection items = new JsonObjectCollection
+                    {
+                        new JsonStringValue("lineItemKey", _createUpdateMultiOrderReq.Orders[i].Items[j].LineItemKey != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].LineItemKey.ToString() : string.Empty),
+                        new JsonStringValue("sku", _createUpdateMultiOrderReq.Orders[i].Items[j].Sku != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Sku.ToString() : string.Empty),
+                        new JsonStringValue("name", _createUpdateMultiOrderReq.Orders[i].Items[j].Name != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Name.ToString() : string.Empty),
+                        new JsonStringValue("image", _createUpdateMultiOrderReq.Orders[i].Items[j].ImageUrl != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].ImageUrl.ToString() : string.Empty),
+                        new JsonObjectCollection("weight", elementItemsWeight),
+                        new JsonStringValue("quantity", _createUpdateMultiOrderReq.Orders[i].Items[j].Quantity != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Quantity.ToString() : null),
+                        new JsonStringValue("unitPrice", _createUpdateMultiOrderReq.Orders[i].Items[j].UnitPrice != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].UnitPrice.ToString() : null),
+                        new JsonStringValue("taxAmount", _createUpdateMultiOrderReq.Orders[i].Items[j].TaxAmount != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].TaxAmount.ToString() : null),
+                        new JsonStringValue("shippingAmount", _createUpdateMultiOrderReq.Orders[i].Items[j].ShippingAmount != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].ShippingAmount.ToString() : null),
+                        new JsonStringValue("warehouseLocation", _createUpdateMultiOrderReq.Orders[i].Items[j].WarehouseLocation != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].WarehouseLocation.ToString() : null),
+                        new JsonArrayCollection("options", itemsOptions),
+                        new JsonStringValue("productId", _createUpdateMultiOrderReq.Orders[i].Items[j].ProductId != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].ProductId.ToString() : null),
+                        new JsonStringValue("fulfillmentSku", _createUpdateMultiOrderReq.Orders[i].Items[j].FulfillmentSku != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].FulfillmentSku.ToString() : string.Empty),
+                        new JsonStringValue("adjustment", _createUpdateMultiOrderReq.Orders[i].Items[j].Adjustment != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Adjustment.ToString() : null),
+                        new JsonStringValue("upc", _createUpdateMultiOrderReq.Orders[i].Items[j].Upc != null ? _createUpdateMultiOrderReq.Orders[i].Items[j].Upc.ToString() : string.Empty)
+                    };
+                    itemList.Add(items);
+                }
+
+
+
                 JsonObjectCollection elementWeight = new JsonObjectCollection
                 {
                     new JsonStringValue("value", _createUpdateMultiOrderReq.Orders[i].Weight.Value != null ? _createUpdateMultiOrderReq.Orders[i].Weight.Value.ToString() : null),
@@ -896,7 +937,8 @@ namespace ShipStation.Api
                 };
 
                 JsonArrayCollection reqMain = new JsonArrayCollection();
-                JsonObjectCollection jobj = new JsonObjectCollection
+                JsonObjectCollection jobj = null;
+                jobj = new JsonObjectCollection
                 {
                     new JsonStringValue("orderNumber", _createUpdateMultiOrderReq.Orders[i].OrderNumber != null ? _createUpdateMultiOrderReq.Orders[i].OrderNumber.ToString() : string.Empty),
                     new JsonStringValue("orderKey", _createUpdateMultiOrderReq.Orders[i].OrderKey != null ? _createUpdateMultiOrderReq.Orders[i].OrderKey.ToString() : string.Empty),
@@ -904,12 +946,12 @@ namespace ShipStation.Api
                     new JsonStringValue("paymentDate", _createUpdateMultiOrderReq.Orders[i].PaymentDate != null ? _createUpdateMultiOrderReq.Orders[i].PaymentDate.ToString() : null),
                     new JsonStringValue("shipByDate", _createUpdateMultiOrderReq.Orders[i].ShipByDate != null ? _createUpdateMultiOrderReq.Orders[i].ShipByDate.ToString() : null),
                     new JsonStringValue("orderStatus", _createUpdateMultiOrderReq.Orders[i].OrderStatus != null ? _createUpdateMultiOrderReq.Orders[i].OrderStatus.ToString() : string.Empty),
-                    new JsonStringValue("customerId", _createUpdateMultiOrderReq.Orders[i].CustomerId != null ? _createUpdateMultiOrderReq.Orders[i].OrderId.ToString() : null),
+                    new JsonStringValue("customerId", _createUpdateMultiOrderReq.Orders[i].CustomerId != null ? _createUpdateMultiOrderReq.Orders[i].CustomerId.ToString() : null),
                     new JsonStringValue("customerUsername", _createUpdateMultiOrderReq.Orders[i].CustomerUsername != null ? _createUpdateMultiOrderReq.Orders[i].CustomerUsername.ToString() : string.Empty),
                     new JsonStringValue("customerEmail", _createUpdateMultiOrderReq.Orders[i].CustomerEmail != null ? _createUpdateMultiOrderReq.Orders[i].CustomerEmail.ToString() : null),
                     new JsonObjectCollection("billTo", elementBillTo),
                     new JsonObjectCollection("shipTo", elementShipTo),
-                    new JsonArrayCollection("items"), 
+                    new JsonArrayCollection("items", itemList),
                     new JsonStringValue("amountPaid", _createUpdateMultiOrderReq.Orders[i].AmountPaid != null ? _createUpdateMultiOrderReq.Orders[i].AmountPaid.ToString() : null),
                     new JsonStringValue("taxAmount", _createUpdateMultiOrderReq.Orders[i].TaxAmount != null ? _createUpdateMultiOrderReq.Orders[i].TaxAmount.ToString() : null),
                     new JsonStringValue("shippingAmount", _createUpdateMultiOrderReq.Orders[i].ShippingAmount != null ? _createUpdateMultiOrderReq.Orders[i].ShippingAmount.ToString() : null),
