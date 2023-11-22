@@ -168,7 +168,7 @@ namespace ShipStation_Test
                         _billToMyOtherAcoount: null),
                     _tagIds: new List<int?> { 53974 });
 
-            Create_UpdateOrderResponse resData = CreateUpdateOrder.CuOrder(create_updateOrderReq);
+            Create_UpdateOrderResponse resData = API_Orders.CreateUpdateOrder(create_updateOrderReq);
         }
 
     }

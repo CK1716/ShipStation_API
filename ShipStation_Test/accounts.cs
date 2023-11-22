@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using ShipStation.Api;
 using ShipStation.Entities;
 
-namespace SsApi
+namespace ShipStation_Test
 {
     public class Accounts
     {
@@ -33,7 +33,7 @@ namespace SsApi
                 _countryCode: "US",
                 _phone: "5124111234");
 
-            AccountResponse resData = RegisterAccount.AcReq(accountsReq);
+            AccountResponse resData = API_Account.Register(accountsReq);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ShipStation_Test
 {
     public class Create_UpdateMultiOrders
     {
-        static void Main(string[] args)
+        static void Create_UpdateMultiOrder(string[] args)
         {
             // Create obj : billTo
             Address objBillTo = new Address(
@@ -261,7 +261,7 @@ namespace ShipStation_Test
             order.Add(order02);
 
             Create_UpdateMultiOrderRequest createUpdateMultiOrderReq = new Create_UpdateMultiOrderRequest(_orders: order);
-            Create_UpdateMultiOrderResponse resDate = CreateUpdateMultiOrder.MultiOrder(createUpdateMultiOrderReq);
+            Create_UpdateMultiOrderResponse resDate = API_Orders.CreateUpdateMultiOrder(createUpdateMultiOrderReq);
 
         }
     }

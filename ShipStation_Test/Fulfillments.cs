@@ -33,7 +33,7 @@ namespace ShipStation_Test
                 _page: 1,
                 _pageSize: 0);
 
-            FulfillmentResponse resData = ListFulfillments.LfReq(fulfillmentsReq);
+            FulfillmentResponse resData = API_Fulfillments.ListFulfillments(fulfillmentsReq);
         }
     }
 }
