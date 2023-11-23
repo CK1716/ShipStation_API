@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ShipStation.Models;
 
+using ShipStation.Enums;
+
 namespace ShipStation.Entities
 {
     public class FulfillmentRequest

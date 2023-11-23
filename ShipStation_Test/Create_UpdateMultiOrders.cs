@@ -107,10 +107,6 @@ namespace ShipStation_Test
             itemsArr.Add(objItems01);
             itemsArr.Add(objItems02);
 
-
-
-
-
             List<Order> order = new List<Order>();
             Order order01 = new Order(
                 _orderId: null,

@@ -1,5 +1,6 @@
 ﻿using ShipStation.Entities;
 using ShipStation.Models;
+using ShipStation.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,37 +19,31 @@ namespace ShipStation.Api
 
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(_url);
             webRequest.Method = _method;
-            webRequest.Timeout = 30 * 1000; // 30초
-                                            // ContentType은 지정된 것이 있으면 그것을 사용해준다.
+            webRequest.Timeout = 30 * 1000; 
+                                            
             webRequest.ContentType = "application/json; charset=utf-8";
 
-            /* _postData 변수에 api request body 초기화*//*
-            byte[] byteArray = Encoding.UTF8.GetBytes(_postData);
-            // 요청 Data를 쓰는 데 사용할 Stream 개체를 가져온다.
-            Stream dataStream = webRequest.GetRequestStream();
-            // Data를 전송한다.
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            // dataStream 개체 닫기
-            dataStream.Close();*/
+            /* 
+             * byte[] byteArray = Encoding.UTF8.GetBytes(_postData);
+             * Stream dataStream = webRequest.GetRequestStream();
+             * dataStream.Write(byteArray, 0, byteArray.Length);
+             * dataStream.Close();
+             * */
 
             return _postData;
 
             try
             {
-                // 응답 받기
                 using (HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse())
                 {
                     HttpStatusCode status = resp.StatusCode;
-                    Console.WriteLine(status);      // status 가 정상일경우 OK가 입력된다.
-
-                    // 응답과 관련된 stream을 가져온다.
+                    Console.WriteLine(status);      
                     Stream respStream = resp.GetResponseStream();
                     using (StreamReader streamReader = new StreamReader(respStream))
                     {
                         responseText = streamReader.ReadToEnd();
                     }
                 }
-
                 Console.WriteLine(responseText);
             }
             catch (WebException ex1)
@@ -57,7 +52,6 @@ namespace ShipStation.Api
 
                 if (ex1.Status == WebExceptionStatus.ProtocolError)
                 {
-
                     using (Stream data = ex1.Response.GetResponseStream())
                     //using (GZipStream gzip = new GZipStream(data, CompressionMode.Compress))
                     using (var reader = new StreamReader(data, Encoding.UTF8))
@@ -75,16 +69,14 @@ namespace ShipStation.Api
             }
         }
     }
-
     public class API_Account
     {
         public static AccountResponse Register(AccountRequest _accountsReq)
         {
             string url = "https://ssapi.shipstation.com/accounts/registeraccount";
+            // method : POST
 
             JsonObjectCollection reqMain = new JsonObjectCollection
-            /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
-            JsonObjectCollection items = new JsonObjectCollection */
             {
                 new JsonStringValue("FirstName", _accountsReq.FirstName),
                 new JsonStringValue("LastName", _accountsReq.LastName),
@@ -101,47 +93,19 @@ namespace ShipStation.Api
                 new JsonStringValue("Phone", _accountsReq.Phone)
             };
 
-            // accountReq.Add(items);
-            // main.Add(jsonArrayCollection);
-
             string reqJson = reqMain.ToString();
             reqJson = reqJson.Replace("\n", "");
             reqJson = reqJson.Replace("\r", "");
             reqJson = reqJson.Replace("\t", "");
-
-            /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
-
-            // string reqResult = ShipStation.ApiResult(url, "POST", reqJson);
-
-            //response
-            /* 
-            AccountResponse accountsRes = new AccountResponse(
-                _message: "ShipStation account Created.",
-                _sellerId: 123456,
-                _success: true,
-                _apiKey: "abcdt9845hjmgfklj3498gkljdkuyekl",
-                _apiSecret: "1234iou983lkj8mnxgfwu509hkhdy7u3");*/
-
-            /* 
-            AccountResponse acc = new AccountResponse
-            {
-                Message = "ShipStation account created.",
-                SellerId = 123456,
-                Success = true,
-                ApiKey = "abcdt9845hjmgfklj3498gkljdkuyekl",
-                ApiSecret = "1234iou983lkj8mnxgfwu509hkhdy7u3"
-            };*/
-
-            // string resJsonData = JsonConvert.SerializeObject(accountsRes);
-
-            string jsonText = "{\r\n  \"message\": \"ShipStation account created.\",\r\n  \"sellerId\": 123456,\r\n  \"success\": true,\r\n  \"apiKey\": \"abcdt9845hjmgfklj3498gkljdkuyekl\",\r\n  \"apiSecret\": \"1234iou983lkj8mnxgfwu509hkhdy7u3\"\r\n}\r\n";
+            
+            // response
+            string jsonText = "{\r\n  \"message\": \"ShipStation account created.\",\r\n  \"sellerId\": 123456,\r\n  \"success\": true," +
+                "\r\n  \"apiKey\": \"abcdt9845hjmgfklj3498gkljdkuyekl\",\r\n  \"apiSecret\": \"1234iou983lkj8mnxgfwu509hkhdy7u3\"\r\n}\r\n";
 
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(jsonText);
             JsonObjectCollection col = (JsonObjectCollection)obj;
 
-            //삼항 연산자 
-            // -> (if 조건) ? (참일 때 사용 값) ? (거짓일 때 사용 값)
             AccountResponse accountsRes = new AccountResponse(
                 _message: (string)(col["message"] != null ? col["message"].GetValue() : string.Empty),
                 _sellerId: int.Parse(col["sellerId"] != null ? col["sellerId"].GetValue().ToString() : string.Empty),
@@ -158,10 +122,9 @@ namespace ShipStation.Api
         public static FulfillmentResponse ListFulfillments(FulfillmentRequest _fulfillmentsReq)
         {
             string url = "https://ssapi.shipstation.com/fulfillments";
+            //mehtod : GET
 
             JsonObjectCollection reqMain = new JsonObjectCollection
-            /* JsonArrayCollection accountReq = new JsonArrayCollection("AccountRequest");
-            JsonObjectCollection items = new JsonObjectCollection */
             {
                 new JsonStringValue("FulfillmentId", _fulfillmentsReq.FulfillmentId.ToString()),
                 new JsonStringValue("OrderId", _fulfillmentsReq.OrderId.ToString()),
@@ -178,100 +141,14 @@ namespace ShipStation.Api
                 new JsonStringValue("PageSize", _fulfillmentsReq.PageSize.ToString())
             };
 
-            // accountReq.Add(items);
-            // main.Add(jsonArrayCollection);
-
             string reqJson = reqMain.ToString();
             reqJson = reqJson.Replace("\n", "");
             reqJson = reqJson.Replace("\r", "");
             reqJson = reqJson.Replace("\t", "");
-            /*getApi() 호출, getApi() return 후 해당 값으로 Res() 호출*/
-
-            // string reqResult = ShipStation.ApiResult(url, "GET", reqJson);
 
             // response
             string jsonText = "{\r\n  \"fulfillments\": [\r\n    {\r\n      \"fulfillmentId\": 33974374,\r\n      \"orderId\": 191759016,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"783408231234\",\r\n      \"createDate\": \"2016-06-07T08:50:50.0670000\",\r\n      \"shipDate\": \"2016-06-07T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"USPS\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null \r\n      }\r\n    },\r\n    {\r\n      \"fulfillmentId\": 246310,\r\n      \"orderId\": 193699927,\r\n      \"orderNumber\": \"101\",\r\n      \"userId\": \"c9f06d74-95de-4263-9b04-e87095cababf\",\r\n      \"customerEmail\": \"apisupport@shipstation.com\",\r\n      \"trackingNumber\": \"664756278745\",\r\n      \"createDate\": \"2016-06-08T12:54:53.3470000\",\r\n      \"shipDate\": \"2016-06-08T00:00:00.0000000\",\r\n      \"voidDate\": null,\r\n      \"deliveryDate\": null,\r\n      \"carrierCode\": \"FedEx\",\r\n      \"sellerFillProviderId\": 12345,\r\n      \"sellerFillProviderName\": \"Example Fulfillment Provider Name\",\r\n      \"fulfillmentProviderCode\": null,\r\n      \"fulfillmentServiceCode\": null,\r\n      \"fulfillmentFee\": 0,\r\n      \"voidRequested\": false,\r\n      \"voided\": false,\r\n      \"marketplaceNotified\": true,\r\n      \"notifyErrorMessage\": null,\r\n      \"shipTo\": {\r\n        \"name\": \"Yoda\",\r\n        \"company\": null,\r\n        \"street1\": \"3800 N Lamar Blvd # 220\",\r\n        \"street2\": null,\r\n        \"street3\": null,\r\n        \"city\": \"AUSTIN\",\r\n        \"state\": \"TX\",\r\n        \"postalCode\": \"78756\",\r\n        \"country\": \"US\",\r\n        \"phone\": \"512-485-4282\",\r\n        \"residential\": null,\r\n        \"addressVerified\": null\r\n      }\r\n    }\r\n  ],\r\n  \"total\": 2,\r\n  \"page\": 1,\r\n  \"pages\": 0\r\n}\r\n";
-            /*string jsonText = @"
-            {   jsonarray 형식으로 for문 
-                ""fulfillments"": [
-                {   
-                    ""fulfillmentId"": 33974374,
-                    ""orderId"": 191759016,
-                    ""orderNumber"": ""101"",
-                    ""userId"": ""c9f06d74-95de-4263-9b04-e87095cababf"",
-                    ""customerEmail"": ""apisupport@shipstation.com"",
-                    ""trackingNumber"": ""783408231234"",
-                    ""createDate"": ""2016-06-07T08:50:50.0670000"",
-                    ""shipDate"": ""2016-06-07T00:00:00.0000000"",
-                    ""voidDate"": null,
-                    ""deliveryDate"": null,
-                    ""carrierCode"": ""USPS"",
-                    ""fulfillmentProviderCode"": null,
-                    ""fulfillmentServiceCode"": null,
-                    ""fulfillmentFee"": 0,
-                    ""voidRequested"": false,
-                    ""voided"": false,
-                    ""marketplaceNotified"": true,
-                    ""notifyErrorMessage"": null,
-                    ""shipTo"": {
-                        ""name"": ""Yoda"",
-                        ""company"": null,
-                        ""street1"": ""3800 N Lamar Blvd # 220"",
-                        ""street2"": null,
-                        ""street3"": null,
-                        ""city"": ""AUSTIN"",
-                        ""state"": ""TX"",
-                        ""postalCode"": ""78756"",
-                        ""country"": ""US"",
-                        ""phone"": ""512-485-4282"",
-                        ""residential"": null,
-                        ""addressVerified"": null
-                    }
-                },
-                {
-                    ""fulfillmentId"": 246310,
-                    ""orderId"": 193699927,
-                    ""orderNumber"": ""101"",
-                    ""userId"": ""c9f06d74-95de-4263-9b04-e87095cababf"",
-                    ""customerEmail"": ""apisupport@shipstation.com"",
-                    ""trackingNumber"": ""664756278745"",
-                    ""createDate"": ""2016-06-08T12:54:53.3470000"",
-                    ""shipDate"": ""2016-06-08T00:00:00.0000000"",
-                    ""voidDate"": null,
-                    ""deliveryDate"": null,
-                    ""carrierCode"": ""FedEx"",
-                    ""sellerFillProviderId"": 12345,
-                    ""sellerFillProviderName"": ""Example Fulfillment Provider Name"",
-                    ""fulfillmentProviderCode"": null,
-                    ""fulfillmentServiceCode"": null,
-                    ""fulfillmentFee"": 0,
-                    ""voidRequested"": false,
-                    ""voided"": false,
-                    ""marketplaceNotified"": true,
-                    ""notifyErrorMessage"": null,
-                    ""shipTo"": {
-                        ""name"": ""Yoda"",
-                        ""company"": null,
-                        ""street1"": ""3800 N Lamar Blvd # 220"",
-                        ""street2"": null,
-                        ""street3"": null,
-                        ""city"": ""AUSTIN"",
-                        ""state"": ""TX"",
-                        ""postalCode"": ""78756"",
-                        ""country"": ""US"",
-                        ""phone"": ""512-485-4282"",
-                        ""residential"": null,
-                        ""addressVerified"": null
-                    }
-                }
-            ],
-            ""total"": 2,
-            ""page"": 1,
-            ""pages"": 0
-            }";*/
-
-
-
+            
             JsonTextParser parser = new JsonTextParser();
             JsonObject obj = parser.Parse(jsonText);
             JsonObjectCollection col = (JsonObjectCollection)obj;
@@ -329,14 +206,13 @@ namespace ShipStation.Api
 
                 });
 
-                // 상태도 같이 리턴??
                 string _statusToStr = listFulFill[i].ShipTo.AddressVerified;
                 switch (_statusToStr)
                 {
 
                     case "Address not yet validated":
                         // "Address not yet validated";
-                        AddressVerified status = AddressVerified.NotVerified; // 상태를 마지막에 함께 넘겨줘야 하나? 
+                        AddressVerified status = AddressVerified.NotVerified;
                         listFulFill[i].ShipTo.AddressVerified = "Address not yet validated";
                         break;
 
@@ -379,6 +255,7 @@ namespace ShipStation.Api
         public static CreateLabelForOrderResponse CreateLabel(CreateLabelForOrderRequest _createLabelForOrderReq)
         {
             string url = "https://ssapi.shipstation.com/orders/createlabelfororder";
+            // POST
 
             JsonObjectCollection weight = new JsonObjectCollection
             {
@@ -408,8 +285,6 @@ namespace ShipStation.Api
             reqJson = reqJson.Replace("\r", "");
             reqJson = reqJson.Replace("\t", "");
 
-            // string reqResult = ShipStation.ApiResult(url, "POST", reqJson);
-
             string jsonText = "{\r\n  \"shipmentId\": 72513480,\r\n  \"shipmentCost\": 7.3,\r\n  \"insuranceCost\": 0,\r\n  \"trackingNumber\": \"248201115029520\",\r\n  \"labelData\": \"JVBERi0xLjQKJeLjz9MKMiAwIG9iago8PC9MZW5ndGggNjIvRmlsdGVyL0ZsYXRlRGVjb2RlPj5zdHJlYW0KeJwr5HIK4TI2UzC2NFMISeFyDeEK5CpUMFQwAEJDBV0jCz0LBV1jY0M9I4XkXAX9iDRDBZd8hUAuAEdGC7cKZW5kc3RyZWFtCmVuZG9iago0IDAgb2JqCjw8L1R5cGUvUGFnZS9NZWRpYUJveFswIDAgMjg4IDQzMl0vUmVzb3VyY2VzPDwvUHJvY1NldCBbL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSV0vWE9iamVjdDw8L1hmMSAxIDAgUj4+Pj4vQ29udGVudHMgMiAwIFIvUGFyZW50....\",\r\n  \"formData\": null\r\n}\r\n";
 
             JsonTextParser parser = new JsonTextParser();
@@ -432,6 +307,7 @@ namespace ShipStation.Api
         public static Create_UpdateOrderResponse CreateUpdateOrder(Create_UpdateOrderRequest _create_updateOrderReq)
         {
             string url = "https://ssapi.shipstation.com/orders/createorder";
+            // method POST
 
             // Create new object. type : Address
             JsonObjectCollection elementsBillTo = new JsonObjectCollection
@@ -522,6 +398,7 @@ namespace ShipStation.Api
             };
 
             // Create new ItemArray : type OrderItem
+            // 
             JsonArrayCollection itemArray = new JsonArrayCollection();
             JsonArrayCollection optionArray = new JsonArrayCollection();
 
@@ -547,7 +424,6 @@ namespace ShipStation.Api
                 optionArray.Clear();
                 optionArray.Add(elementsOptions);
 
-
                 JsonObjectCollection elementsItmes = new JsonObjectCollection
                 {
                     new JsonStringValue("orderItemId", _create_updateOrderReq.Items[i].OrderItemId != null ? _create_updateOrderReq.Items[i].OrderItemId.ToString() : null),
@@ -567,7 +443,6 @@ namespace ShipStation.Api
                     new JsonStringValue("adjustment", _create_updateOrderReq.Items[i].Adjustment != null ? _create_updateOrderReq.Items[i].Adjustment.ToString() : null),
                     new JsonStringValue("upc", _create_updateOrderReq.Items[i].Upc != null ? _create_updateOrderReq.Items[i].Upc.ToString() : string.Empty)
                 };
-
                 itemArray.Add(elementsItmes);
             }
 
@@ -796,10 +671,10 @@ namespace ShipStation.Api
             };
             return create_UpdateOrderResponse;
         }
-
         public static Create_UpdateMultiOrderResponse CreateUpdateMultiOrder(Create_UpdateMultiOrderRequest _createUpdateMultiOrderReq)
         {
             string url = "http://ssapi.shipstation.com//orders/createorders";
+            // method : POST
 
             JsonArrayCollection reqMain = new JsonArrayCollection();
             for (int i = 0; i < _createUpdateMultiOrderReq.Orders.Count; i++)
@@ -904,10 +779,10 @@ namespace ShipStation.Api
                     new JsonStringValue("customsItems", _createUpdateMultiOrderReq.Orders[i].InternationalOptions.CustomsItems != null ? _createUpdateMultiOrderReq.Orders[i].InternationalOptions.CustomsItems.ToString() : string.Empty)
                 };
 
-                JsonArrayCollection jarr = new JsonArrayCollection();
+                JsonArrayCollection elementTagIds = new JsonArrayCollection();
                 for (int j = 0; j < _createUpdateMultiOrderReq.Orders[i].TagIds.Count; j++)
                 {
-                    jarr.Add(new JsonNumericValue(Convert.ToInt32(_createUpdateMultiOrderReq.Orders[i].TagIds[j])));
+                    elementTagIds.Add(new JsonNumericValue(Convert.ToInt32(_createUpdateMultiOrderReq.Orders[i].TagIds[j])));
                 }
 
                 JsonObjectCollection elemenAdvancedOptions = new JsonObjectCollection
@@ -929,7 +804,6 @@ namespace ShipStation.Api
                     new JsonStringValue("billToPostalCode", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToPostalCode != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToPostalCode.ToString() : null),
                     new JsonStringValue("billToCountryCode", _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToCountryCode != null ? _createUpdateMultiOrderReq.Orders[i].AdvancedOptions.BillToCountryCode.ToString() : null)
                 };
-
 
                 JsonObjectCollection jobj = new JsonObjectCollection
                 {
@@ -964,7 +838,7 @@ namespace ShipStation.Api
                     new JsonObjectCollection("insuranceOptions", elementInsuranceOptions),
                     new JsonObjectCollection("internationalOptions", elementInternationalOptions),
                     new JsonObjectCollection("advancedOptions", elemenAdvancedOptions),
-                    new JsonArrayCollection("tagIds", jarr)
+                    new JsonArrayCollection("tagIds", elementTagIds)
                 };
                 reqMain.Add(jobj);
             }
@@ -1003,14 +877,13 @@ namespace ShipStation.Api
                 Results = listMultiOrders
             };
 
-
             return multiOrderRes;
         }
 
         public static DeleteOrderResponse DeleteOrders(DeleteOrderRequest _delectOrdersReq)
         {
             string url = "http://ssapi.shipstation.com/orders/orderId";
-            // method DELECT
+            // method DELETE
 
             string jsonText = "{\r\n  \"success\": true,\r\n  \"message\": \"The requested order has been deleted.\"\r\n}\r\n";
 

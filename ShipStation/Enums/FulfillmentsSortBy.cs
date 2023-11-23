@@ -7,15 +7,15 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShipStation.Models
+namespace ShipStation.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum SortDir
+    public enum FulfillmentsSortBy
     {
-        [EnumMember(Value = "ASC")]
-        Ascending = 0,
+        [EnumMember(Value = "shipDate")]
+        ShipDate = 0,
 
-        [EnumMember(Value = "DESC")]
-        Descending = 1
+        [EnumMember(Value = "createDate")]
+        CreateDate = 1
     }
 }

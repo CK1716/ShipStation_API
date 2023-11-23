@@ -10,7 +10,7 @@ namespace ShipStation_Test
 {
     public class HoldOrders
     {
-        static void Main(string[] args)
+        static void HoldOrder(string[] args)
         {
             HoldOrderRequest holdOrdersReq = new HoldOrderRequest(
                 _orderId: 1072467,

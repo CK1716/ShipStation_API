@@ -63,7 +63,8 @@
     <Compile Include="Entities\Orders\DeleteOrderRes.cs" />
     <Compile Include="Entities\Orders\HoldOrderReq.cs" />
     <Compile Include="Entities\Orders\HoldOrderRes.cs" />
-    <Compile Include="Models\AddressVerified.cs" />
+    <Compile Include="Entities\Orders\MarkShippedReq.cs" />
+    <Compile Include="Enums\AddressVerified.cs" />
     <Compile Include="GetApiResult.cs" />
     <Compile Include="Entities\Accounts\accountReq.cs" />
     <Compile Include="Entities\Accounts\accountRes.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="Models\AdvancedOptions.cs" />
     <Compile Include="Models\CustomsItems.cs" />
     <Compile Include="Models\Dimensions.cs" />
-    <Compile Include="Models\FulfillmentsSortBy.cs" />
+    <Compile Include="Enums\FulfillmentsSortBy.cs" />
     <Compile Include="Models\ElementPage.cs" />
     <Compile Include="Models\InsuranceOptions.cs" />
     <Compile Include="Models\InternationalOptions.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="Models\MultiOrdersResponseResults.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
-    <Compile Include="Models\SortDir.cs" />
+    <Compile Include="Enums\SortDir.cs" />
     <Compile Include="Models\Weight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

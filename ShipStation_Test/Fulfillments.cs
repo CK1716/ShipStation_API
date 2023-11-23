@@ -1,5 +1,6 @@
 ﻿using ShipStation.Api;
 using ShipStation.Entities;
+using ShipStation.Enums;
 using ShipStation.Models;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,6 @@ namespace ShipStation_Test
     {
         public static void Fulfillment(String[] args)
         {
-            /* sortBy, sortDir 형 변환 하는 법 찾아보기 
-             * github 자료에서는 공통 메소드 만들고 enum 사용 <- 관련해서 찾아보기
-             * 못 찾으면 string 형식으로 사용?  */
-
             FulfillmentRequest fulfillmentsReq = new FulfillmentRequest(
                 _fulfillmentId : 33974374,
                 _orderId: 191759016,

@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShipStation.Models
+namespace ShipStation.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AddressVerified
